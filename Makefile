@@ -43,5 +43,5 @@ check: all
 	./pof-test
 
 zip:
-	zip yubico-sdk-`date +%s` \
+	zip yubico-sdk-`date +%Y-%m-%d` \
 		README Makefile pof.h pof.c pof-test.c modhex.c tool.c 
