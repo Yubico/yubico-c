@@ -1,0 +1,82 @@
+Test vectors for Yubikey
+------------------------
+
+The YubiKey output consists of a two fields concatenated with each
+other:
+
+YubiKey = [identity]<otp>
+
+The "identity" field is a variable-length ModHex encoded identity
+field.  If no static identity is wanted, it may be omitted (i.e., of
+zero length).
+
+The "otp" field is a 32 characters fixed-size ModHex encoded field
+with a AES encrypted plaintext block of a specific format.
+
+Test vectors are needed for ModHex, AES in ECB mode, and internal
+parsing of the plaintext.
+
+In this file, we'll use the sample YubiKey
+'dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh' for demonstration purposes.
+
+Modhex
+------
+
+Modhex is an encoding mechanism, much similar to hex-encoding but the
+alphabet is the alphanumeric string 'cbdefghijklnrtuv' instead.
+
+The input is an arbitrary binary string.  The output is a ASCII
+string, twice as large as the input.
+
+INPUT:     hknhfjbrjnlnldnhcujvddbikngjrtgh
+DECODE:    69b6481c8baba2b60e8f22179b58cd56 (in hex)
+
+More test vectors:
+
+INPUT:     test
+ENCODE:    ifhgieif
+
+INPUT:     test
+ENCODE:    hhhvhvhdhbid
+
+AES-ECB
+-------
+
+This is standard AES-128 in "raw" mode, i.e. Electronic Code Book.  It
+is assumed that the same input is never encrypted twice.  We only use
+key sizes of 128 bits.
+
+INPUT:    69 b6 48 1c 8b ab a2 b6 0e 8f 22 17 9b 58 cd 56 
+AESKEY    ec de 18 db e7 6f bd 0c 33 33 0f 1c 35 48 71 db 
+
+OUTPUT:   87 92 eb fe 26 cc 13 00 30 c2 00 11 c8 9f 23 c8 
+
+Plaintext
+---------
+
+The following plaintext converted into a structure:
+
+PLAINTEXT:  87 92 eb fe 26 cc 13 00 30 c2 00 11 c8 9f 23 c8 
+
+  uid: 87 92 eb fe 26 cc 
+  counter: 19 (0x0013)
+  timestamp (low): 49712 (0xc230)
+  timestamp (high): 0 (0x00)
+  session use: 17 (0x11)
+  random: 40904 (0x9fc8)
+  crc: 51235 (0xc823)
+
+The CRC value is not used for cryptographic authentication, just as a
+sanity check.  It is CRC-16 checksum computed on the entire structure
+(including the provided crc value from the plaintext), and the residue
+should be 0xf0b8.  The CRC-16 value computed on the above PLAINTEXT
+would be:
+
+  crc: F0B8
+
+This matches the expected residue.
+
+Questions?
+----------
+
+Talk to <simon@yubico.com>.
