@@ -1,28 +1,29 @@
-Introduction
-------------
+#summary Introduction to low-level Yubikey C library
+
+= Introduction =
 
 This package make up the low-level C software development kit for the
 Yubico authentication device, the Yubikey.  In particular:
 
-  COPYING: software license
+* COPYING: software license
 
-  pof.h, pof.c: Header file for the low-level library.
+* pof.h, pof.c: Header file for the low-level library.
 
-  pof-test.c: Self tests of the library.
+* pof-test.c: Self tests of the library.
 
-  tool.c: Example command line tool to print debug information about a token.
+* tool.c: Example command line tool to print debug information about a token.
 
-  modhex.c: Command-line tool for modhex encoding/decoding.
+* modhex.c: Command-line tool for modhex encoding/decoding.
 
-  Makefile: Simple makefile to build the above parts.
+* Makefile: Simple makefile to build the above parts.
 
-Building
---------
+= Building =
 
 The recommended way to build the package is by running 'make check'.
 It will build each component, and also test them.  See below for
 sample session.
 
+{{{
 $ make clean
 rm -f pof-test modhex tool *~ *.o
 $ make check
@@ -30,10 +31,14 @@ cc -I. -Wall   -c -o pof.o pof.c
 cc -I. -Wall    pof-test.c pof.o   -o pof-test
 cc -I. -Wall    modhex.c pof.o   -o modhex
 cc -I. -Wall    tool.c pof.o   -o tool
+}}}
 
-Self-tests
-----------
+= Self-tests =
 
+After building the package, a binary "pof-test" is created that
+performs internal self-tests.  Invoke it as follows.
+
+{{{
 ./pof-test
 modhex-encode("test") = ifhgieif
 Modhex-1 success
@@ -44,10 +49,16 @@ aes-decrypt (data=0123456789abcdef, key=abcdef0123456789)
 AES-1 success
 
 All tests successful
+}}}
 
-Command-line tools
-------------------
+= Command-line tools =
 
+Two command line tools, modex and tool, are built by the makefile.
+The "modhex" program converts data between modhex, normal hex, and
+binary form.  The "tool" program decrypts and parses one OTP given the
+OTP and the AES key corresponding to that Yubikey.
+
+{{{
 $ ./modhex test
 ifhgieif
 $ ./modhex -d ifhgieif
@@ -107,8 +118,8 @@ Derived:
   crc: F0B8
   crc check: ok
 $ 
+}}}
 
-Questions?
-----------
+= Questions? =
 
 Talk to <simon@yubico.com>.
