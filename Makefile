@@ -44,4 +44,4 @@ check: all
 
 zip:
 	zip yubico-sdk-`date +%Y-%m-%d` \
-		README Makefile pof.h pof.c pof-test.c modhex.c tool.c 
+		COPYING README Makefile pof.h pof.c pof-test.c modhex.c tool.c 
