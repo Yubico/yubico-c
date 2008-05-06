@@ -44,8 +44,8 @@ typedef struct
 {
   /* Unique (secret) ID. */
   uint8_t uid[POF_UID_SIZE];
-  /* Session counter (incremented by 1 at each startup + real use).
-     High bit indicates whether caps-lock triggered the token. */
+  /* Session counter (incremented by 1 at each startup).  High bit
+     indicates whether caps-lock triggered the token. */
   uint16_t ctr;
   /* Timestamp incremented by approx 8Hz (low part). */
   uint16_t tstpl;
