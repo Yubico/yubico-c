@@ -34,7 +34,7 @@ PROGRAMS = pof-test modhex tool
 
 all: $(PROGRAMS)
 
-$(PROGRAMS): pof.o
+$(PROGRAMS): pof.o pof.h
 
 clean:
 	rm -f $(PROGRAMS) *~ *.o
