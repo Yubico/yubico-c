@@ -70,7 +70,7 @@ pof_parse (const uint8_t token[POF_BLOCK_SIZE],
 	   pof_token *out);
 
 #define pof_counter(ctr) ((ctr) & 0x7FFF)
-#define pof_capslock(ctr) ((ctr) & 0x800)
+#define pof_capslock(ctr) ((ctr) & 0x8000)
 #define pof_crc_ok_p(tok) \
   (pof_crc16 ((tok), POF_BLOCK_SIZE) == POF_CRC_OK_RESIDUE)
 
