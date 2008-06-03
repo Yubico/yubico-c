@@ -71,6 +71,11 @@ main (int argc, char *argv[])
       token = token + (strlen (token) - 32);
     }
 
+  if (strlen (token) != 32)
+    {
+      printf ("error: ModHex encoded token must be 32 characters.\n");
+      return EXIT_FAILURE;
+    }
 
   /* Debug. */
   printf ("Input:\n");
