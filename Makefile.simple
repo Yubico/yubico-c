@@ -30,7 +30,7 @@
 
 CFLAGS = -I. -Wall -g
 
-PROGRAMS = selftest modhex tool
+PROGRAMS = modhex yubikey-debug selftest
 
 all: $(PROGRAMS)
 
@@ -44,4 +44,4 @@ check: all
 
 zip:
 	zip yubico-sdk-`date +%Y-%m-%d` \
-		COPYING README Makefile.simple pof.h pof.c pof-test.c modhex.c tool.c 
+		COPYING README Makefile.simple yubikey.h yubikey.c selftest.c modhex.c yubikey-debug.c 
