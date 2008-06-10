@@ -30,18 +30,18 @@
 
 CFLAGS = -I. -Wall -g
 
-PROGRAMS = pof-test modhex tool
+PROGRAMS = selftest modhex tool
 
 all: $(PROGRAMS)
 
-$(PROGRAMS): pof.o pof.h
+$(PROGRAMS): yubikey.o yubikey.h
 
 clean:
 	rm -f $(PROGRAMS) *~ *.o
 
 check: all
-	./pof-test
+	./selftest
 
 zip:
 	zip yubico-sdk-`date +%Y-%m-%d` \
-		COPYING README Makefile pof.h pof.c pof-test.c modhex.c tool.c 
+		COPYING README Makefile.simple pof.h pof.c pof-test.c modhex.c tool.c 

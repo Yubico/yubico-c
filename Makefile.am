@@ -29,7 +29,7 @@
 # The library.
 
 lib_LTLIBRARIES = libyubikey.la
-libyubikey_la_SOURCES = pof.h pof.c
+libyubikey_la_SOURCES = yubikey.h yubikey.c
 libyubikey_la_LDFLAGS = -no-undefined \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
@@ -38,7 +38,7 @@ libyubikey_la_LDFLAGS = -no-undefined \
 AM_LDFLAGS = -no-install
 LDADD = libyubikey.la -lpam
 
-check_PROGRAMS = pof-test
+check_PROGRAMS = selftest
 TESTS = $(check_PROGRAMS)
 
 # Release
