@@ -68,13 +68,13 @@ All tests successful
 
 = Command-line tools =
 
-Two command line tools, modex and yubikey-debug, are included.
+Two command line tools, modex and ykdebug, are included.
 
 The "modhex" program converts data between modhex, normal hex, and
 binary form.
 
-The "yubikey-debug" program decrypts and parses one OTP given the OTP
-and the AES key corresponding to that Yubikey.
+The "ykdebug" program decrypts and parses one OTP given the OTP and
+the AES key corresponding to that Yubikey.
 
 {{{
 $ ./modhex test
@@ -85,7 +85,7 @@ $ ./modhex -h b565716f
 nghgibhv
 $ ./modhex -h -d nghgibhv
 b565716f
-$ ./yubikey-debug urtubjtnuihvntcreeeecvbregfjibtn dteffujedcflcindvdbrblehecuitvjkjevvehjd
+$ ./ykdebug urtubjtnuihvntcreeeecvbregfjibtn dteffujedcflcindvdbrblehecuitvjkjevvehjd
 warning: overlong token, ignoring prefix: dteffuje
 Input:
   token: dcflcindvdbrblehecuitvjkjevvehjd
@@ -110,7 +110,7 @@ Derived:
   triggered by caps lock: no
   crc: F0B8
   crc check: ok
-$ ./yubikey-debug urtubjtnuihvntcreeeecvbregfjibtn dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh
+$ ./ykdebug urtubjtnuihvntcreeeecvbregfjibtn dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh
 warning: overlong token, ignoring prefix: dteffuje
 Input:
   token: hknhfjbrjnlnldnhcujvddbikngjrtgh
