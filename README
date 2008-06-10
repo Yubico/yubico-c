@@ -15,20 +15,20 @@ Yubico authentication device, the Yubikey.  In particular:
 
 * modhex.c: Command-line tool for modhex encoding/decoding.
 
-* Makefile.simple: Simple makefile to build the above parts.
+* simple.mk: Simple makefile to build the above parts.
 
 * configure.ac, Makefile.am: Autoconf/Automake files.
 
 = Building =
 
-The simple way to build the package is by running 'make -f
-Makefile.simple check'.  It will build each component, and also test
-them.  See below for sample session.
+The simple way to build the package is by running 'make -f simple.mk
+check'.  It will build each component, and also test them.  See below
+for sample session.
 
 {{{
-$ make clean
+$ make -f simple.mk clean
 rm -f pof-test modhex tool *~ *.o
-$ make check
+$ make -f simple.mk check
 cc -I. -Wall   -c -o pof.o pof.c
 cc -I. -Wall    pof-test.c pof.o   -o pof-test
 cc -I. -Wall    modhex.c pof.o   -o modhex
