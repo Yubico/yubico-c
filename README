@@ -5,13 +5,13 @@
 This package make up the low-level C software development kit for the
 Yubico authentication device, the Yubikey.  In particular:
 
-* COPYING: software license
+* AUTHORS, COPYING, NEWS, README: meta-information about the project.
 
-* yubikey.h, yubikey.c: Header file for the low-level library.
+* yubikey.h, yubikey.c: Implementation of the library.
 
 * selftest.c: Self tests of the library.
 
-* tool.c: Example command line tool to print debug information about a token.
+* ykdebug.c: Command line tool to print debug information about a token.
 
 * modhex.c: Command-line tool for modhex encoding/decoding.
 
