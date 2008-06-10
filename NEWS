@@ -1,0 +1,7 @@
+Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
+
+* Version 1.0 (unreleased)
+
+** Uses autoconf, automake and libtool.
+
+** Renamed function namespace from pof_* to yubikey_*.
