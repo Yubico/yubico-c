@@ -21,7 +21,7 @@ Yubico authentication device, the Yubikey.  In particular:
 
 = Building =
 
-The recommended way to build the package is by running 'make -f
+The simple way to build the package is by running 'make -f
 Makefile.simple check'.  It will build each component, and also test
 them.  See below for sample session.
 
@@ -33,11 +33,24 @@ cc -I. -Wall   -c -o pof.o pof.c
 cc -I. -Wall    pof-test.c pof.o   -o pof-test
 cc -I. -Wall    modhex.c pof.o   -o modhex
 cc -I. -Wall    tool.c pof.o   -o tool
+./selftest
+...
+All tests successful
+}}}
+
+To build using the Autoconf, automake and libtool infrastructure,
+which is recommend for more advanced purposes especially
+cross-compilation, build it as follows.
+
+{{{
+$ autoreconf -fvi
+$ ./configure
+$ make check
 }}}
 
 = Self-tests =
 
-After building the package, a binary "pof-test" is created that
+After building the package, a binary "selftest" is created that
 performs internal self-tests.  Invoke it as follows.
 
 {{{
@@ -55,10 +68,13 @@ All tests successful
 
 = Command-line tools =
 
-Two command line tools, modex and tool, are built by the makefile.
+Two command line tools, modex and yubikey-debug, are included.
+
 The "modhex" program converts data between modhex, normal hex, and
-binary form.  The "tool" program decrypts and parses one OTP given the
-OTP and the AES key corresponding to that Yubikey.
+binary form.
+
+The "yubikey-debug" program decrypts and parses one OTP given the OTP
+and the AES key corresponding to that Yubikey.
 
 {{{
 $ ./modhex test
@@ -69,7 +85,7 @@ $ ./modhex -h b565716f
 nghgibhv
 $ ./modhex -h -d nghgibhv
 b565716f
-$ ./tool urtubjtnuihvntcreeeecvbregfjibtn dteffujedcflcindvdbrblehecuitvjkjevvehjd
+$ ./yubikey-debug urtubjtnuihvntcreeeecvbregfjibtn dteffujedcflcindvdbrblehecuitvjkjevvehjd
 warning: overlong token, ignoring prefix: dteffuje
 Input:
   token: dcflcindvdbrblehecuitvjkjevvehjd
@@ -94,7 +110,7 @@ Derived:
   triggered by caps lock: no
   crc: F0B8
   crc check: ok
-$ ./tool urtubjtnuihvntcreeeecvbregfjibtn dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh
+$ ./yubikey-debug urtubjtnuihvntcreeeecvbregfjibtn dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh
 warning: overlong token, ignoring prefix: dteffuje
 Input:
   token: hknhfjbrjnlnldnhcujvddbikngjrtgh

@@ -35,14 +35,13 @@ libyubikey_la_LDFLAGS = -no-undefined \
 
 # The command line tools.
 
-bin_PROGRAMS = modhex yubikey-debug
+bin_PROGRAMS = modhex ykdebug
 
 modhex_SOURCES = modhex.c
 modhex_LDADD = ./libyubikey.la
 
-yubikey_debug_SOURCES = yubikey-debug.c
-yubikey_debug_LDADD = ./libyubikey.la
-
+ykdebug_SOURCES = ykdebug.c
+ykdebug_LDADD = ./libyubikey.la
 
 # Self tests.
 
