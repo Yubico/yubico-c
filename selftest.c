@@ -1,4 +1,4 @@
-/* pof-test.c --- Self-tests for authentication token functions.
+/* yubikey-test.c --- Self-tests for authentication token functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
  * Copyright (c) 2006, 2007, 2008 Yubico AB
@@ -30,7 +30,7 @@
  *
  */
 
-#include <pof.h>
+#include <yubikey.h>
 #include <stdio.h>
 
 int
@@ -40,7 +40,7 @@ main (void)
   uint8_t key[16 + 1];
   size_t i;
 
-  pof_modhex_encode(buf, (uint8_t*) "test", 4);
+  yubikey_modhex_encode(buf, (uint8_t*) "test", 4);
   printf ("modhex-encode(\"test\") = %s\n", buf);
   if (strcmp ((char*)buf, "ifhgieif") != 0)
     {
@@ -50,7 +50,7 @@ main (void)
   printf ("Modhex-1 success\n");
 
   printf ("modhex-decode(\"%s\") = ", buf);
-  pof_modhex_decode(buf, buf, strlen ((char*)buf));
+  yubikey_modhex_decode(buf, buf, strlen ((char*)buf));
   printf ("%.*s\n", 4, buf);
   if (memcmp (buf, "test", 4) != 0)
     {
@@ -62,7 +62,7 @@ main (void)
   strcpy ((char*)buf, "0123456789abcdef");
   strcpy ((char*)key, "abcdef0123456789");
   printf ("aes-decrypt (data=%s, key=%s)\n => ", buf, key);
-  pof_aes_decrypt (buf, key);
+  yubikey_aes_decrypt (buf, key);
   for (i = 0; i < 16; i++)
     printf ("%02x", buf[i]);
   printf("\n");
