@@ -33,6 +33,17 @@ libyubikey_la_SOURCES = yubikey.h yubikey.c
 libyubikey_la_LDFLAGS = -no-undefined \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
+# The command line tools.
+
+bin_PROGRAMS = modhex yubikey-debug
+
+modhex_SOURCES = modhex.c
+modhex_LDADD = ./libyubikey.la
+
+yubikey_debug_SOURCES = yubikey-debug.c
+yubikey_debug_LDADD = ./libyubikey.la
+
+
 # Self tests.
 
 AM_LDFLAGS = -no-install
