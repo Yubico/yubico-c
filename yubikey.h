@@ -1,4 +1,4 @@
-/* pof.h --- Definitions and prototypes for authentication token functions.
+/* yubikey.h --- Definitions and prototypes for authentication token functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
  * Copyright (c) 2006, 2007, 2008 Yubico AB
@@ -30,20 +30,20 @@
  *
  */
 
-#ifndef POF_H
-# define POF_H
+#ifndef YUBIKEY_H
+# define YUBIKEY_H
 
 # include <stdint.h>
 # include <string.h>
 
-#define POF_BLOCK_SIZE 16
-#define POF_KEY_SIZE 16
-#define POF_UID_SIZE 6
+#define YUBIKEY_BLOCK_SIZE 16
+#define YUBIKEY_KEY_SIZE 16
+#define YUBIKEY_UID_SIZE 6
 
 typedef struct
 {
   /* Unique (secret) ID. */
-  uint8_t uid[POF_UID_SIZE];
+  uint8_t uid[YUBIKEY_UID_SIZE];
   /* Session counter (incremented by 1 at each startup).  High bit
      indicates whether caps-lock triggered the token. */
   uint16_t ctr;
@@ -57,22 +57,24 @@ typedef struct
   uint16_t rnd;
   /* CRC16 value of all fields. */
   uint16_t crc;
-} pof_token;
+} yubikey_token_st;
+
+typedef yubikey_token_st *yubikey_token_t;
 
 /* High-level functions. */
 
 /* Decrypt TOKEN using KEY and store output in OUT structure.  Note
    that there is no error checking whether the output data is valid or
-   not, use pof_check_* for that. */
+   not, use yubikey_check_* for that. */
 void
-pof_parse (const uint8_t token[POF_BLOCK_SIZE],
-	   const uint8_t key[POF_KEY_SIZE],
-	   pof_token *out);
+yubikey_parse (const uint8_t token[YUBIKEY_BLOCK_SIZE],
+	       const uint8_t key[YUBIKEY_KEY_SIZE],
+	       yubikey_token_t out);
 
-#define pof_counter(ctr) ((ctr) & 0x7FFF)
-#define pof_capslock(ctr) ((ctr) & 0x8000)
-#define pof_crc_ok_p(tok) \
-  (pof_crc16 ((tok), POF_BLOCK_SIZE) == POF_CRC_OK_RESIDUE)
+#define yubikey_counter(ctr) ((ctr) & 0x7FFF)
+#define yubikey_capslock(ctr) ((ctr) & 0x8000)
+#define yubikey_crc_ok_p(tok) \
+  (yubikey_crc16 ((tok), YUBIKEY_BLOCK_SIZE) == YUBIKEY_CRC_OK_RESIDUE)
 
 /*
  * Low-level functions; ModHex.
@@ -82,26 +84,26 @@ pof_parse (const uint8_t token[POF_BLOCK_SIZE],
    DST.  The size of the output string DST must be at least 2*srcSize.
    The output string is always 2*SRCSIZE large.  */
 void
-pof_modhex_encode(uint8_t *dst, const uint8_t *src, size_t srcSize);
+yubikey_modhex_encode(uint8_t *dst, const uint8_t *src, size_t srcSize);
 
 /* ModHex-Decode input string SRC of length DSTSIZE/2 into output
    string DST.  The output string DST is always DSTSIZE/2 large.  */
 void
-pof_modhex_decode(uint8_t *dst, const uint8_t *src, size_t dstSize);
+yubikey_modhex_decode(uint8_t *dst, const uint8_t *src, size_t dstSize);
 
 /*
  * Low-level functions; CRC.
  */
 
-#define	POF_CRC_OK_RESIDUE 0xf0b8
+#define	YUBIKEY_CRC_OK_RESIDUE 0xf0b8
 uint16_t
-pof_crc16 (const uint8_t *buf, size_t buf_size);
+yubikey_crc16 (const uint8_t *buf, size_t buf_size);
 
 /* Low-level functions; AES. */
 
 /* AES-decrypt one 16-byte block STATE using the 128-bit KEY, leaving
    the decrypted output in the STATE buffer. */
 void
-pof_aes_decrypt(uint8_t *state, const uint8_t *key);
+yubikey_aes_decrypt(uint8_t *state, const uint8_t *key);
 
 #endif

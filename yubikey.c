@@ -1,4 +1,4 @@
-/* pof.c --- Implementation of token functions.
+/* yubikey.c --- Implementation of Yubikey token functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
  * Copyright (c) 2006, 2007, 2008 Yubico AB
@@ -30,7 +30,7 @@
  *
  */
 
-#include "pof.h"
+#include "yubikey.h"
 
 #include <stdlib.h>
 #include <stdbool.h>
@@ -38,11 +38,13 @@
 /* Parser. */
 
 void
-pof_parse (const uint8_t token[32], const uint8_t key[16], pof_token *out)
+yubikey_parse (const uint8_t token[32],
+	       const uint8_t key[16],
+	       yubikey_token_t out)
 {
   memset (out, 0, sizeof(*out));
-  pof_modhex_decode ((void*)out, token, sizeof (*out));
-  pof_aes_decrypt ((void*)out, key);
+  yubikey_modhex_decode ((void*)out, token, sizeof (*out));
+  yubikey_aes_decrypt ((void*)out, key);
 }
 
 /* ModHex */
@@ -50,7 +52,7 @@ pof_parse (const uint8_t token[32], const uint8_t key[16], pof_token *out)
 static const char trans[65] = "cbdefghijklnrtuv";
 
 void
-pof_modhex_encode (uint8_t *dst, const uint8_t *src, size_t srcSize)
+yubikey_modhex_encode (uint8_t *dst, const uint8_t *src, size_t srcSize)
 {
   while (srcSize--)
     {
@@ -62,7 +64,7 @@ pof_modhex_encode (uint8_t *dst, const uint8_t *src, size_t srcSize)
 }
 
 void
-pof_modhex_decode (uint8_t *dst, const uint8_t *src, size_t dstSize)
+yubikey_modhex_decode (uint8_t *dst, const uint8_t *src, size_t dstSize)
 {
   char b;
   bool flag = false;
@@ -91,7 +93,7 @@ pof_modhex_decode (uint8_t *dst, const uint8_t *src, size_t dstSize)
 /* Crc */
 
 uint16_t
-pof_crc16 (const uint8_t *buf, size_t buf_size)
+yubikey_crc16 (const uint8_t *buf, size_t buf_size)
 {
   uint16_t m_crc = 0xffff;
 
@@ -188,14 +190,14 @@ static const uint8_t rijndael_inv_sbox[] = {
   0xE1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0C, 0x7D
 };
 
-inline uint8_t
+static inline uint8_t
 xtime (uint8_t b)
 {
   return (b & 0x80) ? ((b << 1) ^ 0x1b) : (b << 1);
 }
 
 void
-pof_aes_decrypt (uint8_t * state, const uint8_t * key)
+yubikey_aes_decrypt (uint8_t * state, const uint8_t * key)
 {
   uint8_t i, j, round_key[0x10];
   uint8_t a02x, a13x;
