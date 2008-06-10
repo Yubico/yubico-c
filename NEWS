@@ -1,5 +1,9 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
+* Version 1.1 (unreleased)
+
+** Include simple.mk in distribution.
+
 * Version 1.0 (released 2008-06-10)
 
 ** Uses autoconf, automake and libtool.
