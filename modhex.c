@@ -30,7 +30,7 @@
  *
  */
 
-#include "pof.h"
+#include "yubikey.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -154,9 +154,9 @@ main (int argc, char *argv[])
       }
 
     if (decode_p)
-      pof_modhex_decode ((uint8_t*)buf, (uint8_t*)data, inlen/2);
+      yubikey_modhex_decode ((uint8_t*)buf, (uint8_t*)data, inlen/2);
     else
-      pof_modhex_encode ((uint8_t*)buf, (uint8_t*)data, inlen);
+      yubikey_modhex_encode ((uint8_t*)buf, (uint8_t*)data, inlen);
 
     if (decode_p && hex_p)
       {
