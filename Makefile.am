@@ -64,3 +64,5 @@ release:
 	svn copy https://yubico-c.googlecode.com/svn/trunk/ \
 	 https://yubico-c.googlecode.com/svn/tags/$(PACKAGE)-$(VERSION) \
 	 -m "Tagging the $(VERSION) release of the $(PACKAGE) project."
+	googlecode_upload.py -s "Yubico C library v$(VERSION)." \
+	 -p yubico-c -u simon75j $(PACKAGE)-$(VERSION).tar.gz 
