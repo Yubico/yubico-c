@@ -1,6 +1,6 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
-* Version 1.0 (unreleased)
+* Version 1.0 (released 2008-06-10)
 
 ** Uses autoconf, automake and libtool.
 
