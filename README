@@ -7,21 +7,23 @@ Yubico authentication device, the Yubikey.  In particular:
 
 * COPYING: software license
 
-* pof.h, pof.c: Header file for the low-level library.
+* yubikey.h, yubikey.c: Header file for the low-level library.
 
-* pof-test.c: Self tests of the library.
+* selftest.c: Self tests of the library.
 
 * tool.c: Example command line tool to print debug information about a token.
 
 * modhex.c: Command-line tool for modhex encoding/decoding.
 
-* Makefile: Simple makefile to build the above parts.
+* Makefile.simple: Simple makefile to build the above parts.
+
+* configure.ac, Makefile.am: Autoconf/Automake files.
 
 = Building =
 
-The recommended way to build the package is by running 'make check'.
-It will build each component, and also test them.  See below for
-sample session.
+The recommended way to build the package is by running 'make -f
+Makefile.simple check'.  It will build each component, and also test
+them.  See below for sample session.
 
 {{{
 $ make clean

@@ -30,7 +30,7 @@
  *
  */
 
-#include "pof.h"
+#include "yubikey.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -42,9 +42,9 @@ int
 main (int argc, char *argv[])
 {
   uint8_t buf[128];
-  uint8_t key[POF_KEY_SIZE];
+  uint8_t key[YUBIKEY_KEY_SIZE];
   char *aeskey, *token;
-  pof_token tok;
+  yubikey_token_st tok;
 
   /* Parse command line parameters. */
   if (argc < 2)
@@ -81,36 +81,36 @@ main (int argc, char *argv[])
   printf ("Input:\n");
   printf ("  token: %s\n", token);
 
-  pof_modhex_decode (key, (uint8_t*)token, POF_KEY_SIZE);
+  yubikey_modhex_decode (key, (uint8_t*)token, YUBIKEY_KEY_SIZE);
 
   {
     size_t i;
     printf ("          ");
-    for (i = 0; i < POF_KEY_SIZE; i++)
+    for (i = 0; i < YUBIKEY_KEY_SIZE; i++)
       printf ("%02x ", key[i] & 0xFF);
     printf ("\n");
   }
 
   printf ("  aeskey: %s\n", aeskey);
 
-  pof_modhex_decode (key, (uint8_t*)aeskey, POF_KEY_SIZE);
+  yubikey_modhex_decode (key, (uint8_t*)aeskey, YUBIKEY_KEY_SIZE);
 
   {
     size_t i;
     printf ("          ");
-    for (i = 0; i < POF_KEY_SIZE; i++)
+    for (i = 0; i < YUBIKEY_KEY_SIZE; i++)
       printf ("%02x ", key[i] & 0xFF);
     printf ("\n");
   }
 
   /* Pack up dynamic password, decrypt it and verify checksum */
-  pof_parse ((uint8_t*)token, key, &tok);
+  yubikey_parse ((uint8_t*)token, key, &tok);
 
   printf ("Output:\n");
   {
     size_t i;
     printf ("          ");
-    for (i = 0; i < POF_BLOCK_SIZE; i++)
+    for (i = 0; i < YUBIKEY_BLOCK_SIZE; i++)
       printf ("%02x ", ((uint8_t*)&tok)[i] & 0xFF);
     printf ("\n");
   }
@@ -120,7 +120,7 @@ main (int argc, char *argv[])
   {
     size_t i;
     printf ("  uid: ");
-    for (i = 0; i < POF_UID_SIZE; i++)
+    for (i = 0; i < YUBIKEY_UID_SIZE; i++)
       printf ("%02x ", tok.uid[i] & 0xFF);
     printf ("\n");
   }
@@ -133,15 +133,15 @@ main (int argc, char *argv[])
 
   printf ("\nDerived:\n");
   printf ("  cleaned counter: %d (0x%04x)\n",
-	  pof_counter (tok.ctr), pof_counter (tok.ctr));
-  pof_modhex_encode (buf, tok.uid, POF_UID_SIZE);
+	  yubikey_counter (tok.ctr), yubikey_counter (tok.ctr));
+  yubikey_modhex_encode (buf, tok.uid, YUBIKEY_UID_SIZE);
   printf ("  modhex uid: %s\n", buf);
   printf ("  triggered by caps lock: %s\n",
-	  pof_capslock(tok.ctr) ? "yes" : "no");
-  printf ("  crc: %04X\n", pof_crc16 ((void*)&tok, POF_KEY_SIZE));
+	  yubikey_capslock(tok.ctr) ? "yes" : "no");
+  printf ("  crc: %04X\n", yubikey_crc16 ((void*)&tok, YUBIKEY_KEY_SIZE));
 
   printf ("  crc check: ");
-  if (pof_crc_ok_p ((uint8_t*)&tok))
+  if (yubikey_crc_ok_p ((uint8_t*)&tok))
     {
       printf("ok\n");
       return EXIT_SUCCESS;
