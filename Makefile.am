@@ -46,7 +46,7 @@ ykdebug_LDADD = ./libyubikey.la
 # Self tests.
 
 AM_LDFLAGS = -no-install
-LDADD = libyubikey.la -lpam
+LDADD = libyubikey.la
 
 check_PROGRAMS = selftest
 TESTS = $(check_PROGRAMS)
