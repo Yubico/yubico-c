@@ -4,6 +4,8 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 ** Don't link to libpam.
 
+** Add libtool -export-symbols-regex to restrict exported symbols.
+
 * Version 1.1 (released 2008-06-10)
 
 ** Include simple.mk in distribution.
