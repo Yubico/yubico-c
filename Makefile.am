@@ -29,7 +29,9 @@
 # The library.
 
 lib_LTLIBRARIES = libyubikey.la
-libyubikey_la_SOURCES = yubikey.h yubikey.c
+include_HEADERS = yubikey.h
+
+libyubikey_la_SOURCES = yubikey.c
 libyubikey_la_LDFLAGS = -no-undefined \
 	-export-symbols-regex '^yubikey_.*' \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
