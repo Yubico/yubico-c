@@ -1,6 +1,6 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
-* Version 1.2 (unreleased)
+* Version 1.2 (released 2009-01-13)
 
 ** Don't link to libpam.
 
