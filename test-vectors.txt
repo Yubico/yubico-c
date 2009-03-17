@@ -28,6 +28,9 @@ alphabet is the alphanumeric string 'cbdefghijklnrtuv' instead.
 The input is an arbitrary binary string.  The output is a ASCII
 string, twice as large as the input.
 
+INPUT:     dteffuje
+DECODE:    2d344e83 (in hex)
+
 INPUT:     hknhfjbrjnlnldnhcujvddbikngjrtgh
 DECODE:    69b6481c8baba2b60e8f22179b58cd56 (in hex)
 
