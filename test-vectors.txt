@@ -6,18 +6,19 @@ other:
 
 YubiKey = [identity]<otp>
 
-The "identity" field is a variable-length ModHex encoded identity
-field.  If no static identity is wanted, it may be omitted (i.e., of
-zero length).
+The "identity" field is a variable-length (0..16) ModHex encoded
+identity field.  If no static identity is wanted, it may be omitted
+(i.e., of zero length).
 
 The "otp" field is a 32 characters fixed-size ModHex encoded field
 with a AES encrypted plaintext block of a specific format.
 
-Test vectors are needed for ModHex, AES in ECB mode, and internal
-parsing of the plaintext.
+Test vectors are needed for ModHex, AES-128 in ECB mode, and internal
+parsing of the decrypted OTP.
 
-In this file, we'll use the sample YubiKey
+In this file, we'll use the sample YubiKey OTP (in modhex)
 'dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh' for demonstration purposes.
+The AES encryption key is (in hex) 'ecde18dbe76fbd0c33330f1c354871db'.
 
 Modhex
 ------
@@ -34,6 +35,9 @@ DECODE:    2d344e83 (in hex)
 INPUT:     hknhfjbrjnlnldnhcujvddbikngjrtgh
 DECODE:    69b6481c8baba2b60e8f22179b58cd56 (in hex)
 
+INPUT:     ecde18dbe76fbd0c33330f1c354871db
+ENCODE:    urtubjtnuihvntcreeeecvbregfjibtn
+
 More test vectors:
 
 INPUT:     test
@@ -49,8 +53,8 @@ This is standard AES-128 in "raw" mode, i.e. Electronic Code Book.  It
 is assumed that the same input is never encrypted twice.  We only use
 key sizes of 128 bits.
 
-INPUT:    69 b6 48 1c 8b ab a2 b6 0e 8f 22 17 9b 58 cd 56 
-AESKEY    ec de 18 db e7 6f bd 0c 33 33 0f 1c 35 48 71 db 
+INPUT:    69 b6 48 1c 8b ab a2 b6 0e 8f 22 17 9b 58 cd 56
+AESKEY    ec de 18 db e7 6f bd 0c 33 33 0f 1c 35 48 71 db
 
 OUTPUT:   87 92 eb fe 26 cc 13 00 30 c2 00 11 c8 9f 23 c8 
 
