@@ -1,7 +1,7 @@
 /* tool.c --- Example command line interface for authentication token.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -81,7 +81,7 @@ main (int argc, char *argv[])
   printf ("Input:\n");
   printf ("  token: %s\n", token);
 
-  yubikey_modhex_decode (key, (uint8_t*)token, YUBIKEY_KEY_SIZE);
+  yubikey_modhex_decode ((char*)key, token, YUBIKEY_KEY_SIZE);
 
   {
     size_t i;
@@ -93,7 +93,7 @@ main (int argc, char *argv[])
 
   printf ("  aeskey: %s\n", aeskey);
 
-  yubikey_modhex_decode (key, (uint8_t*)aeskey, YUBIKEY_KEY_SIZE);
+  yubikey_modhex_decode ((char*)key, aeskey, YUBIKEY_KEY_SIZE);
 
   {
     size_t i;
@@ -134,7 +134,7 @@ main (int argc, char *argv[])
   printf ("\nDerived:\n");
   printf ("  cleaned counter: %d (0x%04x)\n",
 	  yubikey_counter (tok.ctr), yubikey_counter (tok.ctr));
-  yubikey_modhex_encode (buf, tok.uid, YUBIKEY_UID_SIZE);
+  yubikey_modhex_encode ((char*)buf, (char*)tok.uid, YUBIKEY_UID_SIZE);
   printf ("  modhex uid: %s\n", buf);
   printf ("  triggered by caps lock: %s\n",
 	  yubikey_capslock(tok.ctr) ? "yes" : "no");
