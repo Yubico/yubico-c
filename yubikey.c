@@ -1,7 +1,7 @@
 /* yubikey.c --- Implementation of Yubikey token functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,49 +45,6 @@ yubikey_parse (const uint8_t token[32],
   memset (out, 0, sizeof(*out));
   yubikey_modhex_decode ((void*)out, token, sizeof (*out));
   yubikey_aes_decrypt ((void*)out, key);
-}
-
-/* ModHex */
-
-static const char trans[65] = "cbdefghijklnrtuv";
-
-void
-yubikey_modhex_encode (uint8_t *dst, const uint8_t *src, size_t srcSize)
-{
-  while (srcSize--)
-    {
-      *dst++ = trans[(*src >> 4) & 0xf];
-      *dst++ = trans[*src++ & 0xf];
-    }
-
-  *dst = '\0';
-}
-
-void
-yubikey_modhex_decode (uint8_t *dst, const uint8_t *src, size_t dstSize)
-{
-  char b;
-  bool flag = false;
-  char *p1;
-
-  for (; *src && dstSize > 0; src++)
-    {
-      if ((p1 = strchr (trans, *src)) == NULL)
-	b = 0;
-      else
-	b = (char) (p1 - trans);
-
-      if ((flag = !flag))
-	*dst = b;
-      else
-	{
-	  *dst = (*dst << 4) | b;
-	  dst++;
-	  dstSize--;
-	}
-    }
-  while (dstSize--)
-    *dst++ = 0;
 }
 
 /* Crc */

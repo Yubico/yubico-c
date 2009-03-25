@@ -1,7 +1,7 @@
 # Makefile --- Instructions for make to build Yubikey library and tools. 
 #
 # Written by Simon Josefsson <simon@josefsson.org>.
-# Copyright (c) 2006, 2007, 2008 Yubico AB
+# Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ PROGRAMS = modhex ykdebug selftest
 
 all: $(PROGRAMS)
 
-$(PROGRAMS): yubikey.o yubikey.h
+$(PROGRAMS): yubikey.o ykmodhex.o yubikey.h
 
 clean:
 	rm -f $(PROGRAMS) *~ *.o

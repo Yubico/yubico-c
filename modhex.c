@@ -1,7 +1,7 @@
 /* modhex.c --- Simple ModHex conversion command line tool.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -154,9 +154,9 @@ main (int argc, char *argv[])
       }
 
     if (decode_p)
-      yubikey_modhex_decode ((uint8_t*)buf, (uint8_t*)data, inlen/2);
+      yubikey_modhex_decode (buf, data, inlen/2);
     else
-      yubikey_modhex_encode ((uint8_t*)buf, (uint8_t*)data, inlen);
+      yubikey_modhex_encode (buf, data, inlen);
 
     if (decode_p && hex_p)
       {

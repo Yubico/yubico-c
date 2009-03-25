@@ -1,7 +1,7 @@
 /* yubikey.h --- Definitions and prototypes for authentication token functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -80,16 +80,22 @@ yubikey_parse (const uint8_t token[YUBIKEY_BLOCK_SIZE],
  * Low-level functions; ModHex.
  */
 
-/* ModHex-Encode input string SRC of length SRCSIZE into output string
-   DST.  The size of the output string DST must be at least 2*srcSize.
-   The output string is always 2*SRCSIZE large.  */
-void
-yubikey_modhex_encode(uint8_t *dst, const uint8_t *src, size_t srcSize);
+#define YUBIKEY_MODHEX_MAP "cbdefghijklnrtuv"
 
-/* ModHex-Decode input string SRC of length DSTSIZE/2 into output
-   string DST.  The output string DST is always DSTSIZE/2 large.  */
-void
-yubikey_modhex_decode(uint8_t *dst, const uint8_t *src, size_t dstSize);
+/* ModHex encode input string SRC of length SRCSIZE and put the zero
+   terminated output string in DST.  The size of the output string DST
+   must be at least 2*SRCSIZE+1.  The output string is always
+   2*SRCSIZE large plus the terminating zero.  */
+extern void yubikey_modhex_encode (char *dst,
+				   const char *src,
+				   size_t srcsize);
+
+/* ModHex decode input string SRC of length DSTSIZE/2 into output
+   string DST.  The output string DST is always DSTSIZE/2 large plus
+   the terminating zero.  */
+extern void yubikey_modhex_decode(char *dst,
+				  const char *src,
+				  size_t dstsize);
 
 /*
  * Low-level functions; CRC.

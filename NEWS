@@ -1,5 +1,11 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
+* Version 1.3 (unreleased)
+
+** Use char* instead of uint8_t* for modhex functions.
+
+** Add YUBIKEY_MODHEX_MAP.
+
 * Version 1.2 (released 2009-01-13)
 
 ** Don't link to libpam.
