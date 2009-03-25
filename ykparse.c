@@ -37,10 +37,9 @@
 
 void
 yubikey_parse (const uint8_t token[32],
-	       const uint8_t key[16],
-	       yubikey_token_t out)
+	       const uint8_t key[16], yubikey_token_t out)
 {
-  memset (out, 0, sizeof(*out));
-  yubikey_modhex_decode ((void*)out, token, sizeof (*out));
-  yubikey_aes_decrypt ((void*)out, key);
+  memset (out, 0, sizeof (*out));
+  yubikey_modhex_decode ((void *) out, (char *) token, sizeof (*out));
+  yubikey_aes_decrypt ((void *) out, key);
 }
