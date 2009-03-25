@@ -1,4 +1,4 @@
-/* tool.c --- Example command line interface for authentication token.
+/* ykdebug.c --- Example command line interface for authentication token.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
  * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
