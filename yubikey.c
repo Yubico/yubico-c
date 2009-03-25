@@ -47,29 +47,6 @@ yubikey_parse (const uint8_t token[32],
   yubikey_aes_decrypt ((void*)out, key);
 }
 
-/* Crc */
-
-uint16_t
-yubikey_crc16 (const uint8_t *buf, size_t buf_size)
-{
-  uint16_t m_crc = 0xffff;
-
-  while (buf_size--)
-    {
-      int i, j;
-      m_crc ^= (uint8_t) * buf++ & 0xFF;
-      for (i = 0; i < 8; i++)
-	{
-	  j = m_crc & 1;
-	  m_crc >>= 1;
-	  if (j)
-	    m_crc ^= 0x8408;
-	}
-    }
-
-  return m_crc;
-}
-
 /* AES */
 
 #define	NUMBER_OF_ROUNDS	10
