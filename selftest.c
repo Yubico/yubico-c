@@ -1,7 +1,7 @@
 /* yubikey-test.c --- Self-tests for authentication token functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,13 +36,13 @@
 int
 main (void)
 {
-  uint8_t buf[1024];
-  uint8_t key[16 + 1];
+  char buf[1024];
+  char key[16 + 1];
   size_t i;
 
-  yubikey_modhex_encode(buf, (uint8_t*) "test", 4);
+  yubikey_modhex_encode(buf, "test", 4);
   printf ("modhex-encode(\"test\") = %s\n", buf);
-  if (strcmp ((char*)buf, "ifhgieif") != 0)
+  if (strcmp (buf, "ifhgieif") != 0)
     {
       printf ("ModHex failure\n");
       return 1;
@@ -59,8 +59,8 @@ main (void)
     }
   printf ("Modhex-2 success\n");
 
-  strcpy ((char*)buf, "0123456789abcdef");
-  strcpy ((char*)key, "abcdef0123456789");
+  strcpy (buf, "0123456789abcdef");
+  strcpy (key, "abcdef0123456789");
   printf ("aes-decrypt (data=%s, key=%s)\n => ", buf, key);
   yubikey_aes_decrypt (buf, key);
   for (i = 0; i < 16; i++)
