@@ -64,7 +64,7 @@ main (void)
   printf ("aes-decrypt (data=%s, key=%s)\n => ", buf, key);
   yubikey_aes_decrypt (buf, key);
   for (i = 0; i < 16; i++)
-    printf ("%02x", buf[i]);
+    printf ("%02x", buf[i] & 0xFF);
   printf("\n");
 
   if (memcmp (buf, "\x83\x8a\x46\x7f\x34\x63\x95\x51\x75\x5b\xd3\x2a\x4a\x2f\x15\xe1", 16) != 0)
