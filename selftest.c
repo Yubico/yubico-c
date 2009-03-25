@@ -40,7 +40,7 @@ main (void)
   char key[16 + 1];
   size_t i;
 
-  yubikey_modhex_encode(buf, "test", 4);
+  yubikey_modhex_encode (buf, "test", 4);
   printf ("modhex-encode(\"test\") = %s\n", buf);
   if (strcmp (buf, "ifhgieif") != 0)
     {
@@ -50,7 +50,7 @@ main (void)
   printf ("Modhex-1 success\n");
 
   printf ("modhex-decode(\"%s\") = ", buf);
-  yubikey_modhex_decode(buf, buf, strlen ((char*)buf));
+  yubikey_modhex_decode (buf, buf, strlen ((char *) buf));
   printf ("%.*s\n", 4, buf);
   if (memcmp (buf, "test", 4) != 0)
     {
@@ -65,15 +65,16 @@ main (void)
   yubikey_aes_decrypt (buf, key);
   for (i = 0; i < 16; i++)
     printf ("%02x", buf[i] & 0xFF);
-  printf("\n");
+  printf ("\n");
 
-  if (memcmp (buf, "\x83\x8a\x46\x7f\x34\x63\x95\x51\x75\x5b\xd3\x2a\x4a\x2f\x15\xe1", 16) != 0)
+  if (memcmp (buf,
+	      "\x83\x8a\x46\x7f\x34\x63\x95\x51"
+	      "\x75\x5b\xd3\x2a\x4a\x2f\x15\xe1", 16) != 0)
     {
       printf ("AES failure\n");
       return 1;
     }
   printf ("AES-1 success\n");
 
-  printf ("\nAll tests successful\n");
   return 0;
 }
