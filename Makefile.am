@@ -33,7 +33,7 @@ ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = libyubikey.la
 include_HEADERS = yubikey.h
 
-libyubikey_la_SOURCES = yubikey.c ykmodhex.c ykcrc.c ykaes.c
+libyubikey_la_SOURCES = ykparse.c ykmodhex.c ykcrc.c ykaes.c
 libyubikey_la_LDFLAGS = -no-undefined \
 	-export-symbols-regex '^yubikey_.*' \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)

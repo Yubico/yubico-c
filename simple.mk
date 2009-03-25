@@ -34,7 +34,7 @@ PROGRAMS = modhex ykdebug selftest
 
 all: $(PROGRAMS)
 
-$(PROGRAMS): yubikey.o ykmodhex.o ykcrc.o ykaes.o yubikey.h
+$(PROGRAMS): ykparse.o ykmodhex.o ykcrc.o ykaes.o yubikey.h
 
 clean:
 	rm -f $(PROGRAMS) *~ *.o
