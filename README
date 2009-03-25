@@ -8,9 +8,11 @@ Yubico authentication device, the Yubikey.  In particular:
 
 * AUTHORS, COPYING, NEWS, README: meta-information about the project.
 
-* yubikey.h, yubikey.c: Implementation of the library.
+* yubikey.h: Prototypes for library.
 
-* selftest.c: Self tests of the library.
+* ykparse.c, ykmodhex.c, ykcrc.c, ykaes.c: Library implementation.
+
+* selftest.c: Library self tests.
 
 * ykdebug.c: Command line tool to print debug information about a token.
 
@@ -27,35 +29,18 @@ check'.  It will build each component, and also test them.  See below
 for sample session.
 
 {{{
-$ make -f simple.mk clean
-rm -f pof-test modhex tool *~ *.o
-$ make -f simple.mk check
-cc -I. -Wall   -c -o pof.o pof.c
-cc -I. -Wall    pof-test.c pof.o   -o pof-test
-cc -I. -Wall    modhex.c pof.o   -o modhex
-cc -I. -Wall    tool.c pof.o   -o tool
+jas@mocca:~/src/yubico-c$ make -f simple.mk  check
+cc -I. -Wall -g   -c -o ykparse.o ykparse.c
+cc -I. -Wall -g   -c -o ykmodhex.o ykmodhex.c
+cc -I. -Wall -g   -c -o ykcrc.o ykcrc.c
+cc -I. -Wall -g   -c -o ykaes.o ykaes.c
+cc -I. -Wall -g    modhex.c ykparse.o ykmodhex.o ykcrc.o ykaes.o yubikey.h   -o modhex
+cc -I. -Wall -g    ykdebug.c ykparse.o ykmodhex.o ykcrc.o ykaes.o yubikey.h   -o ykdebug
+cc -I. -Wall -g    selftest.c ykparse.o ykmodhex.o ykcrc.o ykaes.o yubikey.h   -o selftest
+selftest.c: In function ‘main’:
+selftest.c:65: warning: pointer targets in passing argument 1 of ‘yubikey_aes_decrypt’ differ in signedness
+selftest.c:65: warning: pointer targets in passing argument 2 of ‘yubikey_aes_decrypt’ differ in signedness
 ./selftest
-...
-All tests successful
-}}}
-
-To build using the Autoconf, automake and libtool infrastructure,
-which is recommend for more advanced purposes especially
-cross-compilation, build it as follows.
-
-{{{
-$ autoreconf -fvi
-$ ./configure
-$ make check
-}}}
-
-= Self-tests =
-
-After building the package, a binary "selftest" is created that
-performs internal self-tests.  Invoke it as follows.
-
-{{{
-./pof-test
 modhex-encode("test") = ifhgieif
 Modhex-1 success
 modhex-decode("ifhgieif") = test
@@ -63,8 +48,17 @@ Modhex-2 success
 aes-decrypt (data=0123456789abcdef, key=abcdef0123456789)
  => 838a467f34639551755bd32a4a2f15e1
 AES-1 success
+jas@mocca:~/src/yubico-c$ 
+}}}
 
-All tests successful
+To build using the Autoconf, automake and libtool infrastructure,
+which is recommend for more advanced purposes in particular shared
+library and cross-compilation support, build it as follows.
+
+{{{
+$ autoreconf -fvi
+$ ./configure
+$ make check
 }}}
 
 = Command-line tools =
