@@ -22,11 +22,46 @@ Yubico authentication device, the Yubikey.  In particular:
 
 * configure.ac, Makefile.am: Autoconf/Automake files.
 
+== Building from SVN ==
+
+Skip to the next section if you are using an official packaged
+version, which is what we recommend.
+
+You may check out the sources using SVN with the following command:
+
+{{{
+  svn checkout http://yubico-c.googlecode.com/svn/trunk/ yubico-c
+}}}
+
+This will create a directory 'yubico-c'.  Enter the directory:
+
+{{{
+  cd yubico-c
+}}}
+
+Autoconf, automake and libtool must be installed.
+
+Generate the build system using:
+
+{{{
+  autoreconf --install
+}}}
+
 = Building =
 
-The simple way to build the package is by running 'make -f simple.mk
-check'.  It will build each component, and also test them.  See below
-for sample session.
+To build using the Autoconf, automake and libtool infrastructure,
+which is recommend for more advanced purposes especially for
+cross-compilation and shared library support, build it as follows.
+
+{{{
+$ ./configure
+$ make check install
+}}}
+
+Another way to build the package is by running 'make -f simple.mk
+check'.  It will build each component, and also test it.  See below
+for sample session.  This is useful if you want to target a platform
+that doesn't support Autoconf/automake/libtool well.
 
 {{{
 jas@mocca:~/src/yubico-c$ make -f simple.mk  check
@@ -49,16 +84,6 @@ aes-decrypt (data=0123456789abcdef, key=abcdef0123456789)
  => 838a467f34639551755bd32a4a2f15e1
 AES-1 success
 jas@mocca:~/src/yubico-c$ 
-}}}
-
-To build using the Autoconf, automake and libtool infrastructure,
-which is recommend for more advanced purposes in particular shared
-library and cross-compilation support, build it as follows.
-
-{{{
-$ autoreconf -fvi
-$ ./configure
-$ make check
 }}}
 
 = Command-line tools =

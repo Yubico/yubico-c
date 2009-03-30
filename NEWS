@@ -2,6 +2,8 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 * Version 1.4 (unreleased)
 
+** Improved instructions in README on how to build the package.
+
 * Version 1.3 (released 2009-03-25)
 
 ** Add YUBIKEY_MODHEX_MAP.
