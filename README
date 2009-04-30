@@ -10,7 +10,7 @@ Yubico authentication device, the Yubikey.  In particular:
 
 * yubikey.h: Prototypes for library.
 
-* ykparse.c, ykmodhex.c, ykcrc.c, ykaes.c: Library implementation.
+* ykparse.c, ykmodhex.c, ykhex.c, ykcrc.c, ykaes.c: Library implementation.
 
 * selftest.c: Library self tests.
 
@@ -67,11 +67,12 @@ that doesn't support Autoconf/automake/libtool well.
 jas@mocca:~/src/yubico-c$ make -f simple.mk  check
 cc -I. -Wall -g   -c -o ykparse.o ykparse.c
 cc -I. -Wall -g   -c -o ykmodhex.o ykmodhex.c
+cc -I. -Wall -g   -c -o ykhex.o ykhex.c
 cc -I. -Wall -g   -c -o ykcrc.o ykcrc.c
 cc -I. -Wall -g   -c -o ykaes.o ykaes.c
-cc -I. -Wall -g    modhex.c ykparse.o ykmodhex.o ykcrc.o ykaes.o yubikey.h   -o modhex
-cc -I. -Wall -g    ykdebug.c ykparse.o ykmodhex.o ykcrc.o ykaes.o yubikey.h   -o ykdebug
-cc -I. -Wall -g    selftest.c ykparse.o ykmodhex.o ykcrc.o ykaes.o yubikey.h   -o selftest
+cc -I. -Wall -g    modhex.c ykparse.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h   -o modhex
+cc -I. -Wall -g    ykdebug.c ykparse.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h   -o ykdebug
+cc -I. -Wall -g    selftest.c ykparse.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h   -o selftest
 selftest.c: In function ‘main’:
 selftest.c:65: warning: pointer targets in passing argument 1 of ‘yubikey_aes_decrypt’ differ in signedness
 selftest.c:65: warning: pointer targets in passing argument 2 of ‘yubikey_aes_decrypt’ differ in signedness
@@ -80,6 +81,10 @@ modhex-encode("test") = ifhgieif
 Modhex-1 success
 modhex-decode("ifhgieif") = test
 Modhex-2 success
+hex-encode("test") = 74657374
+Hex-1 success
+hex-decode("74657374") = test
+Hex-2 success
 aes-decrypt (data=0123456789abcdef, key=abcdef0123456789)
  => 838a467f34639551755bd32a4a2f15e1
 AES-1 success
@@ -105,7 +110,7 @@ $ ./modhex -h b565716f
 nghgibhv
 $ ./modhex -h -d nghgibhv
 b565716f
-$ ./ykdebug urtubjtnuihvntcreeeecvbregfjibtn dteffujedcflcindvdbrblehecuitvjkjevvehjd
+$ ./ykdebug ecde18dbe76fbd0c33330f1c354871db dteffujedcflcindvdbrblehecuitvjkjevvehjd
 warning: overlong token, ignoring prefix: dteffuje
 Input:
   token: dcflcindvdbrblehecuitvjkjevvehjd
@@ -130,7 +135,7 @@ Derived:
   triggered by caps lock: no
   crc: F0B8
   crc check: ok
-$ ./ykdebug urtubjtnuihvntcreeeecvbregfjibtn dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh
+$ ./ykdebug ecde18dbe76fbd0c33330f1c354871db dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh
 warning: overlong token, ignoring prefix: dteffuje
 Input:
   token: hknhfjbrjnlnldnhcujvddbikngjrtgh

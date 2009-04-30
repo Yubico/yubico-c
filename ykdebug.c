@@ -50,7 +50,7 @@ main (int argc, char *argv[])
   if (argc < 2)
     {
       printf ("Usage: %s <aeskey> <token>\n", argv[0]);
-      printf (" AESKEY: Modhex encoded AES-key and\n");
+      printf (" AESKEY: Hex encoded AES-key\n");
       printf (" TOKEN: ModHex encoded token\n");
       return EXIT_FAILURE;
     }
@@ -60,7 +60,7 @@ main (int argc, char *argv[])
 
   if (strlen (aeskey) != 32)
     {
-      printf ("error: ModHex encoded AES-key must be 32 characters.\n");
+      printf ("error: Hex encoded AES-key must be 32 characters.\n");
       return EXIT_FAILURE;
     }
 
@@ -93,7 +93,7 @@ main (int argc, char *argv[])
 
   printf ("  aeskey: %s\n", aeskey);
 
-  yubikey_modhex_decode ((char*)key, aeskey, YUBIKEY_KEY_SIZE);
+  yubikey_hex_decode ((char*)key, aeskey, YUBIKEY_KEY_SIZE);
 
   {
     size_t i;

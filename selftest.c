@@ -40,6 +40,7 @@ main (void)
   char key[16 + 1];
   size_t i;
 
+  /* Test Modhex */
   yubikey_modhex_encode (buf, "test", 4);
   printf ("modhex-encode(\"test\") = %s\n", buf);
   if (strcmp (buf, "ifhgieif") != 0)
@@ -59,8 +60,10 @@ main (void)
     }
   printf ("Modhex-2 success\n");
 
+  /* Test Hex */
+
   yubikey_hex_encode (buf, "test", 4);
-  printf ("modhex-encode(\"test\") = %s\n", buf);
+  printf ("hex-encode(\"test\") = %s\n", buf);
   if (strcmp (buf, "74657374") != 0)
     {
       printf ("Hex failure\n");
@@ -68,7 +71,7 @@ main (void)
     }
   printf ("Hex-1 success\n");
 
-  printf ("modhex-decode(\"%s\") = ", buf);
+  printf ("hex-decode(\"%s\") = ", buf);
   yubikey_hex_decode (buf, buf, strlen ((char *) buf));
   printf ("%.*s\n", 4, buf);
   if (memcmp (buf, "test", 4) != 0)
@@ -77,6 +80,8 @@ main (void)
       return 1;
     }
   printf ("Hex-2 success\n");
+
+  /* Test AES */
 
   strcpy (buf, "0123456789abcdef");
   strcpy (key, "abcdef0123456789");

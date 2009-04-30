@@ -6,6 +6,8 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 ** Add interfaces yubikey_hex_encode and yubikey_hex_decode.
 
+** The ykdebug tool now takes hex encoded AES keys instead of modhex encoded.
+
 * Version 1.3 (released 2009-03-25)
 
 ** Add YUBIKEY_MODHEX_MAP.
