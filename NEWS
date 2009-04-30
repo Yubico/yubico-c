@@ -4,6 +4,8 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 ** Improved instructions in README on how to build the package.
 
+** Add interfaces yubikey_hex_encode and yubikey_hex_decode.
+
 * Version 1.3 (released 2009-03-25)
 
 ** Add YUBIKEY_MODHEX_MAP.
