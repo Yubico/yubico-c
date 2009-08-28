@@ -39,6 +39,7 @@ main (void)
   char buf[1024];
   char key[16 + 1];
   size_t i;
+  int rc;
 
   /* Test Modhex */
   yubikey_modhex_encode (buf, "test", 4);
@@ -60,6 +61,26 @@ main (void)
     }
   printf ("Modhex-2 success\n");
 
+  strcpy (buf, "cbdefghijklnrtuv");
+  rc = yubikey_modhex_p (buf);
+  printf ("hex-p(\"%s\") = %d\n", buf, rc);
+  if (!rc)
+    {
+      printf ("Hex_p failure\n");
+      return 1;
+    }
+  printf ("Hex-3 success\n");
+
+  strcpy (buf, "0123Xabc");
+  rc = yubikey_hex_p (buf);
+  printf ("hex-p(\"%s\") = %d\n", buf, rc);
+  if (rc)
+    {
+      printf ("Hex_p failure\n");
+      return 1;
+    }
+  printf ("Hex-3 success\n");
+
   /* Test Hex */
 
   yubikey_hex_encode (buf, "test", 4);
@@ -80,6 +101,26 @@ main (void)
       return 1;
     }
   printf ("Hex-2 success\n");
+
+  strcpy (buf, "0123456789abcdef");
+  rc = yubikey_hex_p (buf);
+  printf ("hex-p(\"%s\") = %d\n", buf, rc);
+  if (!rc)
+    {
+      printf ("Hex_p failure\n");
+      return 1;
+    }
+  printf ("Hex-3 success\n");
+
+  strcpy (buf, "0123Xabc");
+  rc = yubikey_hex_p (buf);
+  printf ("hex-p(\"%s\") = %d\n", buf, rc);
+  if (rc)
+    {
+      printf ("Hex_p failure\n");
+      return 1;
+    }
+  printf ("Hex-3 success\n");
 
   /* Test AES */
 

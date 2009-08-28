@@ -26,16 +26,16 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-AC_INIT([libyubikey], [1.4], [yubico-devel@googlegroups.com])
+AC_INIT([libyubikey], [1.5], [yubico-devel@googlegroups.com])
 AC_CONFIG_MACRO_DIR([m4])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
-AC_SUBST(LT_CURRENT, 0)
-AC_SUBST(LT_REVISION, 4)
-AC_SUBST(LT_AGE, 0)
+AC_SUBST(LT_CURRENT, 1)
+AC_SUBST(LT_REVISION, 0)
+AC_SUBST(LT_AGE, 1)
 
 AM_INIT_AUTOMAKE([-Wall -Werror])
 AC_PROG_CC

@@ -74,3 +74,13 @@ yubikey_hex_decode (char *dst, const char *src, size_t dstSize)
   while (dstSize--)
     *dst++ = 0;
 }
+
+int
+yubikey_hex_p (const char *str)
+{
+  for (; *str; str++)
+    if (strchr (trans, *str) == NULL)
+      return 0;
+
+  return 1;
+}

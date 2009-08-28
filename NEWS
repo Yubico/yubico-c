@@ -1,5 +1,10 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
+* Version 1.5 (unreleased)
+
+** Added new APIs to check validity of hex/modex strings.
+The APIs are yubikey_modhex_p and yubikey_hex_p.
+
 * Version 1.4 (released 2009-04-30)
 
 ** Improved instructions in README on how to build the package.

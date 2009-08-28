@@ -100,6 +100,11 @@ extern void yubikey_modhex_decode (char *dst,
 extern void yubikey_hex_encode (char *dst, const char *src, size_t srcsize);
 extern void yubikey_hex_decode (char *dst, const char *src, size_t dstsize);
 
+/* Return non-zero if zero-terminated input STR is a valid (mod)hex
+   string, and zero if any non-alphabetic characters are found. */
+extern int yubikey_modhex_p (const char *str);
+extern int yubikey_hex_p (const char *str);
+
 /*
  * Low-level functions; CRC.
  */
