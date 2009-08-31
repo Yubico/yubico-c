@@ -34,9 +34,15 @@ lib_LTLIBRARIES = libyubikey.la
 include_HEADERS = yubikey.h
 
 libyubikey_la_SOURCES = ykparse.c ykhex.c ykmodhex.c ykcrc.c ykaes.c
+libyubikey_la_SOURCES += libyubikey.map
 libyubikey_la_LDFLAGS = -no-undefined \
-	-export-symbols-regex '^yubikey_.*' \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+
+if HAVE_LD_VERSION_SCRIPT
+libyubikey_la_LDFLAGS += -Wl,--version-script=$(srcdir)/libyubikey.map
+else
+libyubikey_la_LDFLAGS += -export-symbols-regex '^yubikey_.*'
+endif
 
 # The command line tools.
 

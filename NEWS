@@ -1,6 +1,10 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
-* Version 1.5 (unreleased)
+* Version 1.5 (released 2009-08-31)
+
+** The library now use a linker version script.
+It falls back to using Libtool's -export-symbols-regex if linker
+version scripts are not supported.
 
 ** Added new APIs to check validity of hex/modhex strings.
 The APIs are yubikey_modhex_p and yubikey_hex_p.
