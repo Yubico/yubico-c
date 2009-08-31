@@ -1,6 +1,6 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
-* Version 1.5 (released 2009-08-31)
+* Version 1.5 (unreleased)
 
 ** The library now use a linker version script.
 It falls back to using Libtool's -export-symbols-regex if linker
