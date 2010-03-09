@@ -1,7 +1,7 @@
 /* yubikey.h --- Prototypes for low-level Yubikey OTP functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009, 2010 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -44,8 +44,7 @@ typedef struct
 {
   /* Unique (secret) ID. */
   uint8_t uid[YUBIKEY_UID_SIZE];
-  /* Session counter (incremented by 1 at each startup).  High bit
-     indicates whether caps-lock triggered the token. */
+  /* Session counter (incremented by 1 at each startup). */
   uint16_t ctr;
   /* Timestamp incremented by approx 8Hz (low part). */
   uint16_t tstpl;
