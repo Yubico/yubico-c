@@ -40,6 +40,8 @@ main (void)
   char key[16 + 1];
   size_t i;
   int rc;
+  yubikey_token_st tok;
+
 
   /* Test Modhex */
   yubikey_modhex_encode (buf, "test", 4);
@@ -141,5 +143,27 @@ main (void)
     }
   printf ("AES-1 success\n");
 
+  yubikey_aes_encrypt(buf, key);
+  if (memcmp(buf, "0123456789abcdef", 16) != 0) {
+    printf("AES encryption failure\n");
+    return 1;
+  }
+  printf("AES-2 success\n");
+
+
+  /* Test OTP */
+
+  memcpy((void*)&tok, "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00", 16);
+  strcpy (key, "abcdef0123456789");
+  
+  yubikey_generate((void*)&tok, key, buf);
+  yubikey_parse ((uint8_t*)buf, key, &tok);
+
+  if (memcmp(&tok, "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00", 16)!=0) {
+    printf("OTP generation - parse failure\n");
+    return 1;
+  }
+  printf("OTP-1 success\n");
+  
   return 0;
 }

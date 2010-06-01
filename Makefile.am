@@ -46,13 +46,16 @@ endif
 
 # The command line tools.
 
-bin_PROGRAMS = modhex ykdebug
+bin_PROGRAMS = modhex ykdebug ykgenerate
 
 modhex_SOURCES = modhex.c
 modhex_LDADD = ./libyubikey.la
 
 ykdebug_SOURCES = ykdebug.c
 ykdebug_LDADD = ./libyubikey.la
+
+ykgenerate_SOURCES = ykgenerate.c
+ykgenerate_LDADD = ./libyubikey.la
 
 # Self tests.
 

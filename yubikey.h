@@ -1,7 +1,7 @@
 /* yubikey.h --- Prototypes for low-level Yubikey OTP functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008, 2009, 2010 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -44,7 +44,8 @@ typedef struct
 {
   /* Unique (secret) ID. */
   uint8_t uid[YUBIKEY_UID_SIZE];
-  /* Session counter (incremented by 1 at each startup). */
+  /* Session counter (incremented by 1 at each startup).  High bit
+     indicates whether caps-lock triggered the token. */
   uint16_t ctr;
   /* Timestamp incremented by approx 8Hz (low part). */
   uint16_t tstpl;
@@ -61,6 +62,13 @@ typedef struct
 typedef yubikey_token_st *yubikey_token_t;
 
 /* High-level functions. */
+
+
+extern void yubikey_generate (yubikey_token_t token,
+			      const uint8_t key[YUBIKEY_KEY_SIZE],
+			      char OUT[32]
+			      );
+
 
 /* Decrypt TOKEN using KEY and store output in OUT structure.  Note
    that there is no error checking whether the output data is valid or
@@ -95,9 +103,15 @@ extern void yubikey_modhex_decode (char *dst,
 				   const char *src,
 				   size_t dstsize);
 
+
 /* Hex encode/decode data, same interface as modhex functions. */
 extern void yubikey_hex_encode (char *dst, const char *src, size_t srcsize);
 extern void yubikey_hex_decode (char *dst, const char *src, size_t dstsize);
+
+/* Hex decode uint16_t data */
+extern void yubikey_uint16_t_hex_decode (uint16_t *dst, const char *src, size_t dstSize);
+  
+
 
 /* Return non-zero if zero-terminated input STR is a valid (mod)hex
    string, and zero if any non-alphabetic characters are found. */
@@ -116,5 +130,7 @@ extern uint16_t yubikey_crc16 (const uint8_t * buf, size_t buf_size);
 /* AES-decrypt one 16-byte block STATE using the 128-bit KEY, leaving
    the decrypted output in the STATE buffer. */
 extern void yubikey_aes_decrypt (uint8_t * state, const uint8_t * key);
+extern void yubikey_aes_encrypt(unsigned char *state, const unsigned char *key);
+
 
 #endif

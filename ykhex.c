@@ -75,8 +75,44 @@ yubikey_hex_decode (char *dst, const char *src, size_t dstSize)
     *dst++ = 0;
 }
 
-int
-yubikey_hex_p (const char *str)
+
+void
+yubikey_uint16_t_hex_decode (uint16_t *dst, const char *src, size_t dstSize)
+{
+  char b;
+  int pos = 0;
+  char *p1;
+  
+  for (; *src && dstSize > 0; src++)
+    {
+      if ((p1 = strchr (trans, *src)) == NULL)
+	b = 0;
+      else
+	b = (char) (p1 - trans);
+      
+      switch (pos++){
+      case 0:
+	*dst = b;
+	break;
+      case 1:
+      case 2:
+	*dst = (*dst << 4) | b;
+	break;
+      case 3:
+	*dst = (*dst << 4) | b;
+	dst++;
+	dstSize--;
+	pos=0;
+	break;
+	
+      }
+    }
+  while (dstSize--)
+    *dst++ = 0;
+}
+  
+  int
+    yubikey_hex_p (const char *str)
 {
   for (; *str; str++)
     if (strchr (trans, *str) == NULL)
