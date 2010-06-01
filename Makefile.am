@@ -1,5 +1,5 @@
 # Written by Simon Josefsson <simon@josefsson.org>.
-# Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
+# Copyright (c) 2006, 2007, 2008, 2009, 2010 Yubico AB
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -73,7 +73,7 @@ ChangeLog:
 	svn2cl
 
 PROJECT = yubico-c
-USER ?= simon75j
+USER ?= simon@yubico.com
 KEYID ?= B9156397
 
 release:
