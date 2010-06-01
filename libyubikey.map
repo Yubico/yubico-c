@@ -47,3 +47,11 @@ YUBIKEY_1.5
     yubikey_modhex_p;
     yubikey_hex_p;
 } YUBIKEY_1.0;
+
+YUBIKEY_1.6
+{
+  global:
+    yubikey_aes_encrypt;
+    yubikey_generate;
+    yubikey_uint16_t_hex_decode;
+} YUBIKEY_1.5;
