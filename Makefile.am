@@ -67,7 +67,7 @@ TESTS = $(check_PROGRAMS)
 
 # Release
 
-EXTRA_DIST = simple.mk
+EXTRA_DIST = simple.mk THANKS
 
 ChangeLog:
 	svn2cl
