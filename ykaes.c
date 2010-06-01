@@ -1,6 +1,6 @@
 /* ykaes.c --- Implementation of AES-128.
  *
- * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009, 2010 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -214,19 +214,19 @@ yubikey_aes_decrypt (uint8_t * state, const uint8_t * key)
 }
 
 
-/*******************************************************************  
-function aesEncrypt encrypts a single AES-128 block    				
-  
+/*******************************************************************
+function aesEncrypt encrypts a single AES-128 block
+
   void aesEncrypt(unsigned char *state, const unsigned char *key)
 
-Where:                                                              
+Where:
      "state" is state buffer, i.e. plaintext in, ciphertext out
-     "key" is pointer to AES key	
+     "key" is pointer to AES key
 
 *************************************************************************/
 
 void
-yubikey_aes_encrypt (unsigned char *state, const unsigned char *key)
+yubikey_aes_encrypt (uint8_t *state, const uint8_t *key)
 {
   unsigned char i, j, k, tmp, round_key[0x10];
 

@@ -1,7 +1,7 @@
 /* yubikey.h --- Prototypes for low-level Yubikey OTP functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009, 2010 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -125,11 +125,10 @@ extern uint16_t yubikey_crc16 (const uint8_t * buf, size_t buf_size);
 
 /* Low-level functions; AES. */
 
-/* AES-decrypt one 16-byte block STATE using the 128-bit KEY, leaving
-   the decrypted output in the STATE buffer. */
+/* AES-decrypt/encrypt one 16-byte block STATE using the 128-bit KEY,
+   leaving the decrypted/encrypted output in the STATE buffer. */
 extern void yubikey_aes_decrypt (uint8_t * state, const uint8_t * key);
-extern void yubikey_aes_encrypt (unsigned char *state,
-				 const unsigned char *key);
+extern void yubikey_aes_encrypt (uint8_t * state, const uint8_t * key);
 
 
 #endif

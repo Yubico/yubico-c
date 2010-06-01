@@ -1,7 +1,7 @@
 /* yubikey-test.c --- Self-tests for authentication token functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009, 2010 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,6 @@ int
 main (void)
 {
   char buf[1024];
-  char key[16 + 1];
   size_t i;
   int rc;
   yubikey_token_st tok;
@@ -126,49 +125,53 @@ main (void)
 
   /* Test AES */
 
-  strcpy (buf, "0123456789abcdef");
-  strcpy (key, "abcdef0123456789");
-  printf ("aes-decrypt (data=%s, key=%s)\n => ", buf, key);
-  yubikey_aes_decrypt (buf, key);
-  for (i = 0; i < 16; i++)
-    printf ("%02x", buf[i] & 0xFF);
-  printf ("\n");
+  {
+    uint8_t buf[1024];
+    uint8_t key[16 + 1];
 
-  if (memcmp (buf,
-	      "\x83\x8a\x46\x7f\x34\x63\x95\x51"
-	      "\x75\x5b\xd3\x2a\x4a\x2f\x15\xe1", 16) != 0)
-    {
-      printf ("AES failure\n");
-      return 1;
-    }
-  printf ("AES-1 success\n");
+    memcpy (buf, "0123456789abcdef\0", 17);
+    memcpy (key, "abcdef0123456789\0", 17);
+    printf ("aes-decrypt (data=%s, key=%s)\n => ", (char *) buf, (char *) key);
+    yubikey_aes_decrypt (buf, key);
+    for (i = 0; i < 16; i++)
+      printf ("%02x", buf[i] & 0xFF);
+    printf ("\n");
 
-  yubikey_aes_encrypt (buf, key);
-  if (memcmp (buf, "0123456789abcdef", 16) != 0)
-    {
-      printf ("AES encryption failure\n");
-      return 1;
-    }
-  printf ("AES-2 success\n");
+    if (memcmp (buf,
+		"\x83\x8a\x46\x7f\x34\x63\x95\x51"
+		"\x75\x5b\xd3\x2a\x4a\x2f\x15\xe1", 16) != 0)
+      {
+	printf ("AES failure\n");
+	return 1;
+      }
+    printf ("AES-1 success\n");
 
+    yubikey_aes_encrypt (buf, key);
+    if (memcmp (buf, "0123456789abcdef", 16) != 0)
+      {
+	printf ("AES encryption failure\n");
+	return 1;
+      }
+    printf ("AES-2 success\n");
 
-  /* Test OTP */
+    /* Test OTP */
 
-  memcpy ((void *) &tok,
-	  "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00", 16);
-  strcpy (key, "abcdef0123456789");
+    memcpy ((void *) &tok,
+	    "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00", 16);
+    memcpy (key, "abcdef0123456789", 16);
 
-  yubikey_generate ((void *) &tok, key, buf);
-  yubikey_parse ((uint8_t *) buf, key, &tok);
+    yubikey_generate ((void *) &tok, key, buf);
+    yubikey_parse ((uint8_t *) buf, key, &tok);
 
-  if (memcmp
-      (&tok, "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00",
-       16) != 0)
-    {
-      printf ("OTP generation - parse failure\n");
-      return 1;
-    }
-  printf ("OTP-1 success\n");
+    if (memcmp
+	(&tok, "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00",
+	 16) != 0)
+      {
+	printf ("OTP generation - parse failure\n");
+	return 1;
+      }
+    printf ("OTP-1 success\n");
+  }
 
   return 0;
 }
