@@ -50,7 +50,8 @@ main (int argc, char *argv[])
     {
       printf ("Usage: %s [-dh] <data>\n", argv[0]);
       printf ("\n");
-      printf ("Convert input DATA as specified and print output to STDOUT.\n");
+      printf
+	("Convert input DATA as specified and print output to STDOUT.\n");
       printf ("\n");
       printf (" -d: Decode data (the default is to encode data).\n");
       printf (" -h: Use hex encoding for all non-modhex data.\n");
@@ -67,7 +68,8 @@ main (int argc, char *argv[])
       printf ("  ModHex encode hex-encoded data \"b565716f\":\n");
       printf ("    %s -h b565716f\n", argv[0]);
       printf ("\n");
-      printf ("  Decode ModHex data \"nghgibhv\" and print hex-encode data:\n");
+      printf
+	("  Decode ModHex data \"nghgibhv\" and print hex-encode data:\n");
       printf ("    %s -d -h nghgibhv\n", argv[0]);
       return 1;
     }
@@ -129,14 +131,14 @@ main (int argc, char *argv[])
 	      return 1;
 	    }
 
-	  if (i&1)
-	    tmp[i/2] |= p - hex;
+	  if (i & 1)
+	    tmp[i / 2] |= p - hex;
 	  else
-	    tmp[i/2] = (p - hex) << 4;
+	    tmp[i / 2] = (p - hex) << 4;
 	}
-      tmp[i/2] = '\0';
+      tmp[i / 2] = '\0';
 
-      inlen = inlen/2;
+      inlen = inlen / 2;
 
       data = tmp;
     }
@@ -149,23 +151,23 @@ main (int argc, char *argv[])
 
     if (!buf)
       {
-	perror("malloc");
+	perror ("malloc");
 	return 1;
       }
 
     if (decode_p)
-      yubikey_modhex_decode (buf, data, inlen/2);
+      yubikey_modhex_decode (buf, data, inlen / 2);
     else
       yubikey_modhex_encode (buf, data, inlen);
 
     if (decode_p && hex_p)
       {
 	for (i = 0; i < inlen / 2; i++)
-	  printf ("%02x", buf[i]&0xFF);
+	  printf ("%02x", buf[i] & 0xFF);
 	printf ("\n");
       }
     else if (decode_p)
-      fwrite (buf, inlen/2, 1, stdout);
+      fwrite (buf, inlen / 2, 1, stdout);
     else
       printf ("%s\n", buf);
 

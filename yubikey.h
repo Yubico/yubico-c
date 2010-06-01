@@ -66,8 +66,7 @@ typedef yubikey_token_st *yubikey_token_t;
 
 extern void yubikey_generate (yubikey_token_t token,
 			      const uint8_t key[YUBIKEY_KEY_SIZE],
-			      char OUT[32]
-			      );
+			      char OUT[32]);
 
 
 /* Decrypt TOKEN using KEY and store output in OUT structure.  Note
@@ -93,15 +92,13 @@ extern void yubikey_parse (const uint8_t token[YUBIKEY_BLOCK_SIZE],
    must be at least 2*SRCSIZE+1.  The output string is always
    2*SRCSIZE large plus the terminating zero.  */
 extern void yubikey_modhex_encode (char *dst,
-				   const char *src,
-				   size_t srcsize);
+				   const char *src, size_t srcsize);
 
 /* ModHex decode input string SRC of length DSTSIZE/2 into output
    string DST.  The output string DST is always DSTSIZE/2 large plus
    the terminating zero.  */
 extern void yubikey_modhex_decode (char *dst,
-				   const char *src,
-				   size_t dstsize);
+				   const char *src, size_t dstsize);
 
 
 /* Hex encode/decode data, same interface as modhex functions. */
@@ -109,8 +106,9 @@ extern void yubikey_hex_encode (char *dst, const char *src, size_t srcsize);
 extern void yubikey_hex_decode (char *dst, const char *src, size_t dstsize);
 
 /* Hex decode uint16_t data */
-extern void yubikey_uint16_t_hex_decode (uint16_t *dst, const char *src, size_t dstSize);
-  
+extern void yubikey_uint16_t_hex_decode (uint16_t * dst, const char *src,
+					 size_t dstSize);
+
 
 
 /* Return non-zero if zero-terminated input STR is a valid (mod)hex
@@ -130,7 +128,8 @@ extern uint16_t yubikey_crc16 (const uint8_t * buf, size_t buf_size);
 /* AES-decrypt one 16-byte block STATE using the 128-bit KEY, leaving
    the decrypted output in the STATE buffer. */
 extern void yubikey_aes_decrypt (uint8_t * state, const uint8_t * key);
-extern void yubikey_aes_encrypt(unsigned char *state, const unsigned char *key);
+extern void yubikey_aes_encrypt (unsigned char *state,
+				 const unsigned char *key);
 
 
 #endif

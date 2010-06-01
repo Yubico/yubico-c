@@ -225,83 +225,90 @@ Where:
 
 *************************************************************************/
 
-void yubikey_aes_encrypt(unsigned char *state, const unsigned char *key)
+void
+yubikey_aes_encrypt (unsigned char *state, const unsigned char *key)
 {
   unsigned char i, j, k, tmp, round_key[0x10];
-  
-  memcpy(round_key, key, sizeof(round_key));
-  
-  for (i = 0; i < 16; i++) state[i] ^= key[i];
-  
-  for (i = 0; i < NUMBER_OF_ROUNDS; i++) {
-    
-    // byte_sub_shift_row(state);
-    
-    /* First row: 0 shift, 0 4 8 12 */
-    state[0] = rijndael_sbox[state[0]];
-    state[4] = rijndael_sbox[state[4]];
-    state[8] = rijndael_sbox[state[8]];
-    state[12] = rijndael_sbox[state[12]];
-    
-    /* Second row: 1 shift, 1 5 9 13 */  
-    tmp = state[1];
-    state[1] = rijndael_sbox[state[5]];
-    state[5] = rijndael_sbox[state[9]];
-    state[9] = rijndael_sbox[state[13]];
-    state[13] = rijndael_sbox[tmp];
-    
-    /* Third row: 2 shift, 2 6 10 14 */
-    tmp = state[2];
-    state[2] = rijndael_sbox[state[10]];
-    state[10] = rijndael_sbox[tmp];
-    tmp = state[6];
-    state[6] = rijndael_sbox[state[14]];
-    state[14] = rijndael_sbox[tmp];
-    
-    /* Fourth row: 3 shift, 3 7 11 15 */
-    tmp = state[15];
-    state[15] = rijndael_sbox[state[11]];
-    state[11] = rijndael_sbox[state[7]];
-    state[7] = rijndael_sbox[state[3]];
-    state[3] = rijndael_sbox[tmp];
-    
-    if (i != (NUMBER_OF_ROUNDS - 1)) {
-      
-      // mix_column(state);
-      
-      for (k = 0; k < 16; k += 4) {
-	
-	j = state[k] ^ state[k + 1];				
-	tmp = j ^ state[k + 2] ^ state[k + 3];
-	
-	j = xtime(j);
-	
-	state[k] ^= (j ^ tmp);
-	
-	j = state[k + 1] ^ state[k + 2];
-	j = xtime(j);
-	
-	state[k + 1] ^= (j ^ tmp);
-	
-	j = state[k + 2] ^ state[k + 3];
-	j = xtime(j);
-	
-	state[k + 2] ^= (j ^ tmp);    
-	state[k + 3] = state[k] ^ state[k + 1] ^ state[k + 2] ^ tmp;
-      }
+
+  memcpy (round_key, key, sizeof (round_key));
+
+  for (i = 0; i < 16; i++)
+    state[i] ^= key[i];
+
+  for (i = 0; i < NUMBER_OF_ROUNDS; i++)
+    {
+
+      // byte_sub_shift_row(state);
+
+      /* First row: 0 shift, 0 4 8 12 */
+      state[0] = rijndael_sbox[state[0]];
+      state[4] = rijndael_sbox[state[4]];
+      state[8] = rijndael_sbox[state[8]];
+      state[12] = rijndael_sbox[state[12]];
+
+      /* Second row: 1 shift, 1 5 9 13 */
+      tmp = state[1];
+      state[1] = rijndael_sbox[state[5]];
+      state[5] = rijndael_sbox[state[9]];
+      state[9] = rijndael_sbox[state[13]];
+      state[13] = rijndael_sbox[tmp];
+
+      /* Third row: 2 shift, 2 6 10 14 */
+      tmp = state[2];
+      state[2] = rijndael_sbox[state[10]];
+      state[10] = rijndael_sbox[tmp];
+      tmp = state[6];
+      state[6] = rijndael_sbox[state[14]];
+      state[14] = rijndael_sbox[tmp];
+
+      /* Fourth row: 3 shift, 3 7 11 15 */
+      tmp = state[15];
+      state[15] = rijndael_sbox[state[11]];
+      state[11] = rijndael_sbox[state[7]];
+      state[7] = rijndael_sbox[state[3]];
+      state[3] = rijndael_sbox[tmp];
+
+      if (i != (NUMBER_OF_ROUNDS - 1))
+	{
+
+	  // mix_column(state);
+
+	  for (k = 0; k < 16; k += 4)
+	    {
+
+	      j = state[k] ^ state[k + 1];
+	      tmp = j ^ state[k + 2] ^ state[k + 3];
+
+	      j = xtime (j);
+
+	      state[k] ^= (j ^ tmp);
+
+	      j = state[k + 1] ^ state[k + 2];
+	      j = xtime (j);
+
+	      state[k + 1] ^= (j ^ tmp);
+
+	      j = state[k + 2] ^ state[k + 3];
+	      j = xtime (j);
+
+	      state[k + 2] ^= (j ^ tmp);
+	      state[k + 3] = state[k] ^ state[k + 1] ^ state[k + 2] ^ tmp;
+	    }
+	}
+
+      round_key[0] ^= RC[i];
+
+      round_key[0] ^= rijndael_sbox[round_key[13]];
+      round_key[1] ^= rijndael_sbox[round_key[14]];
+      round_key[2] ^= rijndael_sbox[round_key[15]];
+      round_key[3] ^= rijndael_sbox[round_key[12]];
+
+      for (k = 4; k < 16; k++)
+	round_key[k] ^= round_key[k - 4];
+
+      // add_round_key(state, round_key);
+
+      for (j = 0; j < 16; j++)
+	state[j] ^= round_key[j];
     }
-    
-    round_key[0] ^= RC[i];
-    
-    round_key[0] ^= rijndael_sbox[round_key[13]];
-    round_key[1] ^= rijndael_sbox[round_key[14]];
-    round_key[2] ^= rijndael_sbox[round_key[15]];
-    round_key[3] ^= rijndael_sbox[round_key[12]];
-    
-    for (k = 4; k < 16; k++) round_key[k] ^= round_key[k - 4];
-    
-    // add_round_key(state, round_key);
-    
-    for (j = 0; j < 16; j++) state[j] ^= round_key[j];
-  }
 }

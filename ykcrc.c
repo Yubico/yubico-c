@@ -33,7 +33,7 @@
 #include "yubikey.h"
 
 uint16_t
-yubikey_crc16 (const uint8_t *buf, size_t buf_size)
+yubikey_crc16 (const uint8_t * buf, size_t buf_size)
 {
   uint16_t m_crc = 0xffff;
 

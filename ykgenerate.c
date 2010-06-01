@@ -51,14 +51,16 @@ main (int argc, char *argv[])
   yubikey_token_st tok;
 
   int i;
-  
+
   /* Initiate pseudo-random generator */
-  srand(time(NULL));
+  srand (time (NULL));
 
   /* Parse command line parameters. */
   if (argc < 7)
     {
-      printf ("Usage: %s <aeskey> <yk_internalname> <yk_counter> <yk_low> <yk_high> <yk_use>\n\n", argv[0]);
+      printf
+	("Usage: %s <aeskey> <yk_internalname> <yk_counter> <yk_low> <yk_high> <yk_use>\n\n",
+	 argv[0]);
       printf (" aeskey:\t\tHex encoded AES-key\n");
       printf (" yk_internalname:\tHex encoded yk_internalname (48 bit)\n");
       printf (" yk_counter:\t\tHex encoded counter (16 bit)\n");
@@ -109,24 +111,25 @@ main (int argc, char *argv[])
       printf ("error: Hex encoded yk_use must be 2 characters.\n");
       return EXIT_FAILURE;
     }
-  
-  yubikey_hex_decode ((char*)key, aeskey, YUBIKEY_KEY_SIZE);
+
+  yubikey_hex_decode ((char *) key, aeskey, YUBIKEY_KEY_SIZE);
 
   /* Fill upp tok with values */
-  yubikey_hex_decode ((char*)&tok.uid, yk_internalname, 6);
+  yubikey_hex_decode ((char *) &tok.uid, yk_internalname, 6);
   yubikey_uint16_t_hex_decode (&tok.ctr, yk_counter, 1);
   yubikey_uint16_t_hex_decode (&tok.tstpl, yk_low, 1);
-  yubikey_hex_decode ((char*)&tok.tstph, yk_high, 1);
-  yubikey_hex_decode ((char*)&tok.use, yk_use, 1);
-  tok.rnd=rand();
-  tok.crc=~yubikey_crc16 ((void*)&tok, sizeof(tok)-sizeof(tok.crc));
+  yubikey_hex_decode ((char *) &tok.tstph, yk_high, 1);
+  yubikey_hex_decode ((char *) &tok.use, yk_use, 1);
+  tok.rnd = rand ();
+  tok.crc = ~yubikey_crc16 ((void *) &tok, sizeof (tok) - sizeof (tok.crc));
 
-  yubikey_generate((void*)&tok, key, otp);
+  yubikey_generate ((void *) &tok, key, otp);
 
-  for (i=0;i<32;i++) {
-    printf("%c", otp[i]);
-  }
-  printf("\n");
-  
+  for (i = 0; i < 32; i++)
+    {
+      printf ("%c", otp[i]);
+    }
+  printf ("\n");
+
   return EXIT_SUCCESS;
 }

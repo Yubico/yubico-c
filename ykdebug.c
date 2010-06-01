@@ -81,7 +81,7 @@ main (int argc, char *argv[])
   printf ("Input:\n");
   printf ("  token: %s\n", token);
 
-  yubikey_modhex_decode ((char*)key, token, YUBIKEY_KEY_SIZE);
+  yubikey_modhex_decode ((char *) key, token, YUBIKEY_KEY_SIZE);
 
   {
     size_t i;
@@ -93,7 +93,7 @@ main (int argc, char *argv[])
 
   printf ("  aeskey: %s\n", aeskey);
 
-  yubikey_hex_decode ((char*)key, aeskey, YUBIKEY_KEY_SIZE);
+  yubikey_hex_decode ((char *) key, aeskey, YUBIKEY_KEY_SIZE);
 
   {
     size_t i;
@@ -104,14 +104,14 @@ main (int argc, char *argv[])
   }
 
   /* Pack up dynamic password, decrypt it and verify checksum */
-  yubikey_parse ((uint8_t*)token, key, &tok);
+  yubikey_parse ((uint8_t *) token, key, &tok);
 
   printf ("Output:\n");
   {
     size_t i;
     printf ("          ");
     for (i = 0; i < YUBIKEY_BLOCK_SIZE; i++)
-      printf ("%02x ", ((uint8_t*)&tok)[i] & 0xFF);
+      printf ("%02x ", ((uint8_t *) & tok)[i] & 0xFF);
     printf ("\n");
   }
 
@@ -134,16 +134,16 @@ main (int argc, char *argv[])
   printf ("\nDerived:\n");
   printf ("  cleaned counter: %d (0x%04x)\n",
 	  yubikey_counter (tok.ctr), yubikey_counter (tok.ctr));
-  yubikey_modhex_encode ((char*)buf, (char*)tok.uid, YUBIKEY_UID_SIZE);
+  yubikey_modhex_encode ((char *) buf, (char *) tok.uid, YUBIKEY_UID_SIZE);
   printf ("  modhex uid: %s\n", buf);
   printf ("  triggered by caps lock: %s\n",
-	  yubikey_capslock(tok.ctr) ? "yes" : "no");
-  printf ("  crc: %04X\n", yubikey_crc16 ((void*)&tok, YUBIKEY_KEY_SIZE));
+	  yubikey_capslock (tok.ctr) ? "yes" : "no");
+  printf ("  crc: %04X\n", yubikey_crc16 ((void *) &tok, YUBIKEY_KEY_SIZE));
 
   printf ("  crc check: ");
-  if (yubikey_crc_ok_p ((uint8_t*)&tok))
+  if (yubikey_crc_ok_p ((uint8_t *) & tok))
     {
-      printf("ok\n");
+      printf ("ok\n");
       return EXIT_SUCCESS;
     }
 
