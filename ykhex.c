@@ -1,7 +1,7 @@
 /* ykhex.c --- Implementation of hex encoding/decoding
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009, 2010 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -69,43 +69,6 @@ yubikey_hex_decode (char *dst, const char *src, size_t dstSize)
 	  *dst = (*dst << 4) | b;
 	  dst++;
 	  dstSize--;
-	}
-    }
-  while (dstSize--)
-    *dst++ = 0;
-}
-
-
-void
-yubikey_uint16_t_hex_decode (uint16_t * dst, const char *src, size_t dstSize)
-{
-  char b;
-  int pos = 0;
-  char *p1;
-
-  for (; *src && dstSize > 0; src++)
-    {
-      if ((p1 = strchr (trans, *src)) == NULL)
-	b = 0;
-      else
-	b = (char) (p1 - trans);
-
-      switch (pos++)
-	{
-	case 0:
-	  *dst = b;
-	  break;
-	case 1:
-	case 2:
-	  *dst = (*dst << 4) | b;
-	  break;
-	case 3:
-	  *dst = (*dst << 4) | b;
-	  dst++;
-	  dstSize--;
-	  pos = 0;
-	  break;
-
 	}
     }
   while (dstSize--)

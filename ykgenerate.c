@@ -38,6 +38,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <time.h>
+#include <limits.h>
 
 
 
@@ -116,8 +117,26 @@ main (int argc, char *argv[])
 
   /* Fill upp tok with values */
   yubikey_hex_decode ((char *) &tok.uid, yk_internalname, 6);
-  yubikey_uint16_t_hex_decode (&tok.ctr, yk_counter, 1);
-  yubikey_uint16_t_hex_decode (&tok.tstpl, yk_low, 1);
+  {
+    unsigned long i;
+    char *endptr;
+
+    i = strtoul (yk_counter, &endptr, 16);
+    if (*endptr != '\0' || i == ULONG_MAX)
+      {
+	printf ("error: Hex encoded yk_counter must be 4 hex characters.\n");
+	return EXIT_FAILURE;
+      }
+    tok.ctr = i;
+
+    i = strtoul (yk_low, &endptr, 16);
+    if (*endptr != '\0' || i == ULONG_MAX)
+      {
+	printf ("error: Hex encoded yk_low must be 4 hex characters.\n");
+	return EXIT_FAILURE;
+      }
+    tok.tstpl = i;
+  }
   yubikey_hex_decode ((char *) &tok.tstph, yk_high, 1);
   yubikey_hex_decode ((char *) &tok.use, yk_use, 1);
   tok.rnd = rand ();
