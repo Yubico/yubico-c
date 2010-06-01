@@ -2,6 +2,12 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 * Version 1.6 (unreleased)
 
+** New API to generate OTPs.
+The API is yubikey_generate.  An helper function yubikey_aes_encrypt
+was added too.
+
+** ykgenerate: New tool to generate OTPs.
+
 * Version 1.5 (released 2008-09-31)
 
 ** The library now use a linker version script.
