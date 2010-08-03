@@ -6,7 +6,7 @@
 This package make up the low-level C software development kit for the
 Yubico authentication device, the Yubikey.  In particular:
 
-* AUTHORS, COPYING, NEWS, README: meta-information about the project.
+* AUTHORS, COPYING, NEWS, README, THANKS: meta-information about the project.
 
 * yubikey.h: Prototypes for library.
 
@@ -23,6 +23,8 @@ Yubico authentication device, the Yubikey.  In particular:
 * simple.mk: Simple makefile to build the above parts.
 
 * configure.ac, Makefile.am: Autoconf/Automake files.
+
+* libyubikey.map: Linker version script.
 
 == Building from SVN ==
 
@@ -66,7 +68,41 @@ for sample session.  This is useful if you want to target a platform
 that doesn't support Autoconf/automake/libtool well.
 
 {{{
-$ make -f simple.mk  check
+$ make -f simple.mk check
+cc -I. -Wall -g   -c -o yktoken.o yktoken.c
+cc -I. -Wall -g   -c -o ykmodhex.o ykmodhex.c
+cc -I. -Wall -g   -c -o ykhex.o ykhex.c
+cc -I. -Wall -g   -c -o ykcrc.o ykcrc.c
+cc -I. -Wall -g   -c -o ykaes.o ykaes.c
+cc -I. -Wall -g    modhex.c yktoken.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h   -o modhex
+cc -I. -Wall -g    ykparse.c yktoken.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h   -o ykparse
+cc -I. -Wall -g    selftest.c yktoken.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h   -o selftest
+selftest.c: In function ‘main’:
+selftest.c:163: warning: pointer targets in passing argument 3 of ‘yubikey_generate’ differ in signedness
+./yubikey.h:76: note: expected ‘char *’ but argument is of type ‘uint8_t *’
+cc -I. -Wall -g    ykgenerate.c yktoken.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h   -o ykgenerate
+./selftest
+modhex-encode("test") = ifhgieif
+Modhex-1 success
+modhex-decode("ifhgieif") = test
+Modhex-2 success
+hex-p("cbdefghijklnrtuv") = 1
+Hex-3 success
+hex-p("0123Xabc") = 0
+Hex-3 success
+hex-encode("test") = 74657374
+Hex-1 success
+hex-decode("74657374") = test
+Hex-2 success
+hex-p("0123456789abcdef") = 1
+Hex-3 success
+hex-p("0123Xabc") = 0
+Hex-3 success
+aes-decrypt (data=0123456789abcdef, key=abcdef0123456789)
+ => 838a467f34639551755bd32a4a2f15e1
+AES-1 success
+AES-2 success
+OTP-1 success
 $ 
 }}}
 
