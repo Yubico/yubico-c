@@ -8,6 +8,8 @@ was added too.  Added YUBIKEY_OTP_SIZE constant for OTP buffer size.
 
 ** ykgenerate: New tool to generate OTPs.
 
+** ykdebug/ykparse: The old tool "ykdebug" has been renamed to "ykparse".
+
 * Version 1.5 (released 2008-09-31)
 
 ** The library now use a linker version script.

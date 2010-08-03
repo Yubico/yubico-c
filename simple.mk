@@ -1,7 +1,7 @@
 # Makefile --- Instructions for make to build Yubikey library and tools. 
 #
 # Written by Simon Josefsson <simon@josefsson.org>.
-# Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
+# Copyright (c) 2006, 2007, 2008, 2009, 2010 Yubico AB
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -30,11 +30,11 @@
 
 CFLAGS = -I. -Wall -g
 
-PROGRAMS = modhex ykdebug selftest ykgenerate
+PROGRAMS = modhex ykparse selftest ykgenerate
 
 all: $(PROGRAMS)
 
-$(PROGRAMS): ykparse.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h
+$(PROGRAMS): yktoken.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h
 
 clean:
 	rm -f $(PROGRAMS) *~ *.o
@@ -44,4 +44,4 @@ check: all
 
 zip:
 	zip yubico-sdk-`date +%Y-%m-%d` \
-		COPYING README Makefile.simple yubikey.h yubikey.c selftest.c modhex.c ykdebug.c ykgenerate.c
+		COPYING README Makefile.simple yubikey.h yubikey.c selftest.c modhex.c ykparse.c ykgenerate.c

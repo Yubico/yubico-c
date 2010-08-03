@@ -33,7 +33,7 @@ ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = libyubikey.la
 include_HEADERS = yubikey.h
 
-libyubikey_la_SOURCES = ykparse.c ykhex.c ykmodhex.c ykcrc.c ykaes.c
+libyubikey_la_SOURCES = yktoken.c ykhex.c ykmodhex.c ykcrc.c ykaes.c
 libyubikey_la_SOURCES += libyubikey.map
 libyubikey_la_LDFLAGS = -no-undefined \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
@@ -46,13 +46,13 @@ endif
 
 # The command line tools.
 
-bin_PROGRAMS = modhex ykdebug ykgenerate
+bin_PROGRAMS = modhex ykparse ykgenerate
 
 modhex_SOURCES = modhex.c
 modhex_LDADD = ./libyubikey.la
 
-ykdebug_SOURCES = ykdebug.c
-ykdebug_LDADD = ./libyubikey.la
+ykparse_SOURCES = ykparse.c
+ykparse_LDADD = ./libyubikey.la
 
 ykgenerate_SOURCES = ykgenerate.c
 ykgenerate_LDADD = ./libyubikey.la

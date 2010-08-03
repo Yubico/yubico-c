@@ -40,17 +40,13 @@
 #include <time.h>
 #include <limits.h>
 
-
-
 int
 main (int argc, char *argv[])
 {
   uint8_t key[YUBIKEY_KEY_SIZE];
-  char otp[32];
-
+  char otp[YUBIKEY_OTP_SIZE];
   char *aeskey, *yk_internalname, *yk_counter, *yk_low, *yk_high, *yk_use;
   yubikey_token_st tok;
-
   int i;
 
   /* Initiate pseudo-random generator */
@@ -59,15 +55,14 @@ main (int argc, char *argv[])
   /* Parse command line parameters. */
   if (argc < 7)
     {
-      printf
-	("Usage: %s <aeskey> <yk_internalname> <yk_counter> <yk_low> <yk_high> <yk_use>\n\n",
-	 argv[0]);
-      printf (" aeskey:\t\tHex encoded AES-key\n");
-      printf (" yk_internalname:\tHex encoded yk_internalname (48 bit)\n");
-      printf (" yk_counter:\t\tHex encoded counter (16 bit)\n");
-      printf (" yk_low:\t\tHex encoded timestamp low (16 bit)\n");
-      printf (" yk_high:\t\tHex encoded timestamp high (8bit)\n");
-      printf (" yk_use:\t\tHex encoded use (8 bit)\n");
+      printf ("Usage: %s <aeskey> <yk_internalname> <yk_counter> <yk_low> "
+	      "<yk_high> <yk_use>\n", argv[0]);
+      printf (" AESKEY:\t\tHex encoded AES-key.\n");
+      printf (" YK_INTERNALNAME:\tHex encoded yk_internalname (48 bit).\n");
+      printf (" YK_COUNTER:\t\tHex encoded counter (16 bit).\n");
+      printf (" YK_LOW:\t\tHex encoded timestamp low (16 bit).\n");
+      printf (" YK_HIGH:\t\tHex encoded timestamp high (8bit).\n");
+      printf (" YK_USE:\t\tHex encoded use (8 bit).\n");
       return EXIT_FAILURE;
     }
 

@@ -1,4 +1,4 @@
-/* ykparse.c --- Implementation of Yubikey token parser.
+/* ykdebug.c --- Example command line interface for authentication token.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
  * Copyright (c) 2006, 2007, 2008, 2009, 2010 Yubico AB
@@ -32,22 +32,121 @@
 
 #include "yubikey.h"
 
+#include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 
-void
-yubikey_parse (const uint8_t token[32],
-	       const uint8_t key[16], yubikey_token_t out)
+int
+main (int argc, char *argv[])
 {
-  memset (out, 0, sizeof (*out));
-  yubikey_modhex_decode ((void *) out, (char *) token, sizeof (*out));
-  yubikey_aes_decrypt ((void *) out, key);
-}
+  uint8_t buf[128];
+  uint8_t key[YUBIKEY_KEY_SIZE];
+  char *aeskey, *token;
+  yubikey_token_st tok;
 
-void
-yubikey_generate (yubikey_token_t token,
-		  const uint8_t key[YUBIKEY_KEY_SIZE], char out[32])
-{
-  yubikey_aes_encrypt ((void *) token, key);
-  yubikey_modhex_encode (out, (void *) token, YUBIKEY_KEY_SIZE);
+  /* Parse command line parameters. */
+  if (argc < 2)
+    {
+      printf ("Usage: %s <aeskey> <token>\n", argv[0]);
+      printf (" AESKEY:\tHex encoded AES-key.\n");
+      printf (" TOKEN:\t\tModHex encoded token.\n");
+      return EXIT_FAILURE;
+    }
+
+  aeskey = argv[1];
+  token = argv[2];
+
+  if (strlen (aeskey) != 32)
+    {
+      printf ("error: Hex encoded AES-key must be 32 characters.\n");
+      return EXIT_FAILURE;
+    }
+
+  if (strlen (token) > 32)
+    {
+      printf ("warning: overlong token, ignoring prefix: %.*s\n",
+	      strlen (token) - 32, token);
+      token = token + (strlen (token) - 32);
+    }
+
+  if (strlen (token) != 32)
+    {
+      printf ("error: ModHex encoded token must be 32 characters.\n");
+      return EXIT_FAILURE;
+    }
+
+  /* Debug. */
+  printf ("Input:\n");
+  printf ("  token: %s\n", token);
+
+  yubikey_modhex_decode ((char *) key, token, YUBIKEY_KEY_SIZE);
+
+  {
+    size_t i;
+    printf ("          ");
+    for (i = 0; i < YUBIKEY_KEY_SIZE; i++)
+      printf ("%02x ", key[i] & 0xFF);
+    printf ("\n");
+  }
+
+  printf ("  aeskey: %s\n", aeskey);
+
+  yubikey_hex_decode ((char *) key, aeskey, YUBIKEY_KEY_SIZE);
+
+  {
+    size_t i;
+    printf ("          ");
+    for (i = 0; i < YUBIKEY_KEY_SIZE; i++)
+      printf ("%02x ", key[i] & 0xFF);
+    printf ("\n");
+  }
+
+  /* Pack up dynamic password, decrypt it and verify checksum */
+  yubikey_parse ((uint8_t *) token, key, &tok);
+
+  printf ("Output:\n");
+  {
+    size_t i;
+    printf ("          ");
+    for (i = 0; i < YUBIKEY_BLOCK_SIZE; i++)
+      printf ("%02x ", ((uint8_t *) & tok)[i] & 0xFF);
+    printf ("\n");
+  }
+
+  printf ("\nStruct:\n");
+  /* Debug */
+  {
+    size_t i;
+    printf ("  uid: ");
+    for (i = 0; i < YUBIKEY_UID_SIZE; i++)
+      printf ("%02x ", tok.uid[i] & 0xFF);
+    printf ("\n");
+  }
+  printf ("  counter: %d (0x%04x)\n", tok.ctr, tok.ctr);
+  printf ("  timestamp (low): %d (0x%04x)\n", tok.tstpl, tok.tstpl);
+  printf ("  timestamp (high): %d (0x%02x)\n", tok.tstph, tok.tstph);
+  printf ("  session use: %d (0x%02x)\n", tok.use, tok.use);
+  printf ("  random: %d (0x%02x)\n", tok.rnd, tok.rnd);
+  printf ("  crc: %d (0x%04x)\n", tok.crc, tok.crc);
+
+  printf ("\nDerived:\n");
+  printf ("  cleaned counter: %d (0x%04x)\n",
+	  yubikey_counter (tok.ctr), yubikey_counter (tok.ctr));
+  yubikey_modhex_encode ((char *) buf, (char *) tok.uid, YUBIKEY_UID_SIZE);
+  printf ("  modhex uid: %s\n", buf);
+  printf ("  triggered by caps lock: %s\n",
+	  yubikey_capslock (tok.ctr) ? "yes" : "no");
+  printf ("  crc: %04X\n", yubikey_crc16 ((void *) &tok, YUBIKEY_KEY_SIZE));
+
+  printf ("  crc check: ");
+  if (yubikey_crc_ok_p ((uint8_t *) & tok))
+    {
+      printf ("ok\n");
+      return EXIT_SUCCESS;
+    }
+
+  printf ("fail\n");
+  return EXIT_FAILURE;
 }
