@@ -10,13 +10,15 @@ Yubico authentication device, the Yubikey.  In particular:
 
 * yubikey.h: Prototypes for library.
 
-* ykparse.c, ykmodhex.c, ykhex.c, ykcrc.c, ykaes.c: Library implementation.
+* yktoken.c, ykmodhex.c, ykhex.c, ykcrc.c, ykaes.c: Library implementation.
 
 * selftest.c: Library self tests.
 
-* ykdebug.c: Command line tool to print debug information about a token.
-
 * modhex.c: Command-line tool for modhex encoding/decoding.
+
+* ykgenerate.c: Command line tool to construct and encrypt an OTP.
+
+* ykparse.c: Command line tool to decrypt and parse an OTP.
 
 * simple.mk: Simple makefile to build the above parts.
 
@@ -64,42 +66,22 @@ for sample session.  This is useful if you want to target a platform
 that doesn't support Autoconf/automake/libtool well.
 
 {{{
-jas@mocca:~/src/yubico-c$ make -f simple.mk  check
-cc -I. -Wall -g   -c -o ykparse.o ykparse.c
-cc -I. -Wall -g   -c -o ykmodhex.o ykmodhex.c
-cc -I. -Wall -g   -c -o ykhex.o ykhex.c
-cc -I. -Wall -g   -c -o ykcrc.o ykcrc.c
-cc -I. -Wall -g   -c -o ykaes.o ykaes.c
-cc -I. -Wall -g    modhex.c ykparse.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h   -o modhex
-cc -I. -Wall -g    ykdebug.c ykparse.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h   -o ykdebug
-cc -I. -Wall -g    selftest.c ykparse.o ykmodhex.o ykhex.o ykcrc.o ykaes.o yubikey.h   -o selftest
-selftest.c: In function ‘main’:
-selftest.c:65: warning: pointer targets in passing argument 1 of ‘yubikey_aes_decrypt’ differ in signedness
-selftest.c:65: warning: pointer targets in passing argument 2 of ‘yubikey_aes_decrypt’ differ in signedness
-./selftest
-modhex-encode("test") = ifhgieif
-Modhex-1 success
-modhex-decode("ifhgieif") = test
-Modhex-2 success
-hex-encode("test") = 74657374
-Hex-1 success
-hex-decode("74657374") = test
-Hex-2 success
-aes-decrypt (data=0123456789abcdef, key=abcdef0123456789)
- => 838a467f34639551755bd32a4a2f15e1
-AES-1 success
-jas@mocca:~/src/yubico-c$ 
+$ make -f simple.mk  check
+$ 
 }}}
 
 = Command-line tools =
 
-Two command line tools, modex and ykdebug, are included.
-
 The "modhex" program converts data between modhex, normal hex, and
 binary form.
 
-The "ykdebug" program decrypts and parses one OTP given the OTP and
+The "ykparse" program decrypts and parses one OTP given the OTP and
 the AES key corresponding to that Yubikey.
+
+The "ykgenerate" program constructs and encrypts one OTP given AES key
+and internal data values.
+
+Example usage:
 
 {{{
 $ ./modhex test
@@ -160,7 +142,33 @@ Derived:
   triggered by caps lock: no
   crc: F0B8
   crc check: ok
-$ 
+$ ykgenerate ecde18dbe76fbd0c33330f1c354871db 8792ebfe26cc 0013 c0a8 00 10
+hcfktknicvbcnhbkvigcfhgddhhhrknc
+$ ykdebug ecde18dbe76fbd0c33330f1c354871db `ykgenerate ecde18dbe76fbd0c33330f1c354871db 8792ebfe26cc 0013 c0a8 00 10`
+Input:
+  token: lckttegrjfnvnrutfdvitfgrggeuuhgn
+          a0 9d d3 5c 84 bf bc ed 42 f7 d4 5c 55 3e e6 5b 
+  aeskey: ecde18dbe76fbd0c33330f1c354871db
+          ec de 18 db e7 6f bd 0c 33 33 0f 1c 35 48 71 db 
+Output:
+          87 92 eb fe 26 cc 13 00 a8 c0 00 10 f7 27 94 ee 
+
+Struct:
+  uid: 87 92 eb fe 26 cc 
+  counter: 19 (0x0013)
+  timestamp (low): 49320 (0xc0a8)
+  timestamp (high): 0 (0x00)
+  session use: 16 (0x10)
+  random: 10231 (0x27f7)
+  crc: 61076 (0xee94)
+
+Derived:
+  cleaned counter: 19 (0x0013)
+  modhex uid: jikdunvudhrr
+  triggered by caps lock: no
+  crc: F0B8
+  crc check: ok
+$
 }}}
 
 = Questions? =
