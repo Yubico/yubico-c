@@ -6,7 +6,7 @@
 This package make up the low-level C software development kit for the
 Yubico authentication device, the Yubikey.  In particular:
 
-* AUTHORS, COPYING, NEWS, README, THANKS: meta-information about the project.
+* AUTHORS, COPYING, NEWS, README, THANKS: Meta-information about the project.
 
 * yubikey.h: Prototypes for library.
 
@@ -26,7 +26,7 @@ Yubico authentication device, the Yubikey.  In particular:
 
 * libyubikey.map: Linker version script.
 
-== Building from SVN ==
+== Building from version controlled sources ==
 
 Skip to the next section if you are using an official packaged
 version, which is what we recommend.
@@ -43,9 +43,9 @@ This will create a directory 'yubico-c'.  Enter the directory:
   cd yubico-c
 }}}
 
-Autoconf, automake and libtool must be installed.
-
-Generate the build system using:
+You need to have autoconf, automake and libtool installed if you want
+to use the normal ./configure based approach.  Use simple.mk if you
+don't want this step.  Generate the build system using:
 
 {{{
   autoreconf --install
