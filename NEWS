@@ -1,5 +1,7 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
+* Version 1.7 (unreleased)
+
 * Version 1.6 (released 2010-08-03)
 
 ** New API to generate OTPs.
