@@ -122,18 +122,18 @@ Example usage:
 {{{
 $ ./modhex test
 ifhgieif
-$ ./modhex -d ifhgieif
+$ ./modhex -d ifhgieif; echo
 test
 $ ./modhex -h b565716f
 nghgibhv
 $ ./modhex -h -d nghgibhv
 b565716f
-$ ./ykdebug ecde18dbe76fbd0c33330f1c354871db dteffujedcflcindvdbrblehecuitvjkjevvehjd
+$ ./ykparse ecde18dbe76fbd0c33330f1c354871db dteffujedcflcindvdbrblehecuitvjkjevvehjd
 warning: overlong token, ignoring prefix: dteffuje
 Input:
   token: dcflcindvdbrblehecuitvjkjevvehjd
           20 4a 07 b2 f2 1c 1a 36 30 e7 df 89 83 ff 36 82 
-  aeskey: urtubjtnuihvntcreeeecvbregfjibtn
+  aeskey: ecde18dbe76fbd0c33330f1c354871db
           ec de 18 db e7 6f bd 0c 33 33 0f 1c 35 48 71 db 
 Output:
           87 92 eb fe 26 cc 13 00 a8 c0 00 10 b4 08 6f 5b 
@@ -153,12 +153,12 @@ Derived:
   triggered by caps lock: no
   crc: F0B8
   crc check: ok
-$ ./ykdebug ecde18dbe76fbd0c33330f1c354871db dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh
+$ ./ykparse ecde18dbe76fbd0c33330f1c354871db dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh
 warning: overlong token, ignoring prefix: dteffuje
 Input:
   token: hknhfjbrjnlnldnhcujvddbikngjrtgh
           69 b6 48 1c 8b ab a2 b6 0e 8f 22 17 9b 58 cd 56 
-  aeskey: urtubjtnuihvntcreeeecvbregfjibtn
+  aeskey: ecde18dbe76fbd0c33330f1c354871db
           ec de 18 db e7 6f bd 0c 33 33 0f 1c 35 48 71 db 
 Output:
           87 92 eb fe 26 cc 13 00 30 c2 00 11 c8 9f 23 c8 
@@ -178,16 +178,16 @@ Derived:
   triggered by caps lock: no
   crc: F0B8
   crc check: ok
-$ ykgenerate ecde18dbe76fbd0c33330f1c354871db 8792ebfe26cc 0013 c0a8 00 10
+$ ./ykgenerate ecde18dbe76fbd0c33330f1c354871db 8792ebfe26cc 0013 c0a8 00 10
 hcfktknicvbcnhbkvigcfhgddhhhrknc
-$ ykdebug ecde18dbe76fbd0c33330f1c354871db `ykgenerate ecde18dbe76fbd0c33330f1c354871db 8792ebfe26cc 0013 c0a8 00 10`
+$ ./ykparse ecde18dbe76fbd0c33330f1c354871db `./ykgenerate ecde18dbe76fbd0c33330f1c354871db 8792ebfe26cc 0013 c0a8 00 10`
 Input:
-  token: lckttegrjfnvnrutfdvitfgrggeuuhgn
-          a0 9d d3 5c 84 bf bc ed 42 f7 d4 5c 55 3e e6 5b 
+  token: lihggvrgffbjnrehcgnkvknjkvubeekr
+          a7 65 5f c5 44 18 bc 36 05 b9 f9 b8 9f e1 33 9c 
   aeskey: ecde18dbe76fbd0c33330f1c354871db
           ec de 18 db e7 6f bd 0c 33 33 0f 1c 35 48 71 db 
 Output:
-          87 92 eb fe 26 cc 13 00 a8 c0 00 10 f7 27 94 ee 
+          87 92 eb fe 26 cc 13 00 a8 c0 00 10 95 44 ec e9 
 
 Struct:
   uid: 87 92 eb fe 26 cc 
@@ -195,8 +195,8 @@ Struct:
   timestamp (low): 49320 (0xc0a8)
   timestamp (high): 0 (0x00)
   session use: 16 (0x10)
-  random: 10231 (0x27f7)
-  crc: 61076 (0xee94)
+  random: 17557 (0x4495)
+  crc: 59884 (0xe9ec)
 
 Derived:
   cleaned counter: 19 (0x0013)
