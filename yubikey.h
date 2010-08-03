@@ -39,6 +39,7 @@
 # define YUBIKEY_BLOCK_SIZE 16
 # define YUBIKEY_KEY_SIZE 16
 # define YUBIKEY_UID_SIZE 6
+# define YUBIKEY_OTP_SIZE (2 * YUBIKEY_BLOCK_SIZE)
 
 typedef struct
 {
@@ -74,7 +75,7 @@ extern void yubikey_parse (const uint8_t token[YUBIKEY_BLOCK_SIZE],
 /* Generate OTP */
 extern void yubikey_generate (yubikey_token_t token,
 			      const uint8_t key[YUBIKEY_KEY_SIZE],
-			      char out[32]);
+			      char out[YUBIKEY_OTP_SIZE]);
 
 # define yubikey_counter(ctr) ((ctr) & 0x7FFF)
 # define yubikey_capslock(ctr) ((ctr) & 0x8000)

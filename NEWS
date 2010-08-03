@@ -4,7 +4,7 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 ** New API to generate OTPs.
 The API is yubikey_generate.  An helper function yubikey_aes_encrypt
-was added too.
+was added too.  Added YUBIKEY_OTP_SIZE constant for OTP buffer size.
 
 ** ykgenerate: New tool to generate OTPs.
 
