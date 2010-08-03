@@ -73,7 +73,7 @@ ChangeLog:
 	svn2cl
 
 PROJECT = yubico-c
-USER ?= simon@yubico.com
+GOOGLEACCOUNT ?= simon@yubico.com
 KEYID ?= B9156397
 
 release:
@@ -85,9 +85,9 @@ release:
 	 https://$(PROJECT).googlecode.com/svn/tags/$(PACKAGE)-$(VERSION) \
 	 -m "Tagging the $(VERSION) release of the $(PACKAGE) project."
 	googlecode_upload.py -s "OpenPGP signature for $(PACKAGE) $(VERSION)." \
-	 -p $(PROJECT) -u $(USER) $(PACKAGE)-$(VERSION).tar.gz.sig
+	 -p $(PROJECT) -u $(GOOGLEACCOUNT) $(PACKAGE)-$(VERSION).tar.gz.sig
 	googlecode_upload.py -s "$(PACKAGE) $(VERSION)" \
-	 -p $(PROJECT) -u $(USER) $(PACKAGE)-$(VERSION).tar.gz 
+	 -p $(PROJECT) -u $(GOOGLEACCOUNT) $(PACKAGE)-$(VERSION).tar.gz 
 	cp README ../wiki-$(PROJECT)/ReadMe.wiki && \
 		cd ../wiki-$(PROJECT) && \
 		svn commit -m Sync. ReadMe.wiki
