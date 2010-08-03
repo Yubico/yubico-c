@@ -1,7 +1,7 @@
 /* ykparse.c --- Implementation of Yubikey token parser.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009, 2010 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -46,8 +46,8 @@ yubikey_parse (const uint8_t token[32],
 
 void
 yubikey_generate (yubikey_token_t token,
-		  const uint8_t key[YUBIKEY_KEY_SIZE], char OUT[32])
+		  const uint8_t key[YUBIKEY_KEY_SIZE], char out[32])
 {
   yubikey_aes_encrypt ((void *) token, key);
-  yubikey_modhex_encode (OUT, (void *) token, YUBIKEY_KEY_SIZE);
+  yubikey_modhex_encode (out, (void *) token, YUBIKEY_KEY_SIZE);
 }
