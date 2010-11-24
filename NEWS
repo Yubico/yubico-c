@@ -1,6 +1,6 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
-* Version 1.7 (unreleased)
+* Version 1.7 (released 2010-11-24)
 
 ** yubikey.h: Possible to use from C++ using extern namespace scoping.
 Reported by Giampaolo Bellini <iw2lsi@gmail.com>.
