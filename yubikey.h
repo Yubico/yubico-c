@@ -36,6 +36,11 @@
 # include <stdint.h>
 # include <string.h>
 
+# ifdef __cplusplus
+extern "C"
+{
+# endif
+
 # define YUBIKEY_BLOCK_SIZE 16
 # define YUBIKEY_KEY_SIZE 16
 # define YUBIKEY_UID_SIZE 6
@@ -123,5 +128,7 @@ extern uint16_t yubikey_crc16 (const uint8_t * buf, size_t buf_size);
    leaving the decrypted/encrypted output in the STATE buffer. */
 extern void yubikey_aes_decrypt (uint8_t * state, const uint8_t * key);
 extern void yubikey_aes_encrypt (uint8_t * state, const uint8_t * key);
+
+#endif /* __cplusplus */
 
 #endif
