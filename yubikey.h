@@ -129,6 +129,8 @@ extern uint16_t yubikey_crc16 (const uint8_t * buf, size_t buf_size);
 extern void yubikey_aes_decrypt (uint8_t * state, const uint8_t * key);
 extern void yubikey_aes_encrypt (uint8_t * state, const uint8_t * key);
 
-#endif /* __cplusplus */
+# ifdef __cplusplus
+}
+# endif
 
 #endif
