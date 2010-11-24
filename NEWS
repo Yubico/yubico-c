@@ -2,6 +2,9 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 * Version 1.7 (unreleased)
 
+** yubikey.h: Possible to use from C++ using extern namespace scoping.
+Reported by Giampaolo Bellini <iw2lsi@gmail.com>.
+
 * Version 1.6 (released 2010-08-03)
 
 ** New API to generate OTPs.
