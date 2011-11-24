@@ -1,7 +1,7 @@
 /* modhex.c --- Simple ModHex conversion command line tool.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008, 2009 Yubico AB
+ * Copyright (c) 2006, 2007, 2008, 2009, 2011 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -128,6 +128,7 @@ main (int argc, char *argv[])
 	  if ((p = strchr (hex, data[i])) == NULL)
 	    {
 	      printf ("error: input not hex encoded at position %d\n", i);
+	      free (tmp);
 	      return 1;
 	    }
 
