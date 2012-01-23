@@ -1,7 +1,7 @@
 /* ykdebug.c --- Example command line interface for authentication token.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006, 2007, 2008, 2009, 2010 Yubico AB
+ * Copyright (c) 2006-2012 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -67,7 +67,7 @@ main (int argc, char *argv[])
   if (strlen (token) > 32)
     {
       printf ("warning: overlong token, ignoring prefix: %.*s\n",
-	      strlen (token) - 32, token);
+	      (int) strlen (token) - 32, token);
       token = token + (strlen (token) - 32);
     }
 
