@@ -127,6 +127,7 @@ main (void)
 
   {
     uint8_t buf[1024];
+    char out[1024];
     uint8_t key[16 + 1];
 
     memcpy (buf, "0123456789abcdef\0", 17);
@@ -160,8 +161,8 @@ main (void)
 	    "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00", 16);
     memcpy (key, "abcdef0123456789", 16);
 
-    yubikey_generate ((void *) &tok, key, buf);
-    yubikey_parse ((uint8_t *) buf, key, &tok);
+    yubikey_generate ((void *) &tok, key, out);
+    yubikey_parse ((uint8_t *) out, key, &tok);
 
     if (memcmp
 	(&tok, "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00",
