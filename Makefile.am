@@ -26,6 +26,8 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+SUBDIRS=tests
+
 ACLOCAL_AMFLAGS = -I m4
 
 # The library.
@@ -56,14 +58,6 @@ ykparse_LDADD = ./libyubikey.la
 
 ykgenerate_SOURCES = ykgenerate.c
 ykgenerate_LDADD = ./libyubikey.la
-
-# Self tests.
-
-AM_LDFLAGS = -no-install
-LDADD = libyubikey.la
-
-check_PROGRAMS = selftest
-TESTS = $(check_PROGRAMS)
 
 # Release
 

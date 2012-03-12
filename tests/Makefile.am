@@ -1,5 +1,5 @@
 # Written by Simon Josefsson <simon@josefsson.org>.
-# Copyright (c) 2006-2012 Yubico AB
+# Copyright (c) 2012 Yubico AB
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -26,27 +26,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-AC_INIT([libyubikey], [1.8], [yubico-devel@googlegroups.com])
-AC_CONFIG_MACRO_DIR([m4])
+# Self tests.
 
-# Library code modified:                              REVISION++
-# Interfaces changed/added/removed:   CURRENT++       REVISION=0
-# Interfaces added:                             AGE++
-# Interfaces removed:                           AGE=0
-AC_SUBST(LT_CURRENT, 1)
-AC_SUBST(LT_REVISION, 3)
-AC_SUBST(LT_AGE, 1)
+AM_LDFLAGS = -no-install
+LDADD = ../libyubikey.la
 
-AM_INIT_AUTOMAKE([1.10 -Wall -Werror])
-AM_SILENT_RULES([yes])
-AC_PROG_CC
-AC_LIBTOOL_WIN32_DLL
-AC_PROG_LIBTOOL
-
-gl_LD_VERSION_SCRIPT
-
-AC_CONFIG_FILES([
-  Makefile
-  tests/Makefile
-])
-AC_OUTPUT
+check_PROGRAMS = selftest
+TESTS = $(check_PROGRAMS)
