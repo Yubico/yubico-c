@@ -30,7 +30,7 @@
 
 CFLAGS = -I. -Wall -g
 
-PROGRAMS = modhex ykparse selftest ykgenerate
+PROGRAMS = modhex ykparse tests/selftest ykgenerate
 
 all: $(PROGRAMS)
 
@@ -40,8 +40,8 @@ clean:
 	rm -f $(PROGRAMS) *~ *.o
 
 check: all
-	./selftest
+	tests/selftest
 
 zip:
 	zip yubico-sdk-`date +%Y-%m-%d` \
-		COPYING README Makefile.simple yubikey.h yubikey.c selftest.c modhex.c ykparse.c ykgenerate.c
+		COPYING README Makefile.simple yubikey.h yubikey.c tests/selftest.c modhex.c ykparse.c ykgenerate.c
