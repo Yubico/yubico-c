@@ -1,4 +1,4 @@
-# Makefile --- Instructions for make to build Yubikey library and tools. 
+# Makefile --- Instructions for make to build YubiKey library and tools.
 #
 # Written by Simon Josefsson <simon@josefsson.org>.
 # Copyright (c) 2006-2012 Yubico AB

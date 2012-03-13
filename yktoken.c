@@ -1,4 +1,4 @@
-/* ykparse.c --- Implementation of Yubikey token parser.
+/* ykparse.c --- Implementation of YubiKey token parser.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
  * Copyright (c) 2006-2012 Yubico AB

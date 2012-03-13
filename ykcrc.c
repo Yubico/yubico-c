@@ -1,4 +1,4 @@
-/* ykcrc.c --- Implementation of Yubikey CRC-16 function.
+/* ykcrc.c --- Implementation of YubiKey CRC-16 function.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
  * Copyright (c) 2006-2012 Yubico AB

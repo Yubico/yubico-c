@@ -1,4 +1,4 @@
-Test vectors for Yubikey
+Test vectors for YubiKey
 ------------------------
 
 The YubiKey output consists of a two fields concatenated with each

@@ -1,4 +1,4 @@
-/* yubikey.h --- Prototypes for low-level Yubikey OTP functions.
+/* yubikey.h --- Prototypes for low-level YubiKey OTP functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
  * Copyright (c) 2006-2012 Yubico AB

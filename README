@@ -1,7 +1,7 @@
 Introduction
 
 This package make up the low-level C software development kit for the
-Yubico authentication device, the Yubikey.  In particular:
+Yubico authentication device, the YubiKey.  In particular:
 
 * AUTHORS, COPYING, NEWS, README, THANKS: Meta-information about the project.
 
@@ -110,7 +110,7 @@ The "modhex" program converts data between modhex, normal hex, and
 binary form.
 
 The "ykparse" program decrypts and parses one OTP given the OTP and
-the AES key corresponding to that Yubikey.
+the AES key corresponding to that YubiKey.
 
 The "ykgenerate" program constructs and encrypts one OTP given AES key
 and internal data values.
