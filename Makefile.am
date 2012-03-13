@@ -89,9 +89,9 @@ release:
 	mkdir -p ../releases/$(PACKAGE)/ && \
 		cp -v $(PACKAGE)-$(VERSION).tar.gz* ../releases/$(PACKAGE)/
 	googlecode_upload.py -s "OpenPGP signature for $(PACKAGE) $(VERSION)." \
-	 -p $(PROJECT) -u $(GOOGLEACCOUNT) $(PACKAGE)-$(VERSION).tar.gz.sig
+	 -p $(PROJECT) -u $(USER) $(PACKAGE)-$(VERSION).tar.gz.sig
 	googlecode_upload.py -s "$(PACKAGE) $(VERSION)" \
-	 -p $(PROJECT) -u $(GOOGLEACCOUNT) $(PACKAGE)-$(VERSION).tar.gz
+	 -p $(PROJECT) -u $(USER) $(PACKAGE)-$(VERSION).tar.gz
 	test -d ../wiki-$(PROJECT) && \
 		cp README ../wiki-$(PROJECT)/ReadMe.wiki && \
 		cd ../wiki-$(PROJECT) && \
