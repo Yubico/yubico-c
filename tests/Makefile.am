@@ -29,6 +29,7 @@
 # Self tests.
 
 AM_LDFLAGS = -no-install
+AM_CPPFLAGS = -I$(top_srcdir)
 LDADD = ../libyubikey.la
 
 check_PROGRAMS = selftest
