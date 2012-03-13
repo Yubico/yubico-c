@@ -1,5 +1,7 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
+* Version 1.9 (unreleased)
+
 * Version 1.8 (released 2012-03-13)
 
 ** modhex tool: Fix memory leak.
