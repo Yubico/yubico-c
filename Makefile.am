@@ -64,26 +64,35 @@ ykgenerate_LDADD = ./libyubikey.la
 EXTRA_DIST = simple.mk THANKS
 
 ChangeLog:
-	svn2cl
+	cd $(srcdir) && git2cl > ChangeLog
 
 PROJECT = yubico-c
-GOOGLEACCOUNT ?= simon@yubico.com
-KEYID ?= B9156397
 
 release:
-	rm -f ChangeLog
+	@if test -z "$(USER)" || test -z "$(KEYID)"; then \
+		echo "Try this instead:"; \
+		echo "  make release USER=[GOOGLEUSERNAME] KEYID=[PGPKEYID]"; \
+		echo "For example:"; \
+		echo "  make release USER=simonyubico@gmail.com KEYID=2117364A"; \
+		echo "  make release USER=fredrikyubico@gmail.com KEYID=4EAA4232"; \
+		exit 1; \
+	fi
+	@head -3 $(srcdir)/NEWS | grep -q "Version $(VERSION) .released `date -I`" || \
+		(echo 'error: You need to update date/version in $(srcdir)/NEWS'; exit 1)
+	rm -f $(srcdir)/ChangeLog
 	make ChangeLog distcheck
 	gpg --detach-sign --default-key $(KEYID) $(PACKAGE)-$(VERSION).tar.gz
 	gpg --verify $(PACKAGE)-$(VERSION).tar.gz.sig
-	svn copy https://$(PROJECT).googlecode.com/svn/trunk/ \
-	 https://$(PROJECT).googlecode.com/svn/tags/$(PACKAGE)-$(VERSION) \
-	 -m "Tagging the $(VERSION) release of the $(PACKAGE) project."
+	cd $(srcdir) && git push
+	cd $(srcdir) && git tag -u $(KEYID)! -m $(VERSION) $(PACKAGE)-$(VERSION)
+	cd $(srcdir) && git push --tags
 	mkdir -p ../releases/$(PACKAGE)/ && \
 		cp -v $(PACKAGE)-$(VERSION).tar.gz* ../releases/$(PACKAGE)/
 	googlecode_upload.py -s "OpenPGP signature for $(PACKAGE) $(VERSION)." \
 	 -p $(PROJECT) -u $(GOOGLEACCOUNT) $(PACKAGE)-$(VERSION).tar.gz.sig
 	googlecode_upload.py -s "$(PACKAGE) $(VERSION)" \
-	 -p $(PROJECT) -u $(GOOGLEACCOUNT) $(PACKAGE)-$(VERSION).tar.gz 
-	cp README ../wiki-$(PROJECT)/ReadMe.wiki && \
+	 -p $(PROJECT) -u $(GOOGLEACCOUNT) $(PACKAGE)-$(VERSION).tar.gz
+	test -d ../wiki-$(PROJECT) && \
+		cp README ../wiki-$(PROJECT)/ReadMe.wiki && \
 		cd ../wiki-$(PROJECT) && \
-		svn commit -m Sync. ReadMe.wiki
+		git commit -m Sync. ReadMe.wiki
