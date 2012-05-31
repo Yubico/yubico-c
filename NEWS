@@ -1,6 +1,6 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
-* Version 1.9 (unreleased)
+* Version 1.9 (released 2012-05-31)
 
 ** Updated ld-version-script from gnulib to silence warnings.
 
