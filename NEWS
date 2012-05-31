@@ -2,6 +2,10 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 * Version 1.9 (unreleased)
 
+** Updated ld-version-script from gnulib to silence warnings.
+
+** Fix out-of-tree builds.
+
 * Version 1.8 (released 2012-03-13)
 
 ** modhex tool: Fix memory leak.
