@@ -59,7 +59,7 @@ which is recommend for more advanced purposes especially for
 cross-compilation and shared library support, build it as follows.
 
   $ ./configure
-  $ make all check && sudo make install
+  $ make check && sudo make install
 
 Another way to build the package is by running 'make -f simple.mk
 check'.  It will build each component, and also test it.  See below
