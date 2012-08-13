@@ -34,3 +34,10 @@ depcomp
 install-sh
 ltmain.sh
 missing
+*.o
+*.lo
+libyubikey.la
+modhex
+ykgenerate
+ykparse
+
