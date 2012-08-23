@@ -57,7 +57,7 @@ yubikey_modhex_decode (char *dst, const char *src, size_t dstSize)
 
   for (; *src && dstSize > 0; src++)
     {
-      if ((p1 = strchr (trans, *src)) == NULL)
+      if ((p1 = (char*)strchr (trans, *src)) == NULL)
 	b = 0;
       else
 	b = (char) (p1 - trans);
