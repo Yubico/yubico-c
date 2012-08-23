@@ -34,14 +34,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 int
 main (int argc, char *argv[])
 {
   int argi;
-  bool decode_p = false;
-  bool hex_p = false;
+  int decode_p = 0;
+  int hex_p = 0;
   char *data;
   size_t inlen;
 
@@ -81,12 +80,12 @@ main (int argc, char *argv[])
     {
       if (strcmp (argv[argi], "-d") == 0)
 	{
-	  decode_p = true;
+	  decode_p = 1;
 	  argi++;
 	}
       else if (strcmp (argv[argi], "-h") == 0)
 	{
-	  hex_p = true;
+	  hex_p = 1;
 	  argi++;
 	}
       else

@@ -33,7 +33,6 @@
 #include "yubikey.h"
 
 #include <stdlib.h>
-#include <stdbool.h>
 
 void
 yubikey_parse (const uint8_t token[32],

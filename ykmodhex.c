@@ -32,8 +32,6 @@
 
 #include "yubikey.h"
 
-#include <stdbool.h>
-
 static const char trans[] = YUBIKEY_MODHEX_MAP;
 
 void
@@ -52,7 +50,7 @@ void
 yubikey_modhex_decode (char *dst, const char *src, size_t dstSize)
 {
   char b;
-  bool flag = false;
+  int flag = 0;
   char *p1;
 
   for (; *src && dstSize > 0; src++)
