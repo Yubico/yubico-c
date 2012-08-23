@@ -30,6 +30,8 @@ SUBDIRS=. tests
 
 ACLOCAL_AMFLAGS = -I m4
 
+AM_CFLAGS = $(WARN_CFLAGS)
+
 # The library.
 
 lib_LTLIBRARIES = libyubikey.la

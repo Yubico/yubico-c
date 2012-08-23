@@ -2,6 +2,8 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 * Version 1.10 (unreleased)
 
+** Added ./configure --enable-gcc-warnings to enable a lot of warnings.
+
 * Version 1.9 (released 2012-05-31)
 
 ** Updated ld-version-script from gnulib to silence warnings.
