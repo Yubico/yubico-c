@@ -51,7 +51,7 @@ yubikey_hex_decode (char *dst, const char *src, size_t dstSize)
 {
   char b;
   int flag = 0;
-  char *p1;
+  const char *p1;
 
   for (; *src && dstSize > 0; src++)
     {
