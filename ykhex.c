@@ -32,8 +32,6 @@
 
 #include "yubikey.h"
 
-#include <stdbool.h>
-
 static const char trans[] = "0123456789abcdef";
 
 void
@@ -52,8 +50,8 @@ void
 yubikey_hex_decode (char *dst, const char *src, size_t dstSize)
 {
   char b;
-  bool flag = false;
-  char *p1;
+  int flag = 0;
+  const char *p1;
 
   for (; *src && dstSize > 0; src++)
     {

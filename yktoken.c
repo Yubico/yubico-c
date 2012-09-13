@@ -33,21 +33,20 @@
 #include "yubikey.h"
 
 #include <stdlib.h>
-#include <stdbool.h>
 
 void
 yubikey_parse (const uint8_t token[32],
 	       const uint8_t key[16], yubikey_token_t out)
 {
   memset (out, 0, sizeof (*out));
-  yubikey_modhex_decode ((void *) out, (const char *) token, sizeof (*out));
-  yubikey_aes_decrypt ((void *) out, key);
+  yubikey_modhex_decode ((char *) out, (const char *) token, sizeof (*out));
+  yubikey_aes_decrypt ((uint8_t *) out, key);
 }
 
 void
 yubikey_generate (yubikey_token_t token,
 		  const uint8_t key[YUBIKEY_KEY_SIZE], char out[32])
 {
-  yubikey_aes_encrypt ((void *) token, key);
-  yubikey_modhex_encode (out, (void *) token, YUBIKEY_KEY_SIZE);
+  yubikey_aes_encrypt ((uint8_t *) token, key);
+  yubikey_modhex_encode (out, (const char *) token, YUBIKEY_KEY_SIZE);
 }
