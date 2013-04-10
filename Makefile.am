@@ -92,19 +92,7 @@ release:
 	cd $(srcdir) && git push
 	cd $(srcdir) && git tag -u $(KEYID)! -m $(VERSION) $(PACKAGE)-$(VERSION)
 	cd $(srcdir) && git push --tags
-	mkdir -p $(YUBICO_GITHUB_REPO)/$(PROJECT)/releases
-	cp -v $(PACKAGE)-$(VERSION).tar.gz* \
-		$(YUBICO_GITHUB_REPO)/$(PROJECT)/releases/
-	cd $(YUBICO_GITHUB_REPO)/$(PROJECT) && \
-		x=$$(ls -1v releases/*.tar.gz \
-		| awk -F\- '{print $$2}' | sed 's/.tar.gz//' | paste -sd ',' - \
-		| sed 's/,/, /g' | sed 's/\([0-9.]\{1,\}\)/"\1"/g'); \
-		sed -i -e "2s/\[.*\]/[$$x]/" releases.html
-	cd $(YUBICO_GITHUB_REPO) && \
-		git add $(PROJECT)/releases/$(PACKAGE)-$(VERSION).tar.gz*
-	cd $(YUBICO_GITHUB_REPO) && git add $(PROJECT)/releases.html
-	cd $(YUBICO_GITHUB_REPO) && git commit -m "$(PACKAGE)-$(VERSION)"
-	cd $(YUBICO_GITHUB_REPO) && git push
+	$(YUBICO_GITHUB_REPO)/publish $(PROJECT) $(VERSION) $(PACKAGE)-$(VERSION).tar.gz*
 	@if test -d $(srcdir)/../wiki-$(PROJECT); then \
 		cd $(srcdir) && \
 		cp README ../wiki-$(PROJECT)/ReadMe.wiki && \
