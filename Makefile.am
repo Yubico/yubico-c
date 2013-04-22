@@ -78,7 +78,7 @@ release:
 		echo "  make release KEYID=2117364A"; \
 		exit 1; \
 	fi
-	@if test ! -d $(YUBICO_GITHUB_REPO); then \
+	@if test ! -d "$(YUBICO_GITHUB_REPO)"; then \
 		echo "yubico.github.com repo not found!"; \
 		echo "Make sure that YUBICO_GITHUB_REPO is set"; \
 		exit 1; \
