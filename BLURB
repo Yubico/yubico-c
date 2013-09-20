@@ -1,0 +1,7 @@
+Author: Yubico
+Basename: libyubikey
+Homepage: http://opensource.yubico.com/yubico-c/
+License: BSD-2-clause
+Name: Yubico C low-level Library
+Project: yubico-c
+Summary: C library for manipulating Yubico YubiKey One-Time Passwords (OTPs)
