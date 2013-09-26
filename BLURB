@@ -5,3 +5,4 @@ License: BSD-2-Clause
 Name: Yubico C low-level Library
 Project: yubico-c
 Summary: C library for manipulating Yubico YubiKey One-Time Passwords (OTPs)
+Yubico-Category: YubiKey Low-level Library
