@@ -40,4 +40,5 @@ libyubikey.la
 modhex
 ykgenerate
 ykparse
-
+libyubikey-*.tar.gz
+libyubikey-*.tar.gz.sig
