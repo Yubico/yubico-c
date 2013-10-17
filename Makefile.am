@@ -30,6 +30,8 @@ SUBDIRS=. tests
 
 ACLOCAL_AMFLAGS = -I m4
 
+DISTCHECK_CONFIGURE_FLAGS = --enable-gcc-warnings
+
 AM_CFLAGS = $(WARN_CFLAGS)
 
 # The library.
@@ -61,7 +63,7 @@ ykparse_LDADD = ./libyubikey.la
 ykgenerate_SOURCES = ykgenerate.c
 ykgenerate_LDADD = ./libyubikey.la
 
-dist_man1_MANS = modhex.1
+dist_man1_MANS = modhex.1 ykparse.1 ykgenerate.1
 
 # Release
 
