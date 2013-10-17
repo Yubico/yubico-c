@@ -1,5 +1,5 @@
 # Written by Simon Josefsson <simon@josefsson.org>.
-# Copyright (c) 2006-2012 Yubico AB
+# Copyright (c) 2006-2013 Yubico AB
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -27,6 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 AC_INIT([libyubikey], [1.11], [yubico-devel@googlegroups.com])
+AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 
 # Library code modified:                              REVISION++
@@ -49,6 +50,7 @@ AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 
 gl_LD_VERSION_SCRIPT
+gl_VALGRIND_TESTS
 
 AC_ARG_ENABLE([gcc-warnings],
   [AS_HELP_STRING([--enable-gcc-warnings],
@@ -84,3 +86,15 @@ AC_CONFIG_FILES([
   tests/Makefile
 ])
 AC_OUTPUT
+
+AC_MSG_NOTICE([summary of build options:
+
+  version:          ${VERSION} shared $LT_CURRENT:$LT_REVISION:$LT_AGE major $YKPERS_VERSION_MAJOR minor $YKPERS_VERSION_MINOR patch $YKPERS_VERSION_PATCH number $YKPERS_VERSION_NUMBER
+  Host type:        ${host}
+  Install prefix:   ${prefix}
+  Compiler:         ${CC}
+  Warning flags:    ${WARN_CFLAGS}
+  Library types:    Shared=${enable_shared}, Static=${enable_static}
+  Valgrind:         ${VALGRIND}
+  Version script:   $have_ld_version_script
+])
