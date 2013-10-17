@@ -1,5 +1,5 @@
 # Written by Simon Josefsson <simon@josefsson.org>.
-# Copyright (c) 2012 Yubico AB
+# Copyright (c) 2012-2013 Yubico AB
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -34,3 +34,5 @@ LDADD = ../libyubikey.la
 
 check_PROGRAMS = selftest
 TESTS = $(check_PROGRAMS)
+
+TESTS_ENVIRONMENT = $(VALGRIND)

@@ -4,6 +4,9 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 ** Add man pages.
 
+** Self-tests may be run under valgrind to catch bugs.
+Disable with "./configure --disable-valgrind-tests".
+
 * Version 1.10 (released 2013-03-12)
 
 ** Added ./configure --enable-gcc-warnings to enable a lot of warnings.
