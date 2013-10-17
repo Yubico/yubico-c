@@ -2,27 +2,8 @@ YubiKey C Library: libyubikey
 =============================
 
 This package make up the low-level C software development kit for the
-Yubico authentication device, the YubiKey.  In particular:
-
-* AUTHORS, COPYING, NEWS, README, THANKS: Meta-information about the project.
-
-* yubikey.h: Prototypes for library.
-
-* yktoken.c, ykmodhex.c, ykhex.c, ykcrc.c, ykaes.c: Library implementation.
-
-* selftest.c: Library self tests.
-
-* modhex.c: Command-line tool for modhex encoding/decoding.
-
-* ykgenerate.c: Command line tool to construct and encrypt an OTP.
-
-* ykparse.c: Command line tool to decrypt and parse an OTP.
-
-* simple.mk: Simple makefile to build the above parts.
-
-* configure.ac, Makefile.am: Autoconf/Automake files.
-
-* libyubikey.map: Linker version script.
+Yubico YubiKey authentication device.  See https://www.yubico.com/ for
+more information about Yubico and the YubiKey.
 
 License
 -------
@@ -80,6 +61,7 @@ and internal data values.
 
 Example usage:
 
+-------
   $ ./modhex test
   ifhgieif
   $ ./modhex -d ifhgieif; echo
@@ -165,3 +147,4 @@ Example usage:
     crc: F0B8
     crc check: ok
   $
+-------

@@ -1,5 +1,5 @@
 # Written by Simon Josefsson <simon@josefsson.org>.
-# Copyright (c) 2006-2012 Yubico AB
+# Copyright (c) 2006-2013 Yubico AB
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -60,6 +60,8 @@ ykparse_LDADD = ./libyubikey.la
 
 ykgenerate_SOURCES = ykgenerate.c
 ykgenerate_LDADD = ./libyubikey.la
+
+dist_man1_MANS = modhex.1
 
 # Release
 
