@@ -31,6 +31,9 @@ information.
 Building from version controlled sources
 ----------------------------------------
 
+Warning!  This is only for developers and if you don't understand what
+you are doing, you should download the release files instead.
+
 You may check out the sources using GIT with the following command:
 
   git clone git://github.com/Yubico/yubico-c.git
@@ -39,9 +42,11 @@ This will create a directory 'yubico-c'.  Enter the directory:
 
   cd yubico-c
 
-You need to have recent versions of autoconf, automake and libtool
-installed if you want to use the normal ./configure based approach.
-Use simple.mk if you don't want this step.  Generate the build system:
+Recent versions of autoconf, automake and libtool must be installed,
+if you want to use the normal ./configure based approach.  Use
+simple.mk if you don't want this step.
+
+Generate the build system:
 
   autoreconf --install
 
