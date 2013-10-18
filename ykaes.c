@@ -1,6 +1,6 @@
 /* ykaes.c --- Implementation of AES-128.
  *
- * Copyright (c) 2006-2012 Yubico AB
+ * Copyright (c) 2006-2013 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -138,8 +138,6 @@ yubikey_aes_decrypt (uint8_t * state, const uint8_t * key)
 
   for (i = 1; i <= NUMBER_OF_ROUNDS; i++)
     {
-      // inv_byte_sub_shift_row();
-
       /* First row: 0 shift, 0 4 8 12 */
       state[0] = rijndael_inv_sbox[state[0]];
       state[4] = rijndael_inv_sbox[state[4]];
@@ -168,8 +166,6 @@ yubikey_aes_decrypt (uint8_t * state, const uint8_t * key)
       state[11] = rijndael_inv_sbox[state[15]];
       state[15] = rijndael_inv_sbox[j];
 
-//              get_inv_round_key(i);
-
       for (j = 15; j > 3; j--)
 	round_key[j] ^= round_key[j - 4];
 
@@ -184,9 +180,6 @@ yubikey_aes_decrypt (uint8_t * state, const uint8_t * key)
 	state[j] ^= round_key[j];
       if (i != NUMBER_OF_ROUNDS)
 	{
-
-	  //inv_mix_column();
-
 	  for (j = 0; j < 16; j += 4)
 	    {
 	      k1 = state[j] ^ state[j + 2];
@@ -237,9 +230,6 @@ yubikey_aes_encrypt (uint8_t * state, const uint8_t * key)
 
   for (i = 0; i < NUMBER_OF_ROUNDS; i++)
     {
-
-      // byte_sub_shift_row(state);
-
       /* First row: 0 shift, 0 4 8 12 */
       state[0] = rijndael_sbox[state[0]];
       state[4] = rijndael_sbox[state[4]];
@@ -270,9 +260,6 @@ yubikey_aes_encrypt (uint8_t * state, const uint8_t * key)
 
       if (i != (NUMBER_OF_ROUNDS - 1))
 	{
-
-	  // mix_column(state);
-
 	  for (k = 0; k < 16; k += 4)
 	    {
 
@@ -305,8 +292,6 @@ yubikey_aes_encrypt (uint8_t * state, const uint8_t * key)
 
       for (k = 4; k < 16; k++)
 	round_key[k] ^= round_key[k - 4];
-
-      // add_round_key(state, round_key);
 
       for (j = 0; j < 16; j++)
 	state[j] ^= round_key[j];
