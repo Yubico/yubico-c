@@ -19,9 +19,9 @@ Building
 After downloading and unpacking the package tarball, you build it as
 follows.
 
-  $ ./configure
-  $ make check
-  $ sudo make install
+  ./configure
+  make check
+  sudo make install
 
 Another way to build the package is with a hand written short
 makefile, invoke using 'make -f simple.mk check'.  This is usually not
@@ -39,9 +39,9 @@ This will create a directory 'yubico-c'.  Enter the directory:
 
   cd yubico-c
 
-You need to have autoconf, automake and libtool installed if you want
-to use the normal ./configure based approach.  Use simple.mk if you
-don't want this step.  Generate the build system using:
+You need to have recent versions of autoconf, automake and libtool
+installed if you want to use the normal ./configure based approach.
+Use simple.mk if you don't want this step.  Generate the build system:
 
   autoreconf --install
 
