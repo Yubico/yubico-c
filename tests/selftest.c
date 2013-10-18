@@ -132,7 +132,8 @@ main (void)
 
     memcpy (buf, "0123456789abcdef\0", 17);
     memcpy (key, "abcdef0123456789\0", 17);
-    printf ("aes-decrypt (data=%s, key=%s)\n => ", (char *) buf, (char *) key);
+    printf ("aes-decrypt (data=%s, key=%s)\n => ", (char *) buf,
+	    (char *) key);
     yubikey_aes_decrypt (buf, key);
     for (i = 0; i < 16; i++)
       printf ("%02x", buf[i] & 0xFF);
@@ -158,7 +159,8 @@ main (void)
     /* Test OTP */
 
     memcpy ((void *) &tok,
-	    "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00", 16);
+	    "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00",
+	    16);
     memcpy (key, "abcdef0123456789", 16);
 
     yubikey_generate ((void *) &tok, key, out);

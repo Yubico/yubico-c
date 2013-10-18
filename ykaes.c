@@ -226,7 +226,7 @@ Where:
 *************************************************************************/
 
 void
-yubikey_aes_encrypt (uint8_t *state, const uint8_t *key)
+yubikey_aes_encrypt (uint8_t * state, const uint8_t * key)
 {
   unsigned char i, j, k, tmp, round_key[0x10];
 

@@ -65,9 +65,13 @@ ykgenerate_LDADD = ./libyubikey.la
 
 dist_man1_MANS = modhex.1 ykparse.1 ykgenerate.1
 
-# Release
-
 EXTRA_DIST = simple.mk THANKS
+
+# Maintainer rules
+
+indent:
+	indent *.c *.h tests/*.c
+	indent *.c *.h tests/*.c
 
 ChangeLog:
 	cd $(srcdir) && git2cl > ChangeLog
