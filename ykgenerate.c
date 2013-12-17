@@ -137,14 +137,7 @@ main (int argc, char *argv[])
 
   yubikey_generate ((void *) &tok, key, otp);
 
-  {
-    size_t i;
-
-    for (i = 0; i < 32; i++)
-      printf ("%c", otp[i]);
-
-    printf ("\n");
-  }
+  printf ("%s\n", otp);
 
   return EXIT_SUCCESS;
 }
