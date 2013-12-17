@@ -43,7 +43,7 @@ int
 main (int argc, char *argv[])
 {
   uint8_t key[YUBIKEY_KEY_SIZE];
-  char otp[YUBIKEY_OTP_SIZE];
+  char otp[YUBIKEY_OTP_SIZE + 1];
   char *aeskey, *yk_internalname, *yk_counter, *yk_low, *yk_high, *yk_use;
   yubikey_token_st tok;
 
