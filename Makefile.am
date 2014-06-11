@@ -65,13 +65,13 @@ ykgenerate_LDADD = ./libyubikey.la
 
 dist_man_MANS = modhex.1 ykparse.1 ykgenerate.1
 DISTCLEANFILES = $(dist_man_MANS)
-EXTRA_DIST = modhex.1.txt ykparse.1.txt ykgenerate.1.txt
 
 SUFFIXES = .1.txt .1
 .1.txt.1:
 	$(A2X) --format=manpage -a revdate="Version $(VERSION)" $<
 
-EXTRA_DIST += simple.mk THANKS
+MANSOURCES = modhex.1.txt ykparse.1.txt ykgenerate.1.txt
+EXTRA_DIST = $(MANSOURCES) simple.mk THANKS
 
 # Maintainer rules
 
@@ -106,4 +106,5 @@ release:
 	cd $(srcdir) && git push
 	cd $(srcdir) && git tag -u $(KEYID) -m $(VERSION) $(PACKAGE)-$(VERSION)
 	cd $(srcdir) && git push --tags
+	$(YUBICO_GITHUB_REPO)/save-mans $(PROJECT) $(MANSOURCES)
 	$(YUBICO_GITHUB_REPO)/publish $(PROJECT) $(VERSION) $(PACKAGE)-$(VERSION).tar.gz*
