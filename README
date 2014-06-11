@@ -43,8 +43,9 @@ This will create a directory 'yubico-c'.  Enter the directory:
   cd yubico-c
 
 Recent versions of autoconf, automake and libtool must be installed,
-if you want to use the normal ./configure based approach.  Use
-simple.mk if you don't want this step.
+if you want to use the normal ./configure based approach.  AsciiDoc's
+a2x tool is also required for building the man pages.  (See simple.mk
+if you want a slimmed down non-autoconf build approach.)
 
 Generate the build system:
 
