@@ -1,5 +1,5 @@
 # Written by Simon Josefsson <simon@josefsson.org>.
-# Copyright (c) 2006-2013 Yubico AB
+# Copyright (c) 2006-2014 Yubico AB
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -63,9 +63,15 @@ ykparse_LDADD = ./libyubikey.la
 ykgenerate_SOURCES = ykgenerate.c
 ykgenerate_LDADD = ./libyubikey.la
 
-dist_man1_MANS = modhex.1 ykparse.1 ykgenerate.1
+dist_man_MANS = modhex.1 ykparse.1 ykgenerate.1
+DISTCLEANFILES = $(dist_man_MANS)
+EXTRA_DIST = modhex.1.txt ykparse.1.txt ykgenerate.1.txt
 
-EXTRA_DIST = simple.mk THANKS
+SUFFIXES = .1.txt .1
+.1.txt.1:
+	$(A2X) --format=manpage -a revdate="Version $(VERSION)" $<
+
+EXTRA_DIST += simple.mk THANKS
 
 # Maintainer rules
 

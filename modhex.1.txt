@@ -1,0 +1,50 @@
+MODHEX(1)
+=========
+:doctype:      manpage
+:man source:   yubico-c
+:man manual:   YubiKey C Library Manual
+
+NAME
+----
+modhex - convert data to/from modhex encoding
+
+SYNOPSIS
+--------
+*modhex* [-d] [-h] 'DATA'
+
+DESCRIPTION
+-----------
+Encode/decode modhex data 'DATA' to binary and hex.
+
+OPTIONS
+-------
+The string DATA is the data to convert.
+
+*-d*::
+Decode data (the default is to encode data).
+
+*-h*::
+Use hex encoding for all non-modhex data.
+
+EXAMPLES
+--------
+
+ModHex encode ASCII-string "test":
+
+  modhex test
+
+Decode ModHex data "ifhgieif" into ASCII string:
+
+  modhex -d ifhgieif
+
+ModHex encode hex-encoded data "b565716f":
+
+  modhex -h b565716f
+
+Decode ModHex data "nghgibhv" and print hex-encode data:
+
+  modhex -d -h nghgibhv
+
+SEE ALSO
+---------
+YubiKeys can be obtained from Yubico: http://www.yubico.com/

@@ -1,0 +1,36 @@
+YKPARSE(1)
+=========
+:doctype:      manpage
+:man source:   yubico-c
+:man manual:   YubiKey C Library Manual
+
+NAME
+----
+ykparse - decrypt and show information inside a YubiKey OTP
+
+SYNOPSIS
+--------
+*ykparse* 'AESKEY' 'TOKEN'
+
+DESCRIPTION
+-----------
+Decrypt and display information inside a YubiKey OTP.
+
+OPTIONS
+-------
+*AESKEY*::
+The 16-character AES-128 key to use in hex.
+
+*TOKEN*::
+The modhex encoded One-Time Password (OTP).
+
+EXAMPLES
+--------
+
+Typical usage of the tool is as follows.
+
+  ykparse ecde18dbe76fbd0c33330f1c354871db dteffujedcflcindvdbrblehecuitvjkjevvehjd
+
+SEE ALSO
+---------
+YubiKeys can be obtained from Yubico: http://www.yubico.com/

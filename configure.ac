@@ -1,5 +1,5 @@
 # Written by Simon Josefsson <simon@josefsson.org>.
-# Copyright (c) 2006-2013 Yubico AB
+# Copyright (c) 2006-2014 Yubico AB
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -48,6 +48,7 @@ AM_PROG_AR
 
 AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
+AM_MISSING_PROG([A2X], a2x, $missing_dir)
 
 gl_LD_VERSION_SCRIPT
 gl_VALGRIND_TESTS

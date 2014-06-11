@@ -1,5 +1,6 @@
 *.lo
 *.o
+*~
 .deps
 .libs
 ChangeLog
@@ -31,6 +32,7 @@ m4/ltsugar.m4
 m4/ltversion.m4
 m4/lt~obsolete.m4
 modhex
+modhex.1
 tests/Makefile
 tests/Makefile.in
 tests/selftest
@@ -39,4 +41,6 @@ tests/selftest.o
 tests/selftest.trs
 tests/test-suite.log
 ykgenerate
+ykgenerate.1
 ykparse
+ykparse.1

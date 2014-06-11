@@ -2,6 +2,8 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 * Version 1.12 (unreleased)
 
+** Rewrote man pages using Asciidoc.
+
 * Version 1.11 (released 2013-10-18)
 
 ** Add man pages.

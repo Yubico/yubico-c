@@ -1,0 +1,50 @@
+YKPARSE(1)
+=========
+:doctype:      manpage
+:man source:   yubico-c
+:man manual:   YubiKey C Library Manual
+
+NAME
+----
+ykgenerate - construct and encrypt an OTP from given data
+
+SYNOPSIS
+--------
+*ykgenerate* 'AESKEY' 'YK_INTERNALNAME' 'YK_COUNTER' 'YK_LOW' 'YK_HIGH' 'YK_USE'
+
+DESCRIPTION
+-----------
+Generate OTPs by encrypting given values under the given encryption key.
+
+OPTIONS
+-------
+*AESKEY*::
+The 16-character AES-128 key to use in hex.
+
+*YK_INTERNALNAME*::
+Hex encoded internal identity (48 bit).
+
+*YK_COUNTER*::
+Hex encoded counter (16 bit).
+
+*YK_LOW*::
+Hex encoded timestamp low (16 bit).
+
+*YK_HIGH*::
+Hex encoded timestamp high (8bit).
+
+*YK_USE*::
+Hex encoded use (8 bit).
+
+EXAMPLES
+--------
+
+Typical usage of the tool is as follows.
+
+  ykgenerate ecde18dbe76fbd0c33330f1c354871db 8792ebfe26cc 0013 c0a8 00 10
+
+Use ykparse(1) to decode the resulting OTP.
+
+SEE ALSO
+---------
+YubiKeys can be obtained from Yubico: http://www.yubico.com/
