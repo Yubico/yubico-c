@@ -103,7 +103,7 @@ main (int argc, char *argv[])
 
   if (!decode_p && hex_p)
     {
-      size_t i;
+      unsigned long i;
       char *tmp;
 
       if (inlen & 1)
@@ -126,7 +126,7 @@ main (int argc, char *argv[])
 
 	  if ((p = strchr (hex, data[i])) == NULL)
 	    {
-	      printf ("error: input not hex encoded at position %ld\n", i);
+	      printf ("error: input not hex encoded at position %lu\n", i);
 	      free (tmp);
 	      return 1;
 	    }
