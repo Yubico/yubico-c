@@ -1,6 +1,6 @@
 Author: Yubico
 Basename: libyubikey
-Homepage: http://opensource.yubico.com/yubico-c/
+Homepage: https://developers.yubico.com/yubico-c/
 License: BSD-2-Clause
 Name: Yubico C low-level Library
 Project: yubico-c
