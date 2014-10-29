@@ -2,16 +2,7 @@ YubiKey C Library: libyubikey
 =============================
 
 This package make up the low-level C software development kit for the
-Yubico YubiKey authentication device.  See https://www.yubico.com/ for
-more information about Yubico and the YubiKey.
-
-License
--------
-
-The project is licensed under a BSD license.  See the file COPYING for
-exact wording.  For any copyright year range specified as YYYY-ZZZZ in
-this package note that the range specifies every single year in that
-closed interval.
+Yubico https://www.yubico.com[YubiKey] authentication device.
 
 Building
 --------
@@ -155,3 +146,11 @@ Example usage:
     crc check: ok
   $
 -------
+
+License
+-------
+
+The project is licensed under a BSD license.  See the file COPYING for
+exact wording.  For any copyright year range specified as YYYY-ZZZZ in
+this package note that the range specifies every single year in that
+closed interval.
