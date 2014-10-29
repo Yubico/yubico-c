@@ -67,6 +67,7 @@ and internal data values.
 
 Example usage:
 
+[source, sh]
 -------
   $ ./modhex test
   ifhgieif
