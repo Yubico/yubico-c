@@ -25,7 +25,7 @@ Building from version controlled sources
 Warning!  This is only for developers and if you don't understand what
 you are doing, you should download the release files instead.
 
-You may check out the sources using GIT with the following command:
+You may check out the sources using Git with the following command:
 
   git clone git://github.com/Yubico/yubico-c.git
 
@@ -47,13 +47,13 @@ Then refer to the user sections above regarding building.
 Command-line tools
 ------------------
 
-The "modhex" program converts data between modhex, normal hex, and
+The 'modhex' program converts data between modhex, normal hex, and
 binary form.
 
-The "ykparse" program decrypts and parses one OTP given the OTP and
+The 'ykparse' program decrypts and parses one OTP given the OTP and
 the AES key corresponding to that YubiKey.
 
-The "ykgenerate" program constructs and encrypts one OTP given AES key
+The 'ykgenerate' program constructs and encrypts one OTP given AES key
 and internal data values.
 
 Example usage:
