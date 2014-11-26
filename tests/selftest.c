@@ -200,6 +200,44 @@ otp_test1 (void)
   printf ("OTP-1 success\n");
 }
 
+static void
+crc_test1 (void)
+{
+  unsigned char buf[] = { 0, 1, 2, 3, 4 };
+  uint16_t crc = yubikey_crc16 (buf, sizeof (buf));
+  assert (crc == 62919);
+  printf ("CRC-1 success\n");
+}
+
+static void
+crc_test2 (void)
+{
+  unsigned char buf[] = { 0xfe };
+  uint16_t crc = yubikey_crc16 (buf, sizeof (buf));
+  assert (crc == 4470);
+  printf ("CRC-2 success\n");
+}
+
+static void
+crc_test3 (void)
+{
+  unsigned char buf[] = { 0x55, 0xaa, 0, 0xff };
+  uint16_t crc = yubikey_crc16 (buf, sizeof (buf));
+  assert (crc == 52149);
+  printf ("CRC-3 success\n");
+}
+
+static void
+crc_test4 (void)
+{
+  unsigned char buf[] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06,
+    0x30, 0x75, 0x00, 0x09, 0x3d, 0xfa, 0x60, 0xea
+  };
+  uint16_t crc = yubikey_crc16 (buf, sizeof (buf));
+  assert (crc == 35339);
+  printf ("CRC-4 success\n");
+}
+
 int
 main (void)
 {
@@ -213,6 +251,10 @@ main (void)
   hex_test5 ();
   aes_test1 ();
   otp_test1 ();
+  crc_test1 ();
+  crc_test2 ();
+  crc_test3 ();
+  crc_test4 ();
 
   return 0;
 }
