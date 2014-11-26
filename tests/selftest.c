@@ -55,7 +55,7 @@ main (void)
   printf ("Modhex-1 success\n");
 
   printf ("modhex-decode(\"%s\") = ", buf);
-  yubikey_modhex_decode (buf2, buf, sizeof(buf2));
+  yubikey_modhex_decode (buf2, buf, sizeof (buf2));
   printf ("%.*s\n", 4, buf2);
   if (memcmp (buf2, "test", 4) != 0)
     {
@@ -96,8 +96,8 @@ main (void)
   printf ("Hex-1 success\n");
 
   printf ("hex-decode(\"%s\") = ", buf);
-  memset(buf2, 0, sizeof(buf2));
-  yubikey_hex_decode (buf2, buf, sizeof(buf2));
+  memset (buf2, 0, sizeof (buf2));
+  yubikey_hex_decode (buf2, buf, sizeof (buf2));
   printf ("%.*s\n", 4, buf2);
   if (memcmp (buf2, "test", 4) != 0)
     {
@@ -127,13 +127,13 @@ main (void)
   printf ("Hex-4 success\n");
 
   strcpy (buf, "a2c2a");
-  memset(buf2, 0, sizeof(buf2));
-  yubikey_hex_decode (buf2, buf, sizeof(buf2));
+  memset (buf2, 0, sizeof (buf2));
+  yubikey_hex_decode (buf2, buf, sizeof (buf2));
   printf ("hex-decode(\"%s\") = %x%x%x\n", buf, buf2[0], buf2[1], buf2[2]);
   cmp[0] = 0xa;
   cmp[1] = 0x2c;
   cmp[2] = 0x2a;
-  if (memcmp(buf2, cmp, 3) != 0)
+  if (memcmp (buf2, cmp, 3) != 0)
     {
       printf ("Hex failure\n");
       return 1;

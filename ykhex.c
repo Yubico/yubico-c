@@ -36,7 +36,8 @@ static const char hex_trans[] = "0123456789abcdef";
 static const char modhex_trans[] = YUBIKEY_MODHEX_MAP;
 
 static void
-_yubikey_encode (char *dst, const char *src, size_t srcSize, const char *trans)
+_yubikey_encode (char *dst, const char *src, size_t srcSize,
+		 const char *trans)
 {
   while (srcSize--)
     {
@@ -48,15 +49,17 @@ _yubikey_encode (char *dst, const char *src, size_t srcSize, const char *trans)
 }
 
 static void
-_yubikey_decode (char *dst, const char *src, size_t dstSize, const char *trans)
+_yubikey_decode (char *dst, const char *src, size_t dstSize,
+		 const char *trans)
 {
   char b;
   int flag = 0;
   const char *p1;
 
-  if(strlen(src) % 2 == 1) {
-    flag = !flag;
-  }
+  if (strlen (src) % 2 == 1)
+    {
+      flag = !flag;
+    }
 
   for (; *src && dstSize > 0; src++)
     {
