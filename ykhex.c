@@ -53,6 +53,10 @@ yubikey_hex_decode (char *dst, const char *src, size_t dstSize)
   int flag = 0;
   const char *p1;
 
+  if(strlen(src) % 2 == 1) {
+    flag = !flag;
+  }
+
   for (; *src && dstSize > 0; src++)
     {
       if ((p1 = strchr (trans, *src)) == NULL)
