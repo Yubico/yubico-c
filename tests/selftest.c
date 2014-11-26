@@ -153,6 +153,53 @@ hex_test5 (void)
   printf ("Hex-5 success\n");
 }
 
+static void
+aes_test1 (void)
+{
+  size_t i;
+  uint8_t buf[1024];
+  uint8_t key[16 + 1];
+
+  memcpy (buf, "0123456789abcdef\0", 17);
+  memcpy (key, "abcdef0123456789\0", 17);
+  printf ("aes-decrypt (data=%s, key=%s)\n => ", (char *) buf, (char *) key);
+  yubikey_aes_decrypt (buf, key);
+  for (i = 0; i < 16; i++)
+    printf ("%02x", buf[i] & 0xFF);
+  printf ("\n");
+
+  assert (memcmp (buf,
+		  "\x83\x8a\x46\x7f\x34\x63\x95\x51"
+		  "\x75\x5b\xd3\x2a\x4a\x2f\x15\xe1", 16) == 0);
+  printf ("AES-1.1 success\n");
+
+  yubikey_aes_encrypt (buf, key);
+  assert (memcmp (buf, "0123456789abcdef", 16) == 0);
+  printf ("AES-1.2 success\n");
+}
+
+static void
+otp_test1 (void)
+{
+  yubikey_token_st tok;
+  char out[1024];
+  uint8_t key[16 + 1];
+
+  /* Test OTP */
+
+  memcpy ((void *) &tok,
+	  "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00", 16);
+  memcpy (key, "abcdef0123456789", 16);
+
+  yubikey_generate ((void *) &tok, key, out);
+  yubikey_parse ((uint8_t *) out, key, &tok);
+
+  assert (memcmp (&tok,
+		  "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00",
+		  16) == 0);
+  printf ("OTP-1 success\n");
+}
+
 int
 main (void)
 {
@@ -164,47 +211,8 @@ main (void)
   hex_test3 ();
   hex_test4 ();
   hex_test5 ();
-
-  {
-    size_t i;
-    yubikey_token_st tok;
-    uint8_t buf[1024];
-    char out[1024];
-    uint8_t key[16 + 1];
-
-    memcpy (buf, "0123456789abcdef\0", 17);
-    memcpy (key, "abcdef0123456789\0", 17);
-    printf ("aes-decrypt (data=%s, key=%s)\n => ", (char *) buf,
-	    (char *) key);
-    yubikey_aes_decrypt (buf, key);
-    for (i = 0; i < 16; i++)
-      printf ("%02x", buf[i] & 0xFF);
-    printf ("\n");
-
-    assert (memcmp (buf,
-		    "\x83\x8a\x46\x7f\x34\x63\x95\x51"
-		    "\x75\x5b\xd3\x2a\x4a\x2f\x15\xe1", 16) == 0);
-    printf ("AES-1 success\n");
-
-    yubikey_aes_encrypt (buf, key);
-    assert (memcmp (buf, "0123456789abcdef", 16) == 0);
-    printf ("AES-2 success\n");
-
-    /* Test OTP */
-
-    memcpy ((void *) &tok,
-	    "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00",
-	    16);
-    memcpy (key, "abcdef0123456789", 16);
-
-    yubikey_generate ((void *) &tok, key, out);
-    yubikey_parse ((uint8_t *) out, key, &tok);
-
-    assert (memcmp (&tok,
-		    "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00",
-		    16) == 0);
-    printf ("OTP-1 success\n");
-  }
+  aes_test1 ();
+  otp_test1 ();
 
   return 0;
 }
