@@ -34,66 +34,113 @@
 #include <stdio.h>
 #include <assert.h>
 
-int
-main (void)
+static void
+modhex_test1 (void)
 {
   char buf[1024];
   char buf2[1024];
-  char cmp[1024];
-  size_t i;
-  int rc;
-  yubikey_token_st tok;
 
-
-  /* Test Modhex */
   yubikey_modhex_encode (buf, "test", 4);
   printf ("modhex-encode(\"test\") = %s\n", buf);
   assert (strcmp (buf, "ifhgieif") == 0);
-  printf ("Modhex-1 success\n");
+  printf ("Modhex-1.1 success\n");
 
   printf ("modhex-decode(\"%s\") = ", buf);
   yubikey_modhex_decode (buf2, buf, sizeof (buf2));
   printf ("%.*s\n", 4, buf2);
   assert (memcmp (buf2, "test", 4) == 0);
-  printf ("Modhex-2 success\n");
+  printf ("Modhex-1.2 success\n");
+}
+
+static void
+modhex_test2 (void)
+{
+  char buf[1024];
+  int rc;
 
   strcpy (buf, "cbdefghijklnrtuv");
   rc = yubikey_modhex_p (buf);
-  printf ("hex-p(\"%s\") = %d\n", buf, rc);
+  printf ("modhex-p(\"%s\") = %d\n", buf, rc);
   assert (rc == 1);
-  printf ("Hex-3 success\n");
+  printf ("Modhex-2 success\n");
+}
+
+static void
+modhex_test3 (void)
+{
+  char buf[1024];
+  int rc;
+
+  strcpy (buf, "cbdefghijklnrtuv");
+  rc = yubikey_modhex_p (buf);
+  printf ("modhex-p(\"%s\") = %d\n", buf, rc);
+  assert (rc == 1);
+  printf ("Modhex-3 success\n");
+}
+
+static void
+hex_test1 (void)
+{
+  char buf[1024];
+  int rc;
 
   strcpy (buf, "0123Xabc");
   rc = yubikey_hex_p (buf);
   printf ("hex-p(\"%s\") = %d\n", buf, rc);
   assert (rc == 0);
-  printf ("Hex-3 success\n");
+  printf ("Hex-1 success\n");
+}
 
-  /* Test Hex */
+static void
+hex_test2 (void)
+{
+  char buf[1024];
+  char buf2[1024];
 
   yubikey_hex_encode (buf, "test", 4);
   printf ("hex-encode(\"test\") = %s\n", buf);
   assert (strcmp (buf, "74657374") == 0);
-  printf ("Hex-1 success\n");
+  printf ("Hex-2.1 success\n");
 
   printf ("hex-decode(\"%s\") = ", buf);
-  memset (buf2, 0, sizeof (buf2));
   yubikey_hex_decode (buf2, buf, sizeof (buf2));
   printf ("%.*s\n", 4, buf2);
   assert (memcmp (buf2, "test", 4) == 0);
-  printf ("Hex-2 success\n");
+  printf ("Hex-2.2 success\n");
+}
+
+static void
+hex_test3 (void)
+{
+  char buf[1024];
+  int rc;
 
   strcpy (buf, "0123456789abcdef");
   rc = yubikey_hex_p (buf);
   printf ("hex-p(\"%s\") = %d\n", buf, rc);
   assert (rc == 1);
   printf ("Hex-3 success\n");
+}
+
+static void
+hex_test4 (void)
+{
+  char buf[1024];
+  int rc;
 
   strcpy (buf, "0123Xabc");
   rc = yubikey_hex_p (buf);
   printf ("hex-p(\"%s\") = %d\n", buf, rc);
   assert (rc == 0);
   printf ("Hex-4 success\n");
+}
+
+static void
+hex_test5 (void)
+{
+  char buf[1024];
+  char buf2[1024];
+  char cmp[1024];
 
   strcpy (buf, "a2c2a");
   memset (buf2, 0, sizeof (buf2));
@@ -104,10 +151,23 @@ main (void)
   cmp[2] = 0x2a;
   assert (memcmp (buf2, cmp, 3) == 0);
   printf ("Hex-5 success\n");
+}
 
-  /* Test AES */
+int
+main (void)
+{
+  modhex_test1 ();
+  modhex_test2 ();
+  modhex_test3 ();
+  hex_test1 ();
+  hex_test2 ();
+  hex_test3 ();
+  hex_test4 ();
+  hex_test5 ();
 
   {
+    size_t i;
+    yubikey_token_st tok;
     uint8_t buf[1024];
     char out[1024];
     uint8_t key[16 + 1];
