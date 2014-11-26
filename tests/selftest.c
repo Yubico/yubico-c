@@ -124,18 +124,18 @@ main (void)
       printf ("Hex_p failure\n");
       return 1;
     }
-  printf ("Hex-3 success\n");
+  printf ("Hex-4 success\n");
 
   strcpy (buf, "a2c2a");
   memset(buf2, 0, sizeof(buf2));
   yubikey_hex_decode (buf2, buf, sizeof(buf2));
-  printf(" %x %x %x \n", buf2[0], buf2[1], buf2[2]);
+  printf ("hex-decode(\"%s\") = %x%x%x\n", buf, buf2[0], buf2[1], buf2[2]);
   cmp[0] = 0xa;
   cmp[1] = 0x2c;
   cmp[2] = 0x2a;
   if (memcmp(buf2, cmp, 3) != 0)
     {
-      printf ("Hex_decode failure\n");
+      printf ("Hex failure\n");
       return 1;
     }
   printf ("Hex-5 success\n");
