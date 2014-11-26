@@ -39,7 +39,7 @@ AM_CFLAGS = $(WARN_CFLAGS)
 lib_LTLIBRARIES = libyubikey.la
 include_HEADERS = yubikey.h
 
-libyubikey_la_SOURCES = yktoken.c ykhex.c ykmodhex.c ykcrc.c ykaes.c
+libyubikey_la_SOURCES = yktoken.c ykhex.c ykcrc.c ykaes.c
 libyubikey_la_SOURCES += libyubikey.map
 libyubikey_la_LDFLAGS = -no-undefined \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)

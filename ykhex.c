@@ -1,7 +1,7 @@
 /* ykhex.c --- Implementation of hex encoding/decoding
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006-2012 Yubico AB
+ * Copyright (c) 2006-2014 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,10 +32,11 @@
 
 #include "yubikey.h"
 
-static const char trans[] = "0123456789abcdef";
+static const char hex_trans[] = "0123456789abcdef";
+static const char modhex_trans[] = YUBIKEY_MODHEX_MAP;
 
-void
-yubikey_hex_encode (char *dst, const char *src, size_t srcSize)
+static void
+_yubikey_encode (char *dst, const char *src, size_t srcSize, const char *trans)
 {
   while (srcSize--)
     {
@@ -46,8 +47,8 @@ yubikey_hex_encode (char *dst, const char *src, size_t srcSize)
   *dst = '\0';
 }
 
-void
-yubikey_hex_decode (char *dst, const char *src, size_t dstSize)
+static void
+_yubikey_decode (char *dst, const char *src, size_t dstSize, const char *trans)
 {
   char b;
   int flag = 0;
@@ -77,12 +78,49 @@ yubikey_hex_decode (char *dst, const char *src, size_t dstSize)
     *dst++ = 0;
 }
 
-int
-yubikey_hex_p (const char *str)
+static int
+_yubikey_p (const char *str, const char *trans)
 {
   for (; *str; str++)
     if (strchr (trans, *str) == NULL)
       return 0;
 
   return 1;
+}
+
+void
+yubikey_hex_encode (char *dst, const char *src, size_t srcSize)
+{
+  _yubikey_encode (dst, src, srcSize, hex_trans);
+}
+
+void
+yubikey_hex_decode (char *dst, const char *src, size_t dstSize)
+{
+  _yubikey_decode (dst, src, dstSize, hex_trans);
+}
+
+int
+yubikey_hex_p (const char *str)
+{
+  return _yubikey_p (str, hex_trans);
+}
+
+
+void
+yubikey_modhex_encode (char *dst, const char *src, size_t srcSize)
+{
+  _yubikey_encode (dst, src, srcSize, modhex_trans);
+}
+
+void
+yubikey_modhex_decode (char *dst, const char *src, size_t dstSize)
+{
+  _yubikey_decode (dst, src, dstSize, modhex_trans);
+}
+
+int
+yubikey_modhex_p (const char *str)
+{
+  return _yubikey_p (str, modhex_trans);
 }
