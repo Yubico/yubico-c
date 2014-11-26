@@ -37,6 +37,7 @@ int
 main (void)
 {
   char buf[1024];
+  char buf2[1024];
   size_t i;
   int rc;
   yubikey_token_st tok;
@@ -53,9 +54,9 @@ main (void)
   printf ("Modhex-1 success\n");
 
   printf ("modhex-decode(\"%s\") = ", buf);
-  yubikey_modhex_decode (buf, buf, strlen ((char *) buf));
-  printf ("%.*s\n", 4, buf);
-  if (memcmp (buf, "test", 4) != 0)
+  yubikey_modhex_decode (buf2, buf, strlen ((char *) buf));
+  printf ("%.*s\n", 4, buf2);
+  if (memcmp (buf2, "test", 4) != 0)
     {
       printf ("ModHex failure\n");
       return 1;
@@ -94,9 +95,10 @@ main (void)
   printf ("Hex-1 success\n");
 
   printf ("hex-decode(\"%s\") = ", buf);
-  yubikey_hex_decode (buf, buf, strlen ((char *) buf));
-  printf ("%.*s\n", 4, buf);
-  if (memcmp (buf, "test", 4) != 0)
+  memset(buf2, 0, sizeof(buf2));
+  yubikey_hex_decode (buf2, buf, strlen ((char *) buf));
+  printf ("%.*s\n", 4, buf2);
+  if (memcmp (buf2, "test", 4) != 0)
     {
       printf ("Hex failure\n");
       return 1;
