@@ -55,7 +55,7 @@ main (void)
   printf ("Modhex-1 success\n");
 
   printf ("modhex-decode(\"%s\") = ", buf);
-  yubikey_modhex_decode (buf2, buf, strlen ((char *) buf));
+  yubikey_modhex_decode (buf2, buf, sizeof(buf2));
   printf ("%.*s\n", 4, buf2);
   if (memcmp (buf2, "test", 4) != 0)
     {
@@ -97,7 +97,7 @@ main (void)
 
   printf ("hex-decode(\"%s\") = ", buf);
   memset(buf2, 0, sizeof(buf2));
-  yubikey_hex_decode (buf2, buf, strlen ((char *) buf));
+  yubikey_hex_decode (buf2, buf, sizeof(buf2));
   printf ("%.*s\n", 4, buf2);
   if (memcmp (buf2, "test", 4) != 0)
     {
@@ -128,7 +128,7 @@ main (void)
 
   strcpy (buf, "a2c2a");
   memset(buf2, 0, sizeof(buf2));
-  yubikey_hex_decode (buf2, buf, strlen ((char *) buf));
+  yubikey_hex_decode (buf2, buf, sizeof(buf2));
   printf(" %x %x %x \n", buf2[0], buf2[1], buf2[2]);
   cmp[0] = 0xa;
   cmp[1] = 0x2c;
