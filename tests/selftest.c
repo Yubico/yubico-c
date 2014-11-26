@@ -1,7 +1,7 @@
 /* yubikey-test.c --- Self-tests for authentication token functions.
  *
  * Written by Simon Josefsson <simon@josefsson.org>.
- * Copyright (c) 2006-2012 Yubico AB
+ * Copyright (c) 2006-2014 Yubico AB
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,6 +32,7 @@
 
 #include <yubikey.h>
 #include <stdio.h>
+#include <assert.h>
 
 int
 main (void)
@@ -47,83 +48,51 @@ main (void)
   /* Test Modhex */
   yubikey_modhex_encode (buf, "test", 4);
   printf ("modhex-encode(\"test\") = %s\n", buf);
-  if (strcmp (buf, "ifhgieif") != 0)
-    {
-      printf ("ModHex failure\n");
-      return 1;
-    }
+  assert (strcmp (buf, "ifhgieif") == 0);
   printf ("Modhex-1 success\n");
 
   printf ("modhex-decode(\"%s\") = ", buf);
   yubikey_modhex_decode (buf2, buf, sizeof (buf2));
   printf ("%.*s\n", 4, buf2);
-  if (memcmp (buf2, "test", 4) != 0)
-    {
-      printf ("ModHex failure\n");
-      return 1;
-    }
+  assert (memcmp (buf2, "test", 4) == 0);
   printf ("Modhex-2 success\n");
 
   strcpy (buf, "cbdefghijklnrtuv");
   rc = yubikey_modhex_p (buf);
   printf ("hex-p(\"%s\") = %d\n", buf, rc);
-  if (!rc)
-    {
-      printf ("Hex_p failure\n");
-      return 1;
-    }
+  assert (rc == 1);
   printf ("Hex-3 success\n");
 
   strcpy (buf, "0123Xabc");
   rc = yubikey_hex_p (buf);
   printf ("hex-p(\"%s\") = %d\n", buf, rc);
-  if (rc)
-    {
-      printf ("Hex_p failure\n");
-      return 1;
-    }
+  assert (rc == 0);
   printf ("Hex-3 success\n");
 
   /* Test Hex */
 
   yubikey_hex_encode (buf, "test", 4);
   printf ("hex-encode(\"test\") = %s\n", buf);
-  if (strcmp (buf, "74657374") != 0)
-    {
-      printf ("Hex failure\n");
-      return 1;
-    }
+  assert (strcmp (buf, "74657374") == 0);
   printf ("Hex-1 success\n");
 
   printf ("hex-decode(\"%s\") = ", buf);
   memset (buf2, 0, sizeof (buf2));
   yubikey_hex_decode (buf2, buf, sizeof (buf2));
   printf ("%.*s\n", 4, buf2);
-  if (memcmp (buf2, "test", 4) != 0)
-    {
-      printf ("Hex failure\n");
-      return 1;
-    }
+  assert (memcmp (buf2, "test", 4) == 0);
   printf ("Hex-2 success\n");
 
   strcpy (buf, "0123456789abcdef");
   rc = yubikey_hex_p (buf);
   printf ("hex-p(\"%s\") = %d\n", buf, rc);
-  if (!rc)
-    {
-      printf ("Hex_p failure\n");
-      return 1;
-    }
+  assert (rc == 1);
   printf ("Hex-3 success\n");
 
   strcpy (buf, "0123Xabc");
   rc = yubikey_hex_p (buf);
   printf ("hex-p(\"%s\") = %d\n", buf, rc);
-  if (rc)
-    {
-      printf ("Hex_p failure\n");
-      return 1;
-    }
+  assert (rc == 0);
   printf ("Hex-4 success\n");
 
   strcpy (buf, "a2c2a");
@@ -133,11 +102,7 @@ main (void)
   cmp[0] = 0xa;
   cmp[1] = 0x2c;
   cmp[2] = 0x2a;
-  if (memcmp (buf2, cmp, 3) != 0)
-    {
-      printf ("Hex failure\n");
-      return 1;
-    }
+  assert (memcmp (buf2, cmp, 3) == 0);
   printf ("Hex-5 success\n");
 
   /* Test AES */
@@ -156,21 +121,13 @@ main (void)
       printf ("%02x", buf[i] & 0xFF);
     printf ("\n");
 
-    if (memcmp (buf,
-		"\x83\x8a\x46\x7f\x34\x63\x95\x51"
-		"\x75\x5b\xd3\x2a\x4a\x2f\x15\xe1", 16) != 0)
-      {
-	printf ("AES failure\n");
-	return 1;
-      }
+    assert (memcmp (buf,
+		    "\x83\x8a\x46\x7f\x34\x63\x95\x51"
+		    "\x75\x5b\xd3\x2a\x4a\x2f\x15\xe1", 16) == 0);
     printf ("AES-1 success\n");
 
     yubikey_aes_encrypt (buf, key);
-    if (memcmp (buf, "0123456789abcdef", 16) != 0)
-      {
-	printf ("AES encryption failure\n");
-	return 1;
-      }
+    assert (memcmp (buf, "0123456789abcdef", 16) == 0);
     printf ("AES-2 success\n");
 
     /* Test OTP */
@@ -183,13 +140,9 @@ main (void)
     yubikey_generate ((void *) &tok, key, out);
     yubikey_parse ((uint8_t *) out, key, &tok);
 
-    if (memcmp
-	(&tok, "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00",
-	 16) != 0)
-      {
-	printf ("OTP generation - parse failure\n");
-	return 1;
-      }
+    assert (memcmp (&tok,
+		    "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00",
+		    16) == 0);
     printf ("OTP-1 success\n");
   }
 
