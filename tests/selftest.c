@@ -38,6 +38,7 @@ main (void)
 {
   char buf[1024];
   char buf2[1024];
+  char cmp[1024];
   size_t i;
   int rc;
   yubikey_token_st tok;
@@ -124,6 +125,20 @@ main (void)
       return 1;
     }
   printf ("Hex-3 success\n");
+
+  strcpy (buf, "a2c2a");
+  memset(buf2, 0, sizeof(buf2));
+  yubikey_hex_decode (buf2, buf, strlen ((char *) buf));
+  printf(" %x %x %x \n", buf2[0], buf2[1], buf2[2]);
+  cmp[0] = 0xa;
+  cmp[1] = 0x2c;
+  cmp[2] = 0x2a;
+  if (memcmp(buf2, cmp, 3) != 0)
+    {
+      printf ("Hex_decode failure\n");
+      return 1;
+    }
+  printf ("Hex-5 success\n");
 
   /* Test AES */
 
