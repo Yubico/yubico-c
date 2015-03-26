@@ -45,6 +45,13 @@ Decode ModHex data "nghgibhv" and print hex-encode data:
 
   modhex -d -h nghgibhv
 
+MODHEX ALPHABET
+---------------
+The modhex alphabet is a base16 alphabet just as hex, they map as follows:
+
+ 0 1 2 3 4 5 6 7 8 9 a b c d e f
+ c b d e f g h i j k l n r t u v
+
 SEE ALSO
 ---------
 YubiKeys can be obtained from Yubico: http://www.yubico.com/
