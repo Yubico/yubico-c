@@ -152,6 +152,8 @@ main (int argc, char *argv[])
     if (!buf)
       {
 	perror ("malloc");
+	if (!decode_p && hex_p)
+	  free (data);
 	return 1;
       }
 
