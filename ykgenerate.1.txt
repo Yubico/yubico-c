@@ -19,7 +19,7 @@ Generate OTPs by encrypting given values under the given encryption key.
 OPTIONS
 -------
 *AESKEY*::
-The 16-character AES-128 key to use in hex.
+The 16-character AES-128 key to use in hex (128 bit).
 
 *YK_INTERNALNAME*::
 Hex encoded internal identity (48 bit).
@@ -31,7 +31,7 @@ Hex encoded counter (16 bit).
 Hex encoded timestamp low (16 bit).
 
 *YK_HIGH*::
-Hex encoded timestamp high (8bit).
+Hex encoded timestamp high (8 bit).
 
 *YK_USE*::
 Hex encoded use (8 bit).
