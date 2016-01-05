@@ -10,7 +10,7 @@ ykgenerate - construct and encrypt an OTP from given data
 
 SYNOPSIS
 --------
-*ykgenerate* 'AESKEY' 'YK_INTERNALNAME' 'YK_COUNTER' 'YK_LOW' 'YK_HIGH' 'YK_USE'
+*ykgenerate* 'AESKEY' 'YK_INTERNALNAME' 'YK_COUNTER' 'YK_LOW' 'YK_HIGH' 'YK_USE' ['YK_RND']
 
 DESCRIPTION
 -----------
@@ -35,6 +35,9 @@ Hex encoded timestamp high (8bit).
 
 *YK_USE*::
 Hex encoded use (8 bit).
+
+*YK_RND*::
+Hex encoded random (16 bit) (optional).
 
 EXAMPLES
 --------

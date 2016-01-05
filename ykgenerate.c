@@ -44,7 +44,7 @@ main (int argc, char *argv[])
 {
   uint8_t key[YUBIKEY_KEY_SIZE];
   char otp[YUBIKEY_OTP_SIZE + 1];
-  char *aeskey, *yk_internalname, *yk_counter, *yk_low, *yk_high, *yk_use;
+  char *aeskey, *yk_internalname, *yk_counter, *yk_low, *yk_high, *yk_use, *yk_rnd;
   yubikey_token_st tok;
 
   /* Initiate pseudo-random generator */
@@ -54,13 +54,14 @@ main (int argc, char *argv[])
   if (argc < 7)
     {
       printf ("Usage: %s <aeskey> <yk_internalname> <yk_counter> <yk_low> "
-	      "<yk_high> <yk_use>\n", argv[0]);
+	      "<yk_high> <yk_use> [<yk_rnd>]\n", argv[0]);
       printf (" AESKEY:\t\tHex encoded AES-key.\n");
       printf (" YK_INTERNALNAME:\tHex encoded yk_internalname (48 bit).\n");
       printf (" YK_COUNTER:\t\tHex encoded counter (16 bit).\n");
       printf (" YK_LOW:\t\tHex encoded timestamp low (16 bit).\n");
       printf (" YK_HIGH:\t\tHex encoded timestamp high (8bit).\n");
       printf (" YK_USE:\t\tHex encoded use (8 bit).\n");
+      printf (" YK_RND:\t\tHex encoded random (16 but) (optional).\n");
       return EXIT_FAILURE;
     }
 
@@ -132,7 +133,21 @@ main (int argc, char *argv[])
   }
   yubikey_hex_decode ((char *) &tok.tstph, yk_high, 1);
   yubikey_hex_decode ((char *) &tok.use, yk_use, 1);
-  tok.rnd = rand ();
+
+  if (argc > 7)
+    {
+      yk_rnd = argv[7];
+      if (strlen (yk_rnd) != 4)
+        {
+          printf ("error: Hex encoded yk_rnd must be 4 characters.\n");
+          return EXIT_FAILURE;
+        }
+      yubikey_hex_decode ((char *) &tok.rnd, yk_rnd, 2);
+    }
+  else
+    {
+      tok.rnd = rand ();
+    }
   tok.crc = ~yubikey_crc16 ((void *) &tok, sizeof (tok) - sizeof (tok.crc));
 
   yubikey_generate ((void *) &tok, key, otp);
