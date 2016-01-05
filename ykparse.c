@@ -46,7 +46,7 @@ main (int argc, char *argv[])
   yubikey_token_st tok;
 
   /* Parse command line parameters. */
-  if (argc < 2)
+  if (argc <= 2)
     {
       printf ("Usage: %s <aeskey> <token>\n", argv[0]);
       printf (" AESKEY:\tHex encoded AES-key.\n");
