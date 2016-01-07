@@ -143,6 +143,7 @@ main (int argc, char *argv[])
           return EXIT_FAILURE;
         }
       yubikey_hex_decode ((char *) &tok.rnd, yk_rnd, 2);
+      tok.rnd = (tok.rnd >> 8 & 0xff) | (tok.rnd << 8 & 0xff00);
     }
   else
     {
