@@ -68,7 +68,7 @@ DISTCLEANFILES = $(dist_man_MANS)
 
 SUFFIXES = .1.txt .1
 .1.txt.1:
-	$(A2X) --format=manpage -a revdate="Version $(VERSION)" $<
+	$(A2X) -L --format=manpage -a revdate="Version $(VERSION)" $<
 
 MANSOURCES = modhex.1.txt ykparse.1.txt ykgenerate.1.txt
 EXTRA_DIST = $(MANSOURCES) simple.mk THANKS
