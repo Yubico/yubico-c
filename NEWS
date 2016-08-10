@@ -1,6 +1,11 @@
 Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
 
 * Version 1.14 (unreleased)
+ ** ykgenerate accepts optional random value to use.
+ ** ykparse doesn't crash when only one parameter is given.
+ ** Better self tests.
+ ** Fix memory leak.
+ ** Document modhex alphabet.
 
 * Version 1.13 (released 2015-03-05)
  ** Correct hex decode with uneven characters, for example "abc".
