@@ -119,7 +119,8 @@ yubikey_modhex_encode (char *dst, const char *src, size_t srcSize)
 void
 yubikey_modhex_decode (char *dst, const char *src, size_t dstSize)
 {
-  for (size_t i = 0; i < N_MODHEX_MAPS; i++) {
+  size_t i;
+  for (i = 0; i < N_MODHEX_MAPS; i++) {
     if (_yubikey_p(src, YUBIKEY_MODHEX_MAPS[i])) {
       _yubikey_decode (dst, src, dstSize, YUBIKEY_MODHEX_MAPS[0]);
     }
@@ -140,7 +141,8 @@ int yubikey_modhex_map_p(const char *str, const char *map) {
 int
 yubikey_modhex_p (const char *str)
 {
-  for (size_t i = 0; i < N_MODHEX_MAPS; i++) {
+  size_t i;
+  for (i = 0; i < N_MODHEX_MAPS; i++) {
     if (_yubikey_p(str, YUBIKEY_MODHEX_MAPS[i])) {
       return 1;
     }
