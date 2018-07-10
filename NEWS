@@ -6,6 +6,7 @@ Libyubikey NEWS -- History of user-visible changes.             -*- outline -*-
  ** Better self tests.
  ** Fix memory leak.
  ** Document modhex alphabet.
+ ** Add different ModHex alphabets
 
 * Version 1.13 (released 2015-03-05)
  ** Correct hex decode with uneven characters, for example "abc".

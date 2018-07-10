@@ -33,7 +33,7 @@
 #include "yubikey.h"
 
 static const char hex_trans[] = "0123456789abcdef";
-static const char modhex_trans[] = YUBIKEY_MODHEX_MAP;
+//static const char modhex_trans[] = YUBIKEY_MODHEX_MAPS[0];
 
 static void
 _yubikey_encode (char *dst, const char *src, size_t srcSize,
@@ -113,17 +113,37 @@ yubikey_hex_p (const char *str)
 void
 yubikey_modhex_encode (char *dst, const char *src, size_t srcSize)
 {
-  _yubikey_encode (dst, src, srcSize, modhex_trans);
+  _yubikey_encode (dst, src, srcSize, YUBIKEY_MODHEX_MAPS[0]);
 }
 
 void
 yubikey_modhex_decode (char *dst, const char *src, size_t dstSize)
 {
-  _yubikey_decode (dst, src, dstSize, modhex_trans);
+  for (size_t i = 0; i < N_MODHEX_MAPS; i++) {
+    if (_yubikey_p(src, YUBIKEY_MODHEX_MAPS[i])) {
+      _yubikey_decode (dst, src, dstSize, YUBIKEY_MODHEX_MAPS[0]);
+    }
+  }
+  _yubikey_decode (dst, src, dstSize, YUBIKEY_MODHEX_MAPS[0]);
+}
+
+void
+yubikey_modhex_decode_map(char *dst, const char *src, size_t dstSize, const char *map)
+{
+  _yubikey_decode(dst, src, dstSize, map);
+}
+
+int yubikey_modhex_map_p(const char *str, const char *map) {
+  return _yubikey_p(str, map);
 }
 
 int
 yubikey_modhex_p (const char *str)
 {
-  return _yubikey_p (str, modhex_trans);
+  for (size_t i = 0; i < N_MODHEX_MAPS; i++) {
+    if (_yubikey_p(str, YUBIKEY_MODHEX_MAPS[i])) {
+      return 1;
+    }
+  }
+  return 0;
 }

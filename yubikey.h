@@ -91,7 +91,13 @@ extern "C"
  * Low-level functions; ModHex.
  */
 
-#define YUBIKEY_MODHEX_MAP "cbdefghijklnrtuv"
+#define N_MODHEX_MAPS (sizeof YUBIKEY_MODHEX_MAPS / sizeof YUBIKEY_MODHEX_MAPS[0])
+const static char* YUBIKEY_MODHEX_MAPS[] = {
+    "cbdefghijklnrtuv", /* default (QWERTY, AZERTY) */
+    "jxe.uidchtnbpygk", /* English Dvorak */
+    "cbsftdhuneikpglv", /* English Colemak */
+};
+
 
 /* ModHex encode input string SRC of length SRCSIZE and put the zero
    terminated output string in DST.  The size of the output string DST
@@ -102,9 +108,14 @@ extern "C"
 
 /* ModHex decode input string SRC of length DSTSIZE/2 into output
    string DST.  The output string DST is always DSTSIZE/2 large plus
-   the terminating zero.  */
+   the terminating zero.
+
+   Tries to guess the modhex map
+*/
   extern void yubikey_modhex_decode (char *dst,
 				     const char *src, size_t dstsize);
+  extern void yubikey_modhex_decode_map (char *dst, const char *src,
+                                         size_t dstsize, const char *map);
 
 /* Hex encode/decode data, same interface as modhex functions. */
   extern void yubikey_hex_encode (char *dst, const char *src, size_t srcsize);
@@ -113,6 +124,7 @@ extern "C"
 /* Return non-zero if zero-terminated input STR is a valid (mod)hex
    string, and zero if any non-alphabetic characters are found. */
   extern int yubikey_modhex_p (const char *str);
+  extern int yubikey_modhex_map_p (const char *str, const char *map);
   extern int yubikey_hex_p (const char *str);
 
 /*
