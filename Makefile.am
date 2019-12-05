@@ -63,6 +63,8 @@ ykparse_LDADD = ./libyubikey.la
 ykgenerate_SOURCES = ykgenerate.c
 ykgenerate_LDADD = ./libyubikey.la
 
+# Man page
+if ENABLE_DOC
 dist_man_MANS = modhex.1 ykparse.1 ykgenerate.1
 DISTCLEANFILES = $(dist_man_MANS)
 
@@ -72,6 +74,7 @@ SUFFIXES = .1.txt .1
 
 MANSOURCES = modhex.1.txt ykparse.1.txt ykgenerate.1.txt
 EXTRA_DIST = $(MANSOURCES) simple.mk THANKS
+endif
 
 # Maintainer rules
 
