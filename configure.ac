@@ -53,6 +53,14 @@ AM_MISSING_PROG([A2X], a2x, $missing_dir)
 gl_LD_VERSION_SCRIPT
 gl_VALGRIND_TESTS
 
+# --disable-documentation
+AC_ARG_ENABLE([documentation],
+	      [AS_HELP_STRING([--disable-documentation],
+			     [do not build documentation])],
+			     [enable_doc="${enableval}" ],
+			     [enable_doc="yes"])
+AM_CONDITIONAL(ENABLE_DOC, test "$enable_doc" != "no")
+
 AC_ARG_ENABLE([gcc-warnings],
   [AS_HELP_STRING([--enable-gcc-warnings],
 		  [turn on lots of GCC warnings (for developers)])],
