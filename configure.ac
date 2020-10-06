@@ -93,6 +93,7 @@ fi
 AC_CONFIG_FILES([
   Makefile
   tests/Makefile
+  yubico-c.pc
 ])
 AC_OUTPUT
 

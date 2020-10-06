@@ -63,6 +63,10 @@ ykparse_LDADD = ./libyubikey.la
 ykgenerate_SOURCES = ykgenerate.c
 ykgenerate_LDADD = ./libyubikey.la
 
+EXTRA_DIST = yubico-c.pc.in
+pkgcongigdir = $(libdir)/pkgconfig
+pkgcongig_DATA = yubico-c.pc
+
 # Man page
 if ENABLE_DOC
 dist_man_MANS = modhex.1 ykparse.1 ykgenerate.1
@@ -73,7 +77,7 @@ SUFFIXES = .1.txt .1
 	$(A2X) -L --format=manpage -a revdate="Version $(VERSION)" $<
 
 MANSOURCES = modhex.1.txt ykparse.1.txt ykgenerate.1.txt
-EXTRA_DIST = $(MANSOURCES) simple.mk THANKS
+EXTRA_DIST += $(MANSOURCES) simple.mk THANKS
 endif
 
 # Maintainer rules
