@@ -1,0 +1,9 @@
+prefix=@prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: yubico-c
+Description: Low-level C software development kit for the Yubico
+Version: @VERSION@
+Libs: -L${libdir} -lyubikey
+Cflags: -I${includedir}
