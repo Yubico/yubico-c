@@ -154,6 +154,25 @@ hex_test5 (void)
 }
 
 static void
+hex_test6 (void)
+{
+  char buf[1024];
+  char buf2[1024];
+  char cmp[1024];
+
+  strcpy (buf, "aGH2c2");
+  memset (buf2, 0, sizeof (buf2));
+  yubikey_hex_decode (buf2, buf, sizeof (buf2));
+  printf ("hex-decode(\"%s\") = %x%x%x\n", \
+	  buf, buf2[0] & 0xff, buf2[1], buf2[2] & 0xff);
+  cmp[0] = 0xa0;
+  cmp[1] = 0x2;
+  cmp[2] = 0xc2;
+  assert (memcmp (buf2, cmp, 3) == 0);
+  printf ("Hex-6 success\n");
+}
+
+static void
 aes_test1 (void)
 {
   size_t i;
@@ -320,6 +339,7 @@ main (void)
   hex_test3 ();
   hex_test4 ();
   hex_test5 ();
+  hex_test6 ();
   aes_test1 ();
   otp_test1 ();
   crc_test1 ();
