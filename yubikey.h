@@ -80,7 +80,7 @@ extern "C"
 /* Generate OTP */
   extern void yubikey_generate (yubikey_token_t token,
 				const uint8_t key[YUBIKEY_KEY_SIZE],
-				char out[YUBIKEY_OTP_SIZE]);
+				char out[YUBIKEY_OTP_SIZE + 1]);
 
 #define yubikey_counter(ctr) ((ctr) & 0x7FFF)
 #define yubikey_capslock(ctr) ((ctr) & 0x8000)
