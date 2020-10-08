@@ -45,7 +45,8 @@ yubikey_parse (const uint8_t token[32],
 
 void
 yubikey_generate (yubikey_token_t token,
-		  const uint8_t key[YUBIKEY_KEY_SIZE], char out[32])
+		  const uint8_t key[YUBIKEY_KEY_SIZE],
+		  char out[YUBIKEY_OTP_SIZE + 1])
 {
   yubikey_aes_encrypt ((uint8_t *) token, key);
   yubikey_modhex_encode (out, (const char *) token, YUBIKEY_KEY_SIZE);
