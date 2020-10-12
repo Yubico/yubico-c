@@ -1,0 +1,36 @@
+name: fuzzer
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04]
+        cc: [clang-10]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Dependencies
+      env:
+        CC: ${{ matrix.cc }}
+      run: |
+        sudo apt -q update
+        sudo apt install -q -y autoconf automake libtool pkg-config \
+          libfido2-dev libpam-dev gengetopt
+          sudo apt install -q -y ${CC%-*}-tools-${CC#clang-}
+    - name: Fuzz
+      env:
+        CC: ${{ matrix.cc }}
+      run: |
+        autoreconf --install
+        ./configure CC=${CC} CFLAGS="-fsanitize=address,leak,undefined" \
+          --disable-documentation
+        make
+        make -C fuzz
+        curl --retry 4 -s -o corpus.tgz \
+           https://storage.googleapis.com/kroppkaka/corpus/yubico-c.corpus.tgz
+        tar xzf corpus.tgz
+        fuzz/fuzz_libyubikey -reload=30 -print_pcs=1 \
+           -print_funcs=30 -timeout=10 -runs=1 corpus

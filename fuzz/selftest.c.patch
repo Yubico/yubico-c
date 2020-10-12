@@ -1,0 +1,159 @@
+diff --git a/tests/selftest.c b/tests/selftest.c
+index eabed81..cb51c9f 100644
+--- a/tests/selftest.c
++++ b/tests/selftest.c
+@@ -34,6 +34,27 @@
+ #include <stdio.h>
+ #include <assert.h>
+ 
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <unistd.h>
++
++void create_seed(char* name, char* data, size_t size)
++{
++  char full_name[1024] = {0};
++  for (char i = 0; i < 13; ++i) {
++    sprintf(full_name, "seed/%d_%s", i, name);
++    int fd = open(full_name, O_WRONLY|O_CREAT, 00700);
++    if (fd != -1) {
++      write(fd, &i, 1);
++      write(fd, data, size);
++      close(fd);
++    }
++    else
++      perror("open");
++  }
++}
++
+ static void
+ modhex_test1 (void)
+ {
+@@ -41,6 +62,7 @@ modhex_test1 (void)
+   char buf2[1024];
+ 
+   yubikey_modhex_encode (buf, "test", 4);
++  create_seed(__FUNCTION__, "test", 5);
+   printf ("modhex-encode(\"test\") = %s\n", buf);
+   assert (strcmp (buf, "ifhgieif") == 0);
+   printf ("Modhex-1.1 success\n");
+@@ -59,6 +81,7 @@ modhex_test2 (void)
+   int rc;
+ 
+   strcpy (buf, "cbdefghijklnrtuv");
++  create_seed(__FUNCTION__, "cbdefghijklnrtuv", sizeof("cbdefghijklnrtuv"));
+   rc = yubikey_modhex_p (buf);
+   printf ("modhex-p(\"%s\") = %d\n", buf, rc);
+   assert (rc == 1);
+@@ -72,6 +95,7 @@ modhex_test3 (void)
+   int rc;
+ 
+   strcpy (buf, "cbdef0ghijklnrtuv");
++  create_seed(__FUNCTION__, "cbdef0ghijklnrtuv", sizeof("cbdef0ghijklnrtuv"));
+   rc = yubikey_modhex_p (buf);
+   printf ("modhex-p(\"%s\") = %d\n", buf, rc);
+   assert (rc == 0);
+@@ -85,6 +109,7 @@ hex_test1 (void)
+   int rc;
+ 
+   strcpy (buf, "0123Xabc");
++  create_seed(__FUNCTION__, "0123Xabc", sizeof("0123Xabc"));
+   rc = yubikey_hex_p (buf);
+   printf ("hex-p(\"%s\") = %d\n", buf, rc);
+   assert (rc == 0);
+@@ -103,6 +128,7 @@ hex_test2 (void)
+   printf ("Hex-2.1 success\n");
+ 
+   printf ("hex-decode(\"%s\") = ", buf);
++  create_seed(__FUNCTION__, buf, strlen(buf) + 1);
+   yubikey_hex_decode (buf2, buf, sizeof (buf2));
+   printf ("%.*s\n", 4, buf2);
+   assert (memcmp (buf2, "test", 4) == 0);
+@@ -116,6 +142,7 @@ hex_test3 (void)
+   int rc;
+ 
+   strcpy (buf, "0123456789abcdef");
++  create_seed(__FUNCTION__, buf, strlen(buf) + 1);
+   rc = yubikey_hex_p (buf);
+   printf ("hex-p(\"%s\") = %d\n", buf, rc);
+   assert (rc == 1);
+@@ -129,6 +156,7 @@ hex_test4 (void)
+   int rc;
+ 
+   strcpy (buf, "0123Xabc");
++  create_seed(__FUNCTION__, buf, strlen(buf)+1);
+   rc = yubikey_hex_p (buf);
+   printf ("hex-p(\"%s\") = %d\n", buf, rc);
+   assert (rc == 0);
+@@ -143,6 +171,7 @@ hex_test5 (void)
+   char cmp[1024];
+ 
+   strcpy (buf, "a2c2a");
++  create_seed(__FUNCTION__, buf, strlen(buf)+1);
+   memset (buf2, 0, sizeof (buf2));
+   yubikey_hex_decode (buf2, buf, sizeof (buf2));
+   printf ("hex-decode(\"%s\") = %x%x%x\n", buf, buf2[0], buf2[1], buf2[2]);
+@@ -161,6 +190,7 @@ hex_test6 (void)
+   char cmp[1024];
+ 
+   strcpy (buf, "aGH2c2");
++  create_seed(__FUNCTION__, "test", 4);
+   memset (buf2, 0, sizeof (buf2));
+   yubikey_hex_decode (buf2, buf, sizeof (buf2));
+   printf ("hex-decode(\"%s\") = %x%x%x\n", \
+@@ -181,6 +211,11 @@ aes_test1 (void)
+ 
+   memcpy (buf, "0123456789abcdef\0", 17);
+   memcpy (key, "abcdef0123456789\0", 17);
++
++  uint8_t buffo[1024];
++  memcpy(buffo, key, 16);
++  memcpy(buffo+16, buf, 17);
++  create_seed(__FUNCTION__, buffo, strlen(buffo)+1);
+   printf ("aes-decrypt (data=%s, key=%s)\n => ", (char *) buf, (char *) key);
+   yubikey_aes_decrypt (buf, key);
+   for (i = 0; i < 16; i++)
+@@ -191,7 +226,7 @@ aes_test1 (void)
+ 		  "\x83\x8a\x46\x7f\x34\x63\x95\x51"
+ 		  "\x75\x5b\xd3\x2a\x4a\x2f\x15\xe1", 16) == 0);
+   printf ("AES-1.1 success\n");
+-
++  create_seed("aes_test1v2", buf, 16);
+   yubikey_aes_encrypt (buf, key);
+   assert (memcmp (buf, "0123456789abcdef", 16) == 0);
+   printf ("AES-1.2 success\n");
+@@ -209,13 +244,15 @@ otp_test1 (void)
+   memcpy ((void *) &tok,
+ 	  "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00", 16);
+   memcpy (key, "abcdef0123456789", 16);
+-
++  create_seed(__FUNCTION__, (void *) &tok, 16);
+   yubikey_generate ((void *) &tok, key, out);
+   yubikey_parse ((uint8_t *) out, key, &tok);
+ 
+   assert (memcmp (&tok,
+ 		  "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00",
+ 		  16) == 0);
++  create_seed("otp_test1v2",
++	      "\x16\xe1\xe5\xd9\xd3\x99\x10\x04\x45\x20\x07\xe3\x02\x00\x00", 16);
+   printf ("OTP-1 success\n");
+ }
+ 
+@@ -327,7 +364,7 @@ otp_testvectors (void)
+     assert (memcmp(&tok, &vectors[i].tok, sizeof(yubikey_token_st)) == 0);
+   }
+ }
+-
++#include <limits.h>
+ int
+ main (void)
+ {
+@@ -348,5 +385,7 @@ main (void)
+   crc_test4 ();
+   otp_testvectors ();
+ 
++  create_seed("another_hex_test", "aaaa", sizeof("aaaa"));
++
+   return 0;
+ }

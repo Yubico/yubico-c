@@ -72,6 +72,21 @@ AC_ARG_ENABLE([gcc-warnings],
   [gl_gcc_warnings=no]
 )
 
+AC_CACHE_CHECK([for clang],
+        _cv_clang,[
+        AC_TRY_COMPILE([], [
+                #ifdef __clang__
+                #else
+                #error "NOT CLANG"
+                #endif
+                return 0;
+        ],
+        [_cv_clang=yes],
+        [_cv_clang=no],
+        [])
+])
+AM_CONDITIONAL([COMPILER_CLANG], [test "$_cv_clang" = yes])
+
 if test "$gl_gcc_warnings" = yes; then
   nw="$nw -Wsystem-headers"         # Don't let system headers trigger warnings
   nw="$nw -Wpadded"                 # Struct's arenot padded
@@ -95,6 +110,11 @@ AC_CONFIG_FILES([
   tests/Makefile
   yubico-c.pc
 ])
+
+# Are we running with clang
+if test "$_cv_clang" = "yes"; then
+   AC_CONFIG_FILES([fuzz/Makefile])
+fi
 AC_OUTPUT
 
 AC_MSG_NOTICE([summary of build options:
