@@ -71,10 +71,10 @@ modhex_test3 (void)
   char buf[1024];
   int rc;
 
-  strcpy (buf, "cbdefghijklnrtuv");
+  strcpy (buf, "cbdef0ghijklnrtuv");
   rc = yubikey_modhex_p (buf);
   printf ("modhex-p(\"%s\") = %d\n", buf, rc);
-  assert (rc == 1);
+  assert (rc == 0);
   printf ("Modhex-3 success\n");
 }
 
