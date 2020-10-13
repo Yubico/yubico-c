@@ -44,3 +44,5 @@ ykgenerate
 ykgenerate.1
 ykparse
 ykparse.1
+fuzz/Makefile
+fuzz/fuzz_libyubikey
