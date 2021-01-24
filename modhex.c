@@ -157,9 +157,13 @@ main (int argc, char *argv[])
 	return 1;
       }
 
-    if (decode_p)
+    if (decode_p) {
+      if (!yubikey_modhex_p(data)) {
+        printf("Invalid modhex string\n");
+        return 0;
+      }
       yubikey_modhex_decode (buf, data, inlen / 2);
-    else
+    } else
       yubikey_modhex_encode (buf, data, inlen);
 
     if (decode_p && hex_p)
