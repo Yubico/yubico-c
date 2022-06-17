@@ -35,7 +35,10 @@ jobs:
         sudo apt -q update
         sudo apt install -y libjson-c-dev libyubikey-dev libyubikey0 \
           libusb-1.0-0-dev libusb-1.0-0 asciidoc
-        ./build-and-test.sh
+        autoreconf --install
+        ./configure
+        make check
+        sudo make install
 
 
     - name: Perform CodeQL Analysis
