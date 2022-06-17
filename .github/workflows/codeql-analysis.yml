@@ -31,8 +31,13 @@ jobs:
         languages: ${{ matrix.language }}
 
         
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+    - run: |
+        sudo apt -q update
+        sudo apt install -q -y autoconf automake libtool pkg-config \
+          libfido2-dev libpam-dev gengetopt
+        sudo apt install -q -y ${CC%-*}-tools-${CC#clang-}
+	./build-and-test.sh
+
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
