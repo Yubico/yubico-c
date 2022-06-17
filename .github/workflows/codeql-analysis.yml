@@ -36,7 +36,7 @@ jobs:
         sudo apt install -q -y autoconf automake libtool pkg-config \
           libfido2-dev libpam-dev gengetopt
         sudo apt install -q -y ${CC%-*}-tools-${CC#clang-}
-	./build-and-test.sh
+        ./build-and-test.sh
 
 
     - name: Perform CodeQL Analysis
