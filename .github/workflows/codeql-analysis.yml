@@ -33,9 +33,8 @@ jobs:
         
     - run: |
         sudo apt -q update
-        sudo apt install -q -y autoconf automake libtool pkg-config \
-          libfido2-dev libpam-dev gengetopt
-        sudo apt install -q -y ${CC%-*}-tools-${CC#clang-}
+        sudo apt install -y libjson-c-dev libyubikey-dev libyubikey0 \
+          libusb-1.0-0-dev libusb-1.0-0 asciidoc
         ./build-and-test.sh
 
 
