@@ -79,6 +79,45 @@ modhex_test3 (void)
 }
 
 static void
+modhex_test4 (void)
+{
+  char buf[1024];
+  int rc;
+
+  strcpy (buf, "jxe.uidchtnbpygk");
+  rc = yubikey_modhex_p (buf);
+  printf ("modhex-p(\"%s\") = %d\n", buf, rc);
+  assert (rc == 1);
+  printf ("Modhex-4 success\n");
+}
+
+static void
+modhex_test5 (void)
+{
+  char buf[1024];
+  int rc;
+
+  strcpy (buf, "cbsftdhuneikpglv");
+  rc = yubikey_modhex_p (buf);
+  printf ("modhex-p(\"%s\") = %d\n", buf, rc);
+  assert (rc == 1);
+  printf ("Modhex-5 success\n");
+}
+
+static void
+modhex_test6 (void)
+{
+  char buf[1024];
+  char buf2[1024];
+
+  strcpy (buf, "vvnhvuuvihlstuhpkgvfthfpeifbnbbuscbhhphffisc");
+  yubikey_modhex_decode(buf2, buf, sizeof (buf2));
+  assert (memcmp (buf2, "\xff\xb6\xfe\xef\x76\xa0\xde\x60\x95\xf4\xd6\x40\x37\x41\xb1\x1e\x00\x16\x60\x64\x47\x00", 22) == 0);
+
+  printf ("Modhex-6 success\n");
+}
+
+static void
 hex_test1 (void)
 {
   char buf[1024];
@@ -334,6 +373,9 @@ main (void)
   modhex_test1 ();
   modhex_test2 ();
   modhex_test3 ();
+  modhex_test4 ();
+  modhex_test5 ();
+  modhex_test6 ();
   hex_test1 ();
   hex_test2 ();
   hex_test3 ();
