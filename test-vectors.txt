@@ -43,7 +43,7 @@ More test vectors:
 INPUT:     test
 ENCODE:    ifhgieif
 
-INPUT:     test
+INPUT:     foobar
 ENCODE:    hhhvhvhdhbid
 
 AES-ECB
